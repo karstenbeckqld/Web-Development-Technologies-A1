@@ -10,11 +10,13 @@ namespace s3893749_s3912792_a1
     internal class CheckAccount : Account
     {
 
-        private char _AccountName;
+        private char _accountName;
 
         public CheckAccount(char accountName, int accountNumber, int customerId, SqlMoney accountBalance):base(accountNumber, customerId, accountBalance)
         {
-            _AccountName = accountName;
+            AccountName = accountName;
         }
+
+        public char AccountName { get; set; }
     }
 }
