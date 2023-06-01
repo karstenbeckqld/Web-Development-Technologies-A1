@@ -14,7 +14,7 @@ namespace s3893749_s3912792_a1
             _numAccounts = 0;
         }
         
-        public List<Account> BankAccounts { get; }
+        internal List<Account>? BankAccounts { get; }
 
         public void AddSavingsAccount(char accountName, int accountNumber, int customerId, SqlMoney accountBalance)
         {

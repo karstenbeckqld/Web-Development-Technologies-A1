@@ -18,9 +18,9 @@ namespace s3893749_s3912792_a1
             Index = index;
         }
 
-        public int Index { get; }
-        public int AccountNumber { get; }
-        public int CustomerId { get; }
-        public SqlMoney AccountBalance { get; private set; }
+        protected int Index { get; }
+        protected int AccountNumber { get; }
+        protected int CustomerId { get; }
+        protected SqlMoney AccountBalance { get; private set; }
     }
 }
