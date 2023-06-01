@@ -9,13 +9,16 @@ namespace s3893749_s3912792_a1
 {
     class Account
     {
-        protected Account(int accountNumber, int customerId, SqlMoney accountBalance)
+        private int _index;
+        protected Account(int index, int accountNumber, int customerId, SqlMoney accountBalance)
         {
             AccountNumber = accountNumber;
             CustomerId = customerId;
             AccountBalance = accountBalance;
+            Index = index;
         }
 
+        public int Index { get; }
         public int AccountNumber { get; }
         public int CustomerId { get; }
         public SqlMoney AccountBalance { get; private set; }

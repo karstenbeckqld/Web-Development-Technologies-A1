@@ -3,28 +3,32 @@ using System.Data.SqlTypes;
 
 namespace s3893749_s3912792_a1
 {
-	public class Accounts
-	{
-		private List<Account> _accounts;
+    public class Accounts
+    {
+        private List<Account> bankAccounts;
+        private int _numAccounts;
 
-		private int _numAccounts;
-
-		public Accounts()
-		{
-			_numAccounts = 0; 
-		}
-
-		public void addSavingsAccount(char accountName, int customerId, int accountNumber, SqlMoney accountBalance)
-		{
-			_accounts.Add(new SavingsAccount(accountName, accountNumber, customerId, accountBalance));
-			_numAccounts++;
-		}
-
-        public void addCheckAccount(char accountName, int customerId, int accountNumber, SqlMoney accountBalance)
+        public Accounts()
         {
-            _accounts.Add(new CheckAccount(accountName, accountNumber, customerId, accountBalance));
+            bankAccounts = new List<Account>();
+            _numAccounts = 0;
+        }
+        
+        public List<Account> BankAccounts { get; }
+
+        public void AddSavingsAccount(char accountName, int accountNumber, int customerId, SqlMoney accountBalance)
+        {
+            bankAccounts.Add(new SavingsAccount(_numAccounts, accountName, accountNumber, customerId, accountBalance));
             _numAccounts++;
         }
+
+        public void AddCheckAccount(char accountName, int customerId, int accountNumber, SqlMoney accountBalance)
+        {
+            bankAccounts.Add(new CheckAccount(_numAccounts, accountName, accountNumber, customerId, accountBalance));
+            _numAccounts++;
+        }
+
+       
+        
     }
 }
-

@@ -8,7 +8,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b649ebce-ac12-4848-9024-1b23fb7dc03a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.s3893749-s3912792-a1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.s3893749-s3912792-a1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/s3893749-s3912792-a1/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/s3893749-s3912792-a1/xs/UserPrefs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/s3893749-s3912792-a1/Account.cs" beforeDir="false" afterPath="$PROJECT_DIR$/s3893749-s3912792-a1/Account.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/s3893749-s3912792-a1/Accounts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/s3893749-s3912792-a1/Accounts.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/s3893749-s3912792-a1/CheckAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/s3893749-s3912792-a1/CheckAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/s3893749-s3912792-a1/SavingsAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/s3893749-s3912792-a1/SavingsAccount.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +42,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -77,6 +82,7 @@
       <option name="presentableId" value="Default" />
       <updated>1685561048118</updated>
       <workItem from="1685561051038" duration="456000" />
+      <workItem from="1685575087958" duration="2458000" />
     </task>
     <servers />
   </component>

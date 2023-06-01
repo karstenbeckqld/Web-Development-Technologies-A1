@@ -1,4 +1,28 @@
 ﻿<Properties StartupConfiguration="{D9130F99-58E6-4C11-BE98-C2B8DCEE3A96}|Default" GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.s3893749-s3912792-a1 PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="s3893749-s3912792-a1/Accounts.cs">
+    <Files>
+      <File FileName="s3893749-s3912792-a1/Account.cs" Line="1" Column="1" />
+      <File FileName="s3893749-s3912792-a1/CheckAccount.cs" Line="22" Column="2" />
+      <File FileName="s3893749-s3912792-a1/Accounts.cs" Line="27" Column="10" />
+      <File FileName="s3893749-s3912792-a1/SavingsAccount.cs" Line="15" Column="92" NotebookId="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="s3893749-s3912792-a1" expanded="True">
+            <Node name="s3893749-s3912792-a1" expanded="True">
+              <Node name="Accounts.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
