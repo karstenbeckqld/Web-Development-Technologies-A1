@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\Assignment 1\\VS Win\\s3893749-s3912792-a1\\s3893749-s3912792-a1.csproj",
+      "projectUniqueName": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\s3893749-s3912792-a1\\s3893749-s3912792-a1.csproj",
       "projectName": "s3893749-s3912792-a1",
-      "projectPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\Assignment 1\\VS Win\\s3893749-s3912792-a1\\s3893749-s3912792-a1.csproj",
+      "projectPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\s3893749-s3912792-a1\\s3893749-s3912792-a1.csproj",
       "packagesPath": "C:\\Users\\karstenbeck\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\Assignment 1\\VS Win\\s3893749-s3912792-a1\\obj\\",
+      "outputPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\s3893749-s3912792-a1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\karstenbeck\\AppData\\Roaming\\NuGet\\NuGet.Config",

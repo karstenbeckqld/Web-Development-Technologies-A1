@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace s3893749_s3912792_a1
 {
-    internal class CheckAccount : Account
+    internal class SavingsAccount : Account
     {
 
         private char _accountName;
 
-        public CheckAccount(int index,char accountName, int accountNumber, int customerId, SqlMoney accountBalance):base(index, accountNumber, customerId, accountBalance)
+        public SavingsAccount(int index, char accountName, int accountNumber, int customerId, SqlMoney accountBalance)
+            : base(index, accountNumber, customerId, accountBalance)
         {
             AccountName = accountName;
         }

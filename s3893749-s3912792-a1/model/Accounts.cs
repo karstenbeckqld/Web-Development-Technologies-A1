@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SqlTypes;
 
-namespace s3893749_s3912792_a1
+namespace s3893749_s3912792_a1.model
 {
     public class Accounts
     {
@@ -13,7 +13,7 @@ namespace s3893749_s3912792_a1
             bankAccounts = new List<Account>();
             _numAccounts = 0;
         }
-        
+
         internal List<Account>? BankAccounts { get; }
 
         public void AddSavingsAccount(char accountName, int accountNumber, int customerId, SqlMoney accountBalance)
@@ -28,7 +28,7 @@ namespace s3893749_s3912792_a1
             _numAccounts++;
         }
 
-       
-        
+
+
     }
 }
