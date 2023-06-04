@@ -2,14 +2,14 @@ using Microsoft.Data.SqlClient;
 
 namespace s3893749_s3912792_a1.builder;
 
-public class sqlConnect
+public class SqlConnect
 {
-    public sqlConnect()
+    public SqlConnect()
     {
         
     }
 
-    public void connect()
+    public void Connect()
     {
         try
         {
@@ -17,7 +17,7 @@ public class sqlConnect
             builder.DataSource = "<your_server>.database.windows.net";
             builder.UserID = "<username>";
             builder.Password = "<password>";
-            builder.InitialCatalog = "<your_database";
+            builder.InitialCatalog = "<your_database>";
 
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
