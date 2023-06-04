@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.SqlTypes;
+﻿using System.Data.SqlTypes;
 
 namespace s3893749_s3912792_a1.model
 {
