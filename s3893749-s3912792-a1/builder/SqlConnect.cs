@@ -14,30 +14,33 @@ public class SqlConnect
         try
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "<your_server>.database.windows.net";
-            builder.UserID = "<username>";
-            builder.Password = "<password>";
-            builder.InitialCatalog = "<your_database>";
+            builder.DataSource = "rmit.australiaeast.cloudapp.azure.com";
+            builder.UserID = "s3912792_a1";
+            builder.Password = "abc123";
+            builder.InitialCatalog = "s3912792_a1";
+            builder.TrustServerCertificate = true;
+            
+            Console.WriteLine(builder.ConnectionString);
 
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
-            {
+            using var connection = new SqlConnection(builder.ConnectionString);
+            
                 Console.WriteLine("\nQuery data example:");
                 Console.WriteLine("==========================================");
 
-                String sql = "SELECT name, collation_name FROM sys.databases";
+                String sql = "SELECT * FROM log";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
+                using var command = new SqlCommand(sql, connection);
+                
                     connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using var reader = command.ExecuteReader();
                     {
                         while (reader.Read())
                         {
-                            Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
+                            Console.WriteLine("{0} {1}", reader.GetChar(1), reader.GetDateTime(2));
                         }
                     }
-                }
-            }
+                
+            
         }
         catch (SqlException e)
         {

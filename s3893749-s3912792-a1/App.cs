@@ -9,7 +9,7 @@ namespace s3893749_s3912792_a1
 {
     internal class App
     {
-        public static void Main(string[] args)
+        public static void MainZ(string[] args)
         {
             new Login();
         }
