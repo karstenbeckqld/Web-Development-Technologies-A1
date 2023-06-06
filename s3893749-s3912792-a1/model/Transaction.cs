@@ -9,7 +9,7 @@ public class Transaction
     private DateTime _transactionTime;
     private int _accountNumber;
 
-    public Transaction(int accountNumber, SqlMoney amount, DateTime datetime, string comment)
+    public Transaction(int accountNumber, decimal amount, DateTime datetime, string comment)
     {
         _accountNumber = accountNumber;
         _amount = amount;
@@ -18,7 +18,7 @@ public class Transaction
     }
     
     public int AccountNumber { get; set; }
-    public SqlMoney Amount { get; set; }
+    public decimal Amount { get; set; }
     public DateTime TransactionTime { get; set; }
     public string Comment { get; set; }
     

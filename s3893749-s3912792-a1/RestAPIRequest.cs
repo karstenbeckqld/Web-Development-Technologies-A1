@@ -7,9 +7,8 @@ public class RestAPIRequest
 {
     public static void RestCall()
     {
-        //const string Url = "https://coreteaching01.csit.rmit.edu.au/~e103884/wdt/services/example/";
-        const string url = "https://rmit.australiaeast.cloudapp.azure.com";
-        
+        const string url = "https://coreteaching01.csit.rmit.edu.au/~e103884/wdt/services/customers/";
+
 
         using var client = new HttpClient();
         var json = client.GetStringAsync(url).Result;

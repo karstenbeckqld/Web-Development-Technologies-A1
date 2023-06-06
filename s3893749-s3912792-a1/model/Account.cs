@@ -6,7 +6,7 @@ namespace s3893749_s3912792_a1.model
     {
         private List<Transaction> _transactions;
 
-        public Account(int accountNumber, int customerId, SqlMoney accountBalance, char accountType)
+        public Account(int accountNumber, int customerId, decimal accountBalance, char accountType)
         {
             AccountNumber = accountNumber;
             CustomerId = customerId;
@@ -17,8 +17,8 @@ namespace s3893749_s3912792_a1.model
 
         public int AccountNumber { get; }
         public int CustomerId { get; }
-        public SqlMoney AccountBalance { get; private set; }
-        public char AccountType { get; set; }
+        public decimal AccountBalance { get;  set; }
+        public char AccountType { get; }
 
         public void AddTransaction(Transaction transaction)
         {
