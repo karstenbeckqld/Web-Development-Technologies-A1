@@ -2,19 +2,32 @@
 
 namespace s3893749_s3912792_a1.model
 {
-    internal class Account
+    public class Account
     {
-        protected Account(int index, int accountNumber, int customerId, SqlMoney accountBalance)
+        private List<Transaction> _transactions;
+
+        public Account(int accountNumber, int customerId, SqlMoney accountBalance, char accountType)
         {
             AccountNumber = accountNumber;
             CustomerId = customerId;
             AccountBalance = accountBalance;
-            Index = index;
+            AccountType = accountType;
+            _transactions = new List<Transaction>();
         }
 
-        protected int Index { get; }
-        protected int AccountNumber { get; }
-        protected int CustomerId { get; }
-        protected SqlMoney AccountBalance { get; private set; }
+        public int AccountNumber { get; }
+        public int CustomerId { get; }
+        public SqlMoney AccountBalance { get; private set; }
+        public char AccountType { get; set; }
+
+        public void AddTransaction(Transaction transaction)
+        {
+            _transactions.Add(transaction);
+        }
+
+        public List<Transaction> GetTransactions()
+        {
+            return _transactions;
+        }
     }
 }
