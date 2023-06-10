@@ -6,19 +6,21 @@ namespace s3893749_s3912792_a1.model
     {
         private List<Transaction> _transactions;
 
-        public Account(int accountNumber, int customerId, decimal accountBalance, char accountType)
+        public Account(int accountNumber, int customerId, decimal accountBalance, string accountType)
         {
             AccountNumber = accountNumber;
-            CustomerId = customerId;
+            CustomerID = customerId;
             AccountBalance = accountBalance;
             AccountType = accountType;
             _transactions = new List<Transaction>();
         }
 
-        public int AccountNumber { get; }
-        public int CustomerId { get; }
+        public int AccountNumber { get; set; }
+        public int CustomerID { get; set; }
         public decimal AccountBalance { get;  set; }
-        public char AccountType { get; }
+        public string AccountType { get; set; }
+        
+        public List<Transaction> Transactions { get; set; }
 
         public void AddTransaction(Transaction transaction)
         {

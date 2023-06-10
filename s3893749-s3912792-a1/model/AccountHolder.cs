@@ -1,13 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace s3893749_s3912792_a1.model;
 
 public class AccountHolder
 {
     private List<Account> _accounts;
-    
+    private Login _login;
+
     [SetsRequiredMembers]
-    public AccountHolder(int customerId, char name, char address, char city, int postcode)
+    public AccountHolder(int customerId, string name, string address, string city, string postcode, Login login)
     {
         CustomerId = customerId;
         Name = name;
@@ -15,17 +17,32 @@ public class AccountHolder
         City = city;
         Postcode = postcode;
         _accounts = new List<Account>(2);
+        _login = login;
     }
 
-    public char Name { get; set; }
+    public string Name { get; set; }
 
-    public char Address { get; set; }
+    public string Address { get; set; }
 
-    public char City { get; set; }
+    public string City { get; set; }
 
-    public int Postcode { get; set; }
+    public string Postcode { get; set; }
 
     public int CustomerId { get; set; }
+    
+    public List<Account> Accounts { get; set; }
+
+    public Login Login
+    {
+        get => _login;
+        set
+        {
+            var _login = new Login();
+            _login = value;
+        }
+    }
+    
+    
 
     public void AddAccount(Account account)
     {
