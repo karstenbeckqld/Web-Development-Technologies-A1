@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace s3893749_s3912792_a1
 {
-    internal class Login
+    internal class LoginController
     {
         private StringBuilder menu;
         private int loginId;
         private int password;
-        public Login()
+        public LoginController()
         {
 
             loginId = 0;

@@ -15,11 +15,11 @@ namespace s3893749_s3912792_a1.model
             _transactions = new List<Transaction>();
         }
 
-        public int AccountNumber { get; set; }
         public int CustomerID { get; set; }
-        public decimal AccountBalance { get;  set; }
+        public int AccountNumber { get; set; }
+        public decimal AccountBalance { get; set; }
         public string AccountType { get; set; }
-        
+
         public List<Transaction> Transactions { get; set; }
 
         public void AddTransaction(Transaction transaction)
