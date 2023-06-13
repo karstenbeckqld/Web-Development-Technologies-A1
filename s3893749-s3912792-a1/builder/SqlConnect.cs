@@ -16,7 +16,7 @@ public class SqlConnect
 
     public static bool IsDataPresentInDataBase()
     {
-        bool result = false;
+        var result = false;
 
         using var connection = new SqlConnection(connectionString);
         connection.Open();
@@ -81,7 +81,7 @@ public class SqlConnect
             let loginCustomerId = row.Field<int>("CustomerID")
             let loginId = row.Field<string>("LoginID")
             let password = row.Field<string>("PasswordHash")
-            select new Login{CustomerId = loginCustomerId, LoginId = loginId,PasswordHash = password});
+            select new Login { CustomerId = loginCustomerId, LoginId = loginId, PasswordHash = password });
 
 
         /*foreach (var login in table2.Select())
@@ -113,61 +113,117 @@ public class SqlConnect
         }
     }
 
-    /*public static void GetLogins()
+    public static void WriteWebServiceCustomers(List<WebServiceObject> customers)
     {
-        using var connection = new SqlConnection(connectionString);
-        connection.Open();
-
-        var command = connection.CreateCommand();
-        command.CommandText = "select * from Login";
-
-
-        // DataTable stores all rows
-        var table = new DataTable();
-        new SqlDataAdapter(command).Fill(table);
-
-        var logins = new List<Login>();
-
-        foreach (var x in table.Select())
-        {
-            var loginId = x.Field<string>("LoginID");
-            var password = x.Field<string>("PasswordHash");
-            var customerId = x.Field<int>("CustomerID");
-
-            logins.Add(new Login { LoginID = loginId, PasswordHash = password });
-        }
-
-        foreach (var login in logins)
-        {
-            Console.WriteLine($"(GetLogins) Login ID: {login.LoginID}, Password: {login.PasswordHash}");
-        }
-    }*/
-
-    public static void WriteCustomer(Customer customer)
-    {
-        var customerID = customer.CustomerId;
-        var customerName = customer.Name;
-
-        var customerAddress = customer.Address == null ? "null" : customer.Address;
-        var customerCity = customer.City == null ? "null" : customer.City;
-        var customerPostCode = customer.PostCode == null ? "null" : customer.PostCode;
-
-
         // NOTE: Can use a using declaration instead of a using block.
         using var connection = new SqlConnection(connectionString);
         connection.Open();
 
-        var command = connection.CreateCommand();
-        command.CommandText =
-            "INSERT INTO Customer VALUES (@customerID, @customerName, @customerAddress, @customerCity, @customerPostCode)";
-        command.Parameters.AddWithValue("customerID", customerID);
-        command.Parameters.AddWithValue("customerName", customerName);
-        command.Parameters.AddWithValue("customerAddress", customerAddress);
-        command.Parameters.AddWithValue("customerCity", customerCity);
-        command.Parameters.AddWithValue("customerPostCode", customerPostCode);
+        foreach (var customer in customers)
+        {
+            var customerId = customer.CustomerId;
+            var customerName = customer.Name;
+            var customerAddress = customer.Address ?? "null";
+            var customerCity = customer.City ?? "null";
+            var customerPostCode = customer.PostCode ?? "null";
 
-        var updates = command.ExecuteNonQuery();
 
-        Console.WriteLine(updates);
+            var command = connection.CreateCommand();
+            command.CommandText =
+                "INSERT INTO Customer VALUES (@customerID, @customerName, @customerAddress, @customerCity, @customerPostCode)";
+
+            command.Parameters.AddWithValue("customerID", customerId);
+            command.Parameters.AddWithValue("customerName", customerName);
+            command.Parameters.AddWithValue("customerAddress", customerAddress);
+            command.Parameters.AddWithValue("customerCity", customerCity);
+            command.Parameters.AddWithValue("customerPostCode", customerPostCode);
+
+            var updates = command.ExecuteNonQuery();
+
+            Console.WriteLine(updates);
+        }
+    }
+
+    public static void WriteWebServiceAccounts(List<WebServiceObject> customers)
+    {
+        // NOTE: Can use a using declaration instead of a using block.
+        using var connection = new SqlConnection(connectionString);
+        connection.Open();
+
+        decimal accountBalance = 0;
+        /*var accountNumber = 0;
+        var accountType = "";*/
+
+        foreach (var customer in customers)
+        {
+            var accountCustomerId = customer.CustomerId;
+
+            foreach (var account in customer.Accounts)
+            {
+                var accountNumber = account.AccountNumber;
+                var accountType = account.AccountType;
+
+                accountBalance += account.Transactions.Sum(transaction => transaction.Amount);
+
+
+                var command = connection.CreateCommand();
+                command.CommandText =
+                    "INSERT INTO Account VALUES (@accountNumber, @accountType, @accountCustomerId, @accountBalance);";
+
+                command.Parameters.AddWithValue("accountNumber", accountNumber);
+                command.Parameters.AddWithValue("accountType", accountType);
+                command.Parameters.AddWithValue("accountCustomerId", accountCustomerId);
+                command.Parameters.AddWithValue("accountBalance", accountBalance);
+
+
+                var updates = command.ExecuteNonQuery();
+
+                Console.WriteLine(updates);
+
+                accountBalance = 0;
+            }
+        }
+    }
+
+    public static void WriteServiceDataTransactions(List<WebServiceObject> customers)
+    {
+        // NOTE: Can use a using declaration instead of a using block.
+        using var connection = new SqlConnection(connectionString);
+        connection.Open();
+
+        const char transactionType = 'D';
+
+        foreach (var customer in customers)
+        {
+            foreach (var account in customer.Accounts)
+            {
+                var accountNumber = account.AccountNumber;
+
+                foreach (var transaction in account.Transactions)
+                {
+                    var destinationAccount = accountNumber;
+                    var amount = transaction.Amount;
+                    var comment = transaction.Comment ?? "none";
+                    var transactionTime = transaction.TransactionTimeUtc;
+
+
+                    var command = connection.CreateCommand();
+                    command.CommandText =
+                        "INSERT INTO [Transaction] (TransactionType, AccountNumber, DestinationAccountNumber, Amount, Comment,TransactionTimeUtc) " +
+                        "VALUES ( @transactionType, @tAccountNumber, @destinationAccount, @amount, @comment, @transactionTime)";
+
+                    command.Parameters.AddWithValue("transactionType", transactionType);
+                    command.Parameters.AddWithValue("tAccountNumber", accountNumber);
+                    command.Parameters.AddWithValue("destinationAccount", destinationAccount);
+                    command.Parameters.AddWithValue("amount", amount);
+                    command.Parameters.AddWithValue("comment", comment);
+                    command.Parameters.AddWithValue("transactionTime", transactionTime);
+
+                    var updates = command.ExecuteNonQuery();
+
+                    Console.WriteLine(updates);
+                }
+            }
+        }
     }
 }

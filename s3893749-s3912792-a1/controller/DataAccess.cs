@@ -12,7 +12,6 @@ namespace s3893749_s3912792_a1.controller
 {
     internal class DataAccess
     {
-        private RestApiRequest getCustomersFromWebService;
 
         public DataAccess()
         {
@@ -21,19 +20,24 @@ namespace s3893749_s3912792_a1.controller
              */
             var isDataPresent = SqlConnect.IsDataPresentInDataBase();
 
-
+            /* MUST BE SWAPPED, ONCE DATABASE ACCESS WORKS! */
             if (isDataPresent)
-            {
-                var customers = new RestApiRequest().WebServiceObjectList;
-                GetDataFromJson(customers);
-            }
-            else
             {
                 //SqlConnect.GetCustomersFromDatabase();
                 //SqlConnect.GetLogins();
             }
+            else
+            {
+                var customers = new RestApiRequest().WebServiceObjectList;
+                GetDataFromJson(customers);
+                SqlConnect.WriteWebServiceCustomers(customers);
+                SqlConnect.WriteWebServiceAccounts(customers);
+                SqlConnect.WriteServiceDataTransactions(customers);
+               
+            }
         }
 
+        /* THIS METHOD CAN GO ONCE THE DATABASE TABLE CREATION WORKS PROPERLY! */
         private void GetDataFromJson(List<WebServiceObject> customers)
         {
             foreach (var customer in customers)
