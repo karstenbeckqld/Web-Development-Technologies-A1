@@ -1,20 +1,26 @@
+using Newtonsoft.Json;
+
 namespace s3893749_s3912792_a1.model;
 
 public class Login
 {
-    /*private string _loginID;
-    private string _passwordHash;
-    private int _customerId;
 
-    public Login(int customerId, string loginId, string password)
+    /*private int _customerId;
+    private string _loginId;
+    private string _passwordHash;
+
+    public Login(int customerId, string loginId, string passwordHash)
     {
         _customerId = customerId;
-        _loginID = loginId;
-        _passwordHash = password;
+        _loginId = loginId;
+        _passwordHash = passwordHash;
     }*/
-
-    //public int CustomerID { get; set; }
-    public string LoginID { get; set; }
+    
+    
+    public string LoginId { get; set; }
+    
     public string PasswordHash { get; set; }
+    
+    public int CustomerId { get; set; }
     
 }

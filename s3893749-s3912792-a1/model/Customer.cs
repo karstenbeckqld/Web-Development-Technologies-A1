@@ -1,36 +1,35 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace s3893749_s3912792_a1.model;
 
-public class AccountHolder
+public class Customer
 {
     private List<Account> _accounts;
     private Login _login;
-    private int _customerId;
-    private string _loginId;
-    private string _password;
 
 
-    public AccountHolder(int customerId, string name, string address, string city, string postcode, Login login)
+    [JsonConstructor]
+    public Customer(int customerId, string name, string address, string city, string postcode, Login login)
     {
         CustomerId = customerId;
         Name = name;
         Address = address;
         City = city;
-        Postcode = postcode;
+        PostCode = postcode;
         _accounts = new List<Account>(2);
         _login = login;
     }
 
     [SetsRequiredMembers]
-    public AccountHolder(int customerId, string name, string address, string city, string postcode)
+    public Customer(int customerId, string name, string address, string city, string postcode)
     {
         CustomerId = customerId;
         Name = name;
         Address = address;
         City = city;
-        Postcode = postcode;
+        PostCode = postcode;
         _accounts = new List<Account>(2);
     }
 
@@ -40,22 +39,16 @@ public class AccountHolder
 
     public string City { get; set; }
 
-    public string Postcode { get; set; }
+    public string PostCode { get; set; }
 
     public int CustomerId { get; set; }
 
     public List<Account> Accounts { get; set; }
 
-    public Login Login
-    {
-        get => _login;
-        set
-        {
-            //login = new Login(_customerId, _loginId,_password);
-            //var _login = login;
-            _login = new Login{LoginID = _loginId, PasswordHash = _password};
-        }
-    }
+    public List<Login> Login { get; set; }
+    
+    /*public string LoginId { get; set; }
+    public string PasswordHash { get; set; }*/
 
 
     public void AddAccount(Account account)

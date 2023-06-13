@@ -54,10 +54,18 @@ public class SqlConnect
         var table2 = new DataTable();
         new SqlDataAdapter(command2).Fill(table2);
 
-        var customers = new List<AccountHolder>();
+        var customers = new List<Customer>();
         var logins = new List<Login>();
 
-        foreach (var row in table1.Select())
+
+        customers.AddRange(from row in table1.Select()
+            let customerId = row.Field<int>("CustomerID")
+            let customerName = row.Field<string>("Name")
+            let customerAddress = row.Field<string>("Address")
+            let customerCity = row.Field<string>("City")
+            let customerPostCode = row.Field<string>("Postcode")
+            select new Customer(customerId, customerName, customerAddress, customerCity, customerPostCode));
+        /*foreach (var row in table1.Select())
         {
             var customerID = row.Field<int>("CustomerID");
             var customerName = row.Field<string>("Name");
@@ -65,11 +73,18 @@ public class SqlConnect
             var customerCity = row.Field<string>("City");
             var customerPostCode = row.Field<string>("Postcode");
 
-            customers.Add(new AccountHolder(customerID, customerName, customerAddress, customerCity,
+            customers.Add(new Customer(customerID, customerName, customerAddress, customerCity,
                 customerPostCode));
-        }
+        }*/
 
-        foreach (var login in table2.Select())
+        logins.AddRange(from row in table2.Select()
+            let loginCustomerId = row.Field<int>("CustomerID")
+            let loginId = row.Field<string>("LoginID")
+            let password = row.Field<string>("PasswordHash")
+            select new Login{CustomerId = loginCustomerId, LoginId = loginId,PasswordHash = password});
+
+
+        /*foreach (var login in table2.Select())
         {
             var loginCustomerId = login.Field<int>("CustomerID");
             var loginId = login.Field<string>("LoginID");
@@ -79,10 +94,10 @@ public class SqlConnect
             {
                 if (loginCustomerId == customer.CustomerId)
                 {
-                    logins.Add( new Login());
+                    logins.Add(new Login { LoginID = loginId, PasswordHash = password, CustomerId = loginCustomerId });
                 }
             }
-        }
+        }*/
 
         var accMgr = new AccountManager { Customers = customers };
 
@@ -93,11 +108,12 @@ public class SqlConnect
 
         foreach (var login in logins)
         {
-            Console.WriteLine($"(GetCustomers) Login ID: {login.LoginID}, Password: {login.PasswordHash}");
+            Console.WriteLine(
+                $"(GetCustomers) Customer ID: {login.CustomerId}, Login ID: {login.LoginId}, Password: {login.PasswordHash}");
         }
     }
 
-    public static void GetLogins()
+    /*public static void GetLogins()
     {
         using var connection = new SqlConnection(connectionString);
         connection.Open();
@@ -118,23 +134,23 @@ public class SqlConnect
             var password = x.Field<string>("PasswordHash");
             var customerId = x.Field<int>("CustomerID");
 
-            logins.Add(new Login { LoginID = loginId, PasswordHash = password});
+            logins.Add(new Login { LoginID = loginId, PasswordHash = password });
         }
 
         foreach (var login in logins)
         {
             Console.WriteLine($"(GetLogins) Login ID: {login.LoginID}, Password: {login.PasswordHash}");
         }
-    }
+    }*/
 
-    public static void WriteCustomer(AccountHolder accountHolder)
+    public static void WriteCustomer(Customer customer)
     {
-        var customerID = accountHolder.CustomerId;
-        var customerName = accountHolder.Name;
+        var customerID = customer.CustomerId;
+        var customerName = customer.Name;
 
-        var customerAddress = accountHolder.Address == null ? "null" : accountHolder.Address;
-        var customerCity = accountHolder.City == null ? "null" : accountHolder.City;
-        var customerPostCode = accountHolder.Postcode == null ? "null" : accountHolder.Postcode;
+        var customerAddress = customer.Address == null ? "null" : customer.Address;
+        var customerCity = customer.City == null ? "null" : customer.City;
+        var customerPostCode = customer.PostCode == null ? "null" : customer.PostCode;
 
 
         // NOTE: Can use a using declaration instead of a using block.

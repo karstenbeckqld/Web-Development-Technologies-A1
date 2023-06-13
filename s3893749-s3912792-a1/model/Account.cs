@@ -10,14 +10,14 @@ namespace s3893749_s3912792_a1.model
         {
             AccountNumber = accountNumber;
             CustomerID = customerId;
-            AccountBalance = accountBalance;
+            Balance = accountBalance;
             AccountType = accountType;
             _transactions = new List<Transaction>();
         }
 
         public int CustomerID { get; set; }
         public int AccountNumber { get; set; }
-        public decimal AccountBalance { get; set; }
+        public decimal Balance { get; set; }
         public string AccountType { get; set; }
 
         public List<Transaction> Transactions { get; set; }

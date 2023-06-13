@@ -12,6 +12,8 @@ namespace s3893749_s3912792_a1.controller
 {
     internal class DataAccess
     {
+        private RestApiRequest getCustomersFromWebService;
+
         public DataAccess()
         {
             /* Get true or false from the SqlConnect class' IsDataPresentInDataBase() method to decide if data gets
@@ -22,43 +24,38 @@ namespace s3893749_s3912792_a1.controller
 
             if (isDataPresent)
             {
-                SqlConnect.GetCustomersFromDatabase();
-                //SqlConnect.GetLogins();
-                var getAccountHoldersFromRestApi = new RestApiRequest();
-                GetDataFromJson(getAccountHoldersFromRestApi);
+                var customers = new RestApiRequest().WebServiceObjectList;
+                GetDataFromJson(customers);
             }
             else
             {
-                var getAccountHoldersFromRestApi = new RestApiRequest();
+                //SqlConnect.GetCustomersFromDatabase();
+                //SqlConnect.GetLogins();
             }
         }
 
-        private void GetDataFromJson(RestApiRequest request)
+        private void GetDataFromJson(List<WebServiceObject> customers)
         {
-            var accountHolders = request.RestCallAccountHolder();
-
-           var accountManager = new AccountManager { Customers = accountHolders };
-            foreach (var accountHolder in accountManager.Customers)
+            foreach (var customer in customers)
             {
                 Console.WriteLine(
-                    $"Customer Id: {accountHolder.CustomerId}, AccountHolder: {accountHolder.Name}, Address: {accountHolder.Address}, " +
-                    $"City: {accountHolder.City}, Postcode: {accountHolder.Postcode}");
+                    $"(RestCall) Customer Id: {customer.CustomerId}, AccountHolder: {customer.Name}, Address: {customer.Address}, " +
+                    $"City: {customer.City}, Postcode: {customer.PostCode}");
+                Console.WriteLine($"Login: {customer.login.LoginId}");
+                Console.WriteLine($"Login: {customer.login.PasswordHash}");
 
-                Console.WriteLine(
-                    $"Customer ID (Login): LoginID: {accountHolder.Login.LoginID}, Password: {accountHolder.Login.PasswordHash}");
-
-                //SqlConnect.WriteCustomer(accountHolder);
-
-                /*foreach (var account in holder.Accounts)
+                foreach (var account in customer.Accounts)
                 {
-                    Console.WriteLine(
-                        $"AccountNo: {account.AccountNumber}, AccountType: {account.AccountType}, Account Balance: {account.AccountBalance}, Customer ID: {account.CustomerID}\n");
+                    Console.WriteLine($"Account No: {account.AccountNumber}");
+
+                    foreach (var item in account.Transactions)
+                    {
+                        Console.WriteLine($"Transaction A/N: {item.AccountNumber}");
+                        Console.WriteLine($"Transaction Time: {item.TransactionTimeUtc}");
+                        Console.WriteLine($"Transaction Amount: {item.Amount}");
+                        Console.WriteLine($"Transaction Comment: {item.Comment}");
+                    }
                 }
-        
-                foreach (var trans in holder.Accounts)
-                {
-                    Console.WriteLine($"Transactions: {trans.Transactions}");
-                }*/
             }
         }
     }
