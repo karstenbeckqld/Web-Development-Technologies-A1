@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace s3893749_s3912792_a1.model;
 
-/* The WebServiceObject class serves as a container for data received from the web service via a HTTP Get request. */
+/* The WebServiceObject class serves as a DTO for data received from the web service via a HTTP Get request. */
 public class WebServiceObject
 {
     /* The CustomerId property receives the stored customer ID. */
@@ -22,7 +22,7 @@ public class WebServiceObject
     
     /* The List<Account> property receives the stored customer accounts, including the transactions associated with them. */
     public List<Account> Accounts { get; set; }
-    
+
     /* The Login property receives the stored customer login object. */
     public Login login { get; set; }
 }

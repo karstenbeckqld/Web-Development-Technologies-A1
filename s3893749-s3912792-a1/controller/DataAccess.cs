@@ -32,7 +32,8 @@ namespace s3893749_s3912792_a1.controller
                 GetDataFromJson(customers);
                 SqlConnect.WriteWebServiceCustomers(customers);
                 SqlConnect.WriteWebServiceAccounts(customers);
-                SqlConnect.WriteServiceDataTransactions(customers);
+                SqlConnect.WriteServiceDataTransactions(customers); 
+                SqlConnect.WriteServiceDataLogins(customers);
                
             }
         }

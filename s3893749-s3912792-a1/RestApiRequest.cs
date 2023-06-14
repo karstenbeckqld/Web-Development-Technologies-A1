@@ -24,10 +24,10 @@ public class RestApiRequest
 
     /* The RestCall() method performs the HTTP GET call to the web service to obtain the JSON object and deserialize it,
      * so that the content can get assigned to the respective classes. It returns a List of WebServiceObjects.
-     */
+     * Adapted from Week 2 lecture. */
     private static List<WebServiceObject> RestCall()
     {
-        /* We first establish a new HttpClient. Using the 'using' keyword omits the requirement to close the connection. */
+        /* We first establish a new HttpClient. Using the 'using' keyword omits the requirement to dispose of the client. */
         using var client = new HttpClient();
         
         /* Now we obtain the JSON string by calling the GetStringAsync() method on the client and providing the url of
@@ -38,7 +38,10 @@ public class RestApiRequest
         /* Now we can convert the JSON string to a list of WebServiceObjects using the DeserializeObject() method and
          * providing it the JSON string.
          */
-        var jsonData = JsonConvert.DeserializeObject<List<WebServiceObject>>(json);
+        var jsonData = JsonConvert.DeserializeObject<List<WebServiceObject>>(json, new JsonSerializerSettings
+        {
+         DateFormatString = "dd/MM/yyyy"
+        });
 
         /* Finally, the method returns the list of WebServiceObjects. */
         return jsonData;

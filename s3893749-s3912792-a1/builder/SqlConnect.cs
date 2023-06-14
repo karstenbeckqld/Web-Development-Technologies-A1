@@ -226,4 +226,31 @@ public class SqlConnect
             }
         }
     }
+    
+    public static void WriteServiceDataLogins(List<WebServiceObject> customers)
+    {
+        // NOTE: Can use a using declaration instead of a using block.
+        using var connection = new SqlConnection(connectionString);
+        connection.Open();
+
+        foreach (var customer in customers)
+        {
+            var customerId = customer.CustomerId;
+            var customerLoginId = customer.login.LoginId;
+            var customerPassword = customer.login.PasswordHash;
+
+
+                    var command = connection.CreateCommand();
+                    command.CommandText =
+                        "INSERT INTO Login VALUES ( @customerLoginId, @customerId, @customerPassword);";
+
+                    command.Parameters.AddWithValue("customerLoginId", customerLoginId);
+                    command.Parameters.AddWithValue("customerId", customerId);
+                    command.Parameters.AddWithValue("customerPassword", customerPassword);
+
+                    var updates = command.ExecuteNonQuery();
+
+                    Console.WriteLine(updates);
+        }
+    }
 }

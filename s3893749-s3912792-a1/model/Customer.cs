@@ -32,6 +32,8 @@ public class Customer
         PostCode = postcode;
         _accounts = new List<Account>(2);
     }
+    
+    public int CustomerId { get; set; }
 
     public string Name { get; set; }
 
@@ -41,7 +43,7 @@ public class Customer
 
     public string PostCode { get; set; }
 
-    public int CustomerId { get; set; }
+    
 
     public List<Account> Accounts { get; set; }
 
