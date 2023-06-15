@@ -1,36 +1,14 @@
 ﻿using System.Data.SqlTypes;
+using s3893749_s3912792_a1.interfaces;
 
 namespace s3893749_s3912792_a1.model
 {
-    public class Account
+    public class Account : IDatabaseObject
     {
-        private List<Transaction> _transactions;
-
-        public Account(int accountNumber, int customerId, decimal accountBalance, string accountType)
-        {
-            AccountNumber = accountNumber;
-            CustomerID = customerId;
-            Balance = accountBalance;
-            AccountType = accountType;
-            _transactions = new List<Transaction>();
-        }
-
         public int AccountNumber { get; set; }
         public string AccountType { get; set; }
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
         public decimal Balance { get; set; }
-
-
         public List<Transaction> Transactions { get; set; }
-
-        public void AddTransaction(Transaction transaction)
-        {
-            _transactions.Add(transaction);
-        }
-
-        public List<Transaction> GetTransactions()
-        {
-            return _transactions;
-        }
     }
 }

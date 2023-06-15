@@ -2,8 +2,8 @@ using Newtonsoft.Json;
 
 namespace s3893749_s3912792_a1.model;
 
-/* The WebServiceObject class serves as a DTO for data received from the web service via a HTTP Get request. */
-public class WebServiceObject
+/* The WebServiceDto class serves as a DTO for data received from the web service via a HTTP Get request. */
+public class WebServiceDto
 {
     /* The CustomerId property receives the stored customer ID. */
     public int CustomerId { get; set; }
