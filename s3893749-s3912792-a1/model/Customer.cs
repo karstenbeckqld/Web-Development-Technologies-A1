@@ -7,8 +7,23 @@ using s3893749_s3912792_a1.interfaces;
 
 namespace s3893749_s3912792_a1.model;
 
-public class Customer : IDatabaseObject
+public class Customer
 {
+
+    /*private int _customerId;
+    private string _name;
+    private string _address;
+    private string _city;
+    private string _postCode;
+    public Customer(int customerId, string customerName, string customerAddress, string customerCity,
+        string customerPostCode)
+    {
+        _customerId = customerId;
+        _name = customerName;
+        _address = customerAddress;
+        _city = customerCity;
+        _postCode = customerPostCode;
+    }*/
 
     public int CustomerId { get; set; }
 

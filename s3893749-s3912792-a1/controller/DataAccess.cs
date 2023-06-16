@@ -24,7 +24,7 @@ namespace s3893749_s3912792_a1.controller
             /* Get true or false from the DataWebService class' IsDataPresentInDataBase() method to decide if data gets
              * loaded from Web Service or database.
              */
-            PrintJsonData(new RestApiRequest().CustomerObjectList);
+            PrintJsonData(RestApiRequest.RestCall());
         }
 
         /* THIS METHOD CAN GO ONCE THE DATABASE TABLE CREATION WORKS PROPERLY! */
@@ -56,7 +56,7 @@ namespace s3893749_s3912792_a1.controller
                     Console.WriteLine($"Transactions for {account.AccountNumber}:\n" );
                     foreach (var transaction in account.Transactions)
                     {
-                        transaction.TransactionType = 'D';
+                        transaction.TransactionType = "D";
                         transaction.AccountNumber = account.AccountNumber;
                         Console.WriteLine($"Transaction Type: {transaction.TransactionType}");
                         Console.WriteLine($"Transaction AccNo: {transaction.AccountNumber}");

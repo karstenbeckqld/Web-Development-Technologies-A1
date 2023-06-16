@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using A1ClassLibrary;
 
 namespace s3893749_s3912792_a1.view;
@@ -13,13 +14,14 @@ public class Menu
 
     public void Run()
     {
+        ShowMenu();
         var appRunning = true;
         while (appRunning)
         {
             Console.WriteLine("Enter your selection:");
             var selection = Console.ReadLine();
 
-            if (!int.TryParse(selection, out var option) || !option.Equals(1) || !option.Equals(2))
+            if (!int.TryParse(selection, out var option) || !option.IsInRange(1,2))
             {
                 Console.WriteLine("Please select a valid option.");
                 continue;
@@ -34,8 +36,7 @@ public class Menu
                     appRunning = false;
                     break;
                 default:
-                    Console.WriteLine("Decide on default action.");
-                    break;
+                    throw new UnreachableException();
             }
         }
         

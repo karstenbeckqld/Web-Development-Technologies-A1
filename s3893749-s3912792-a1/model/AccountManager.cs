@@ -1,18 +1,20 @@
-﻿using System.Data.SqlTypes;
+﻿using System.Data;
+using System.Data.SqlTypes;
 using Microsoft.Data.SqlClient;
+using s3893749_s3912792_a1.interfaces;
 
 namespace s3893749_s3912792_a1.model
 {
-    public class AccountManager
+    public class AccountManager:IManager<Account>
     {
-        private string _connectionString;
+        private readonly string _connectionString;
 
         public AccountManager(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public void InsertAccount(Account account)
+        public void Insert(Account account)
         {
             // NOTE: Can use a using declaration instead of a using block.
             using var connection = new SqlConnection(_connectionString);
@@ -28,6 +30,75 @@ namespace s3893749_s3912792_a1.model
             command.Parameters.AddWithValue("accountType", account.AccountType);
             command.Parameters.AddWithValue("customerId", account.CustomerId);
             command.Parameters.AddWithValue("accountBalance", account.Balance);
+
+            var updates = command.ExecuteNonQuery();
+
+            Console.WriteLine(updates);
+        }
+        
+        public List<Account> GetAll()
+        {
+           
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            var command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Account";
+        
+            var table = new DataTable();
+            new SqlDataAdapter(command).Fill(table);
+
+            var transactionManager = new TransactionManager(_connectionString);
+        
+            return command.GetDataTable().Select().Select(x => new Account
+            {
+                CustomerId = x.Field<int>("CustomerID"),
+                AccountType = x.Field<string>("AccountType"),
+                AccountNumber = x.Field<int>("AccountNumber"),
+                Balance = x.Field<decimal>("Balance"),
+                Transactions = transactionManager.Get(x.Field<int>("AccountNumber"))
+            }).ToList();
+        }
+        
+        public List<Account> Get(int customerId)
+        {
+            
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            var command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Account WHERE CustomerID=@CustomerID";
+            command.Parameters.AddWithValue("CustomerID", customerId);
+        
+            var table = new DataTable();
+            new SqlDataAdapter(command).Fill(table);
+
+            var transactionManager = new TransactionManager(_connectionString);
+        
+            return command.GetDataTable().Select().Select(x => new Account
+            {
+                CustomerId = x.Field<int>("CustomerID"),
+                AccountType = x.Field<string>("AccountType"),
+                AccountNumber = x.Field<int>("AccountNumber"),
+                Balance = x.Field<decimal>("Balance"),
+                Transactions = transactionManager.Get(x.Field<int>("AccountNumber"))
+            }).ToList();
+        }
+        
+        public void Update(Account account)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText =
+                """
+            UPDATE Account SET AccountType = @AccountType, Balance = @Balance
+            WHERE AccountNumber = @AccountNumber;
+            """;
+            command.Parameters.AddWithValue(nameof(account.AccountType), account.AccountType);
+            command.Parameters.AddWithValue(nameof(account.Balance), account.Balance);
+            command.Parameters.AddWithValue(nameof(account.AccountNumber), account.Balance);
 
             var updates = command.ExecuteNonQuery();
 
