@@ -49,15 +49,8 @@ namespace s3893749_s3912792_a1.model
             new SqlDataAdapter(command).Fill(table);
 
             var transactionManager = new TransactionManager(_connectionString);
-        
-            return command.GetDataTable().Select().Select(x => new Account
-            {
-                CustomerId = x.Field<int>("CustomerID"),
-                AccountType = x.Field<string>("AccountType"),
-                AccountNumber = x.Field<int>("AccountNumber"),
-                Balance = x.Field<decimal>("Balance"),
-                Transactions = transactionManager.Get(x.Field<int>("AccountNumber"))
-            }).ToList();
+
+            return CreateAccountList(command, transactionManager);
         }
         
         public List<Account> Get(int customerId)
@@ -74,15 +67,8 @@ namespace s3893749_s3912792_a1.model
             new SqlDataAdapter(command).Fill(table);
 
             var transactionManager = new TransactionManager(_connectionString);
-        
-            return command.GetDataTable().Select().Select(x => new Account
-            {
-                CustomerId = x.Field<int>("CustomerID"),
-                AccountType = x.Field<string>("AccountType"),
-                AccountNumber = x.Field<int>("AccountNumber"),
-                Balance = x.Field<decimal>("Balance"),
-                Transactions = transactionManager.Get(x.Field<int>("AccountNumber"))
-            }).ToList();
+
+            return CreateAccountList(command, transactionManager);
         }
         
         public void Update(Account account)
@@ -105,5 +91,16 @@ namespace s3893749_s3912792_a1.model
             Console.WriteLine(updates);
         }
 
+        private static List<Account> CreateAccountList(SqlCommand command, TransactionManager transactionManager)
+        {
+            return command.GetDataTable().Select().Select(x => new Account
+            {
+                CustomerId = x.Field<int>("CustomerID"),
+                AccountType = x.Field<string>("AccountType"),
+                AccountNumber = x.Field<int>("AccountNumber"),
+                Balance = x.Field<decimal>("Balance"),
+                Transactions = transactionManager.Get(x.Field<int>("AccountNumber"))
+            }).ToList();
+        }
     }
 }

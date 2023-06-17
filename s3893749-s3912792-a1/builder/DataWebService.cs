@@ -17,7 +17,7 @@ public static class DataWebService
     public static void GetAndAddCustomers(CustomerManager customerManager, AccountManager accountManager,
         LoginManager loginManager, TransactionManager transactionManager)
     {
-        // If the database already contains customers, we assume it has been writen before and don't proceed with the
+        // If the database already contains customers, we assume it has been written before and don't proceed with the
         // process of adding records.
         if (customerManager.CheckCustomerDataPresent())
         {

@@ -63,16 +63,8 @@ public class CustomerManager:IManager<Customer>
         new SqlDataAdapter(command).Fill(table);
         
         var accountManager = new AccountManager(_connectionString);
-        
-        return command.GetDataTable().Select().Select(x => new Customer
-        {
-            CustomerId = x.Field<int>("CustomerID"),
-            Name = x.Field<string>("Name"),
-            Address = x.Field<string>("Address"),
-            City = x.Field<string>("City"),
-            PostCode = x.Field<string>("PostCode"),
-            Accounts = accountManager.Get(x.Field<int>("CustomerID"))
-        }).ToList();
+
+        return CreateCustomerList(command, accountManager);
     }
     
     public List<Customer> Get(int customerId)
@@ -87,15 +79,7 @@ public class CustomerManager:IManager<Customer>
 
         var accountManager = new AccountManager(_connectionString);
 
-        return command.GetDataTable().Select().Select(x => new Customer
-        {
-            CustomerId = x.Field<int>("CustomerID"),
-            Name = x.Field<string>("Name"),
-            Address = x.Field<string>("Address"),
-            City = x.Field<string>("City"),
-            PostCode = x.Field<string>("PostCode"),
-            Accounts = accountManager.Get(x.Field<int>("CustomerID"))
-        }).ToList();
+        return CreateCustomerList(command, accountManager);
     }
 
     public void Update(Customer customer)
@@ -118,5 +102,18 @@ public class CustomerManager:IManager<Customer>
         var updates = command.ExecuteNonQuery();
 
         Console.WriteLine(updates);
+    }
+
+    private static List<Customer> CreateCustomerList(SqlCommand command, AccountManager accountManager)
+    {
+        return command.GetDataTable().Select().Select(x => new Customer
+        {
+            CustomerId = x.Field<int>("CustomerID"),
+            Name = x.Field<string>("Name"),
+            Address = x.Field<string>("Address"),
+            City = x.Field<string>("City"),
+            PostCode = x.Field<string>("PostCode"),
+            Accounts = accountManager.Get(x.Field<int>("CustomerID"))
+        }).ToList();
     }
 }

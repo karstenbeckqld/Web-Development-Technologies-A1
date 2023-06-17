@@ -53,6 +53,17 @@ public class Program
                                   $"AccountType: {account.AccountType}\n" +
                                   $"CustomerID: {account.CustomerId}\n" +
                                   $"Balance: {account.Balance}");
+
+                foreach (var transaction in account.Transactions)
+                {
+                    Console.WriteLine($"TransactionID: {transaction.TransactionId}\n" +
+                                      $"TransactionType: {transaction.TransactionType}\n" +
+                                      $"AccountNumber: {transaction.AccountNumber}\n" +
+                                      $"DestinationAccount: {transaction.DestinationAccountNumber}\n" +
+                                      $"Amount: {transaction.Amount}\n" +
+                                      $"Comment: {transaction.Comment}\n" +
+                                      $"TransactionTime: {transaction.TransactionTimeUtc}");
+                }
             }
         }
         

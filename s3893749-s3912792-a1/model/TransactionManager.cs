@@ -4,7 +4,7 @@ using s3893749_s3912792_a1.interfaces;
 
 namespace s3893749_s3912792_a1.model;
 
-public class TransactionManager:IManager<Transaction>
+public class TransactionManager : IManager<Transaction>
 {
     private readonly string _connectionString;
 
@@ -37,34 +37,23 @@ public class TransactionManager:IManager<Transaction>
 
         Console.WriteLine(updates);
     }
-    
+
     public List<Transaction> GetAll()
     {
-
         using var connection = new SqlConnection(_connectionString);
         connection.Open();
 
         var command = connection.CreateCommand();
         command.CommandText = "select * from [Transaction]";
-        
+
         var table = new DataTable();
         new SqlDataAdapter(command).Fill(table);
-        
-        return command.GetDataTable().Select().Select(x => new Transaction
-        {
-            TransactionId = x.Field<int>("TransactionID"),
-            TransactionType = x.Field<string>("TransactionType"),
-            AccountNumber = x.Field<int>("AccountNumber"),
-            DestinationAccountNumber = x.Field<int>("DestinationAccountNumber"),
-            Amount = x.Field<decimal>("Amount"),
-            Comment = x.Field<string>("Comment"),
-            TransactionTimeUtc = x.Field<DateTime>("TransactionTimeUtc")
-        }).ToList();
+
+        return CreateTransactionList(command);
     }
-    
+
     public List<Transaction> Get(int accountNumber)
     {
-        
         using var connection = new SqlConnection(_connectionString);
         connection.Open();
 
@@ -72,18 +61,9 @@ public class TransactionManager:IManager<Transaction>
         command.CommandText = "SELECT * FROM [Transaction] WHERE AccountNumber=@AccountNumber";
         command.Parameters.AddWithValue("AccountNumber", accountNumber);
 
-        return command.GetDataTable().Select().Select(x => new Transaction
-        {
-            TransactionId = x.Field<int>("TransactionID"),
-            TransactionType = x.Field<string>("TransactionType"),
-            AccountNumber = x.Field<int>("AccountNumber"),
-            DestinationAccountNumber = x.Field<int>("DestinationAccountNumber"),
-            Amount = x.Field<decimal>("Amount"),
-            Comment = x.Field<string>("Comment"),
-            TransactionTimeUtc = x.Field<DateTime>("TransactionTimeUtc")
-        }).ToList();
+        return CreateTransactionList(command);
     }
-    
+
     public void Update(Transaction transaction)
     {
         // NOTE: Can use a using declaration instead of a using block.
@@ -93,8 +73,9 @@ public class TransactionManager:IManager<Transaction>
         using var command = connection.CreateCommand();
         command.CommandText =
             """
-            UPDATE [Transaction] SET TransactionType=@TransactionType, AccountNumber=@AccountNumber, DestinationAccountNumber=@DestinationAccountNumber, 
-                                     Amount=@Amount, Comment=@Comment, TransactionTimeUtc=@TransactionTimeUtc 
+            UPDATE [Transaction] SET TransactionType = @TransactionType, AccountNumber = @AccountNumber, 
+                                     DestinationAccountNumber = @DestinationAccountNumber, 
+                                     Amount = @Amount, Comment = @Comment, TransactionTimeUtc = @TransactionTimeUtc 
             WHERE TransactionID = @TransactionID;
             """;
         command.Parameters.AddWithValue(nameof(transaction.TransactionType), transaction.TransactionType);
@@ -109,5 +90,19 @@ public class TransactionManager:IManager<Transaction>
         var updates = command.ExecuteNonQuery();
 
         Console.WriteLine(updates);
+    }
+
+    private static List<Transaction> CreateTransactionList(SqlCommand command)
+    {
+        return command.GetDataTable().Select().Select(x => new Transaction
+        {
+            TransactionId = x.Field<int>("TransactionID"),
+            TransactionType = x.Field<string>("TransactionType"),
+            AccountNumber = x.Field<int>("AccountNumber"),
+            DestinationAccountNumber = x.Field<int>("DestinationAccountNumber"),
+            Amount = x.Field<decimal>("Amount"),
+            Comment = x.Field<string>("Comment"),
+            TransactionTimeUtc = x.Field<DateTime>("TransactionTimeUtc")
+        }).ToList();
     }
 }

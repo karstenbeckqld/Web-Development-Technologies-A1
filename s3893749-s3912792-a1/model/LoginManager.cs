@@ -53,12 +53,7 @@ public class LoginManager : IManager<Login>
         var table = new DataTable();
         new SqlDataAdapter(command).Fill(table);
 
-        return command.GetDataTable().Select().Select(x => new Login
-        {
-            LoginId = x.Field<string>("LoginID"),
-            CustomerId = x.Field<int>("CustomerID"),
-            PasswordHash = x.Field<string>("PasswordHash")
-        }).ToList();
+        return CreateLoginList(command);
     }
     
     public List<Login> Get(int customerId)
@@ -71,12 +66,7 @@ public class LoginManager : IManager<Login>
         command.CommandText = "SELECT * FROM Login WHERE CustomerID=@CustomerID";
         command.Parameters.AddWithValue("CustomerID", customerId);
 
-        return command.GetDataTable().Select().Select(x => new Login
-        {
-            CustomerId = x.Field<int>("CustomerID"),
-            LoginId = x.Field<string>("LoginID"),
-            PasswordHash = x.Field<string>("PasswordHash")
-        }).ToList();
+        return CreateLoginList(command);
     }
     
     public void Update(Login login)
@@ -97,5 +87,15 @@ public class LoginManager : IManager<Login>
         var updates = command.ExecuteNonQuery();
 
         Console.WriteLine(updates);
+    }
+
+    private static List<Login> CreateLoginList(SqlCommand command)
+    {
+        return command.GetDataTable().Select().Select(x => new Login
+        {
+            CustomerId = x.Field<int>("CustomerID"),
+            LoginId = x.Field<string>("LoginID"),
+            PasswordHash = x.Field<string>("PasswordHash")
+        }).ToList();
     }
 }
