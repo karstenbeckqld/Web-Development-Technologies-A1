@@ -1,6 +1,6 @@
-using A1ClassLibrary;
 using Microsoft.Extensions.Configuration;
 using s3893749_s3912792_a1.builder;
+using s3893749_s3912792_a1.controller;
 
 namespace s3893749_s3912792_a1;
 
@@ -12,10 +12,9 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        
         // The connection string to the database is stored in appsettings.json and gets loaded here. 
         var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        
+
         // We now receive the connection string from the DBConnect object in the jsn file. 
         var connectionString = configuration.GetConnectionString("DBConnect");
 
@@ -33,12 +32,12 @@ public class Program
         // DataAccess can get removed once everything runs.
         //new DataAccess();
         //new Menu(customerManager).Run();
-        
+
         // Test for Get method in CustomerManager class
 
         var customers = customerManager.Get(2200);
-        
-        Console.WriteLine("Testing CustomerManager Get method with ID 2200:\n");
+
+        /*Console.WriteLine("Testing CustomerManager Get method with ID 2200:\n");
         foreach (var customer in customers)
         {
             Console.WriteLine($"CustomerID: {customer.CustomerId}\n" +
@@ -65,14 +64,14 @@ public class Program
                                       $"TransactionTime: {transaction.TransactionTimeUtc}");
                 }
             }
-        }
-        
-        Console.WriteLine();
+        }*/
+
+        /*Console.WriteLine();
         Console.WriteLine("Testing AccountManager GetAll:\n");
         // Test for GetAll method in AccountManager class. 
         var accounts = accountManager.GetAll();
-        
-       
+
+
         foreach (var account in accounts)
         {
             Console.WriteLine($"AccountNumber: {account.AccountNumber}\n" +
@@ -89,6 +88,22 @@ public class Program
                                   $"Comment: {transaction.Comment}\n" +
                                   $"TransactionTime: {transaction.TransactionTimeUtc}");
             }
+        }*/
+        var newCustomer = new Customer{
+            CustomerId = 2400,
+            Name = "Karsten Beck",
+            Address = "123 Sample Street",
+            City = "Sample City",
+            PostCode = "1234"
+        };
+        new CustomerController(new CustomerManager(connectionString)).InsertCustomer(newCustomer);
+        
+        var allCustomers = new CustomerController(new CustomerManager(connectionString)).GetAllCustomers();
+
+
+        foreach (var data in allCustomers)
+        {
+            Console.WriteLine(data.ToString());
         }
     }
 }

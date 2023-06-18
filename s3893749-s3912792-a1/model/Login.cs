@@ -26,4 +26,9 @@ public class Login
     
     /* The CustomerId property stores a customer's ID. */
     public int CustomerId { get; set; }
+
+    public override string ToString()
+    {
+        return $"CustomerID: {CustomerId}, LoginID: {LoginId}, PasswordHash: {PasswordHash}";
+    }
 }

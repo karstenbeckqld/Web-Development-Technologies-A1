@@ -25,5 +25,10 @@ namespace s3893749_s3912792_a1.model
         public int CustomerId { get; set; }
         public decimal Balance { get; set; }
         public List<Transaction> Transactions { get; set; }
+
+        public override string ToString()
+        {
+            return $"AccountNumber: {AccountNumber}, AccuntType: {AccountType}, CustomerID: {CustomerId}, Balance: {Balance}";
+        }
     }
 }
