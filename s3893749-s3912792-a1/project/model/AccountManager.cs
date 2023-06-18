@@ -1,6 +1,4 @@
-﻿using System.Data.SqlTypes;
-
-namespace s3893749_s3912792_a1.model
+﻿namespace s3893749_s3912792_a1.project.model
 {
     public class AccountManager
     {
