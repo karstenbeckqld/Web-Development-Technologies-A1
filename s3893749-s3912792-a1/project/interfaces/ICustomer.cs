@@ -1,4 +1,4 @@
-namespace s3893749_s3912792_a1.interfaces;
+namespace s3893749_s3912792_a1.project.interfaces;
 
 public interface ICustomer
 {

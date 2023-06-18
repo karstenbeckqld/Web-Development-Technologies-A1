@@ -1,6 +1,6 @@
-namespace s3893749_s3912792_a1.interfaces;
+namespace s3893749_s3912792_a1.project.model;
 
-public interface ITransaction
+public class Transaction
 {
     public int TransactionId { get; set; }
     public char TransactionType { get; set; }

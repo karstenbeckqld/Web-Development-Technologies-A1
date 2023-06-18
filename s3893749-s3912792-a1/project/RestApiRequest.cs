@@ -1,8 +1,7 @@
 using Newtonsoft.Json;
-using s3893749_s3912792_a1.controller;
-using s3893749_s3912792_a1.model;
+using s3893749_s3912792_a1.project.model;
 
-namespace s3893749_s3912792_a1;
+namespace s3893749_s3912792_a1.project;
 
 /* The RestApiRequest class contacts the web service to get the customers present in the provided JSON file. It collects
  * all present data, including Accounts, Transactions and Login data and stores it in a List of type WebServiceObjectList

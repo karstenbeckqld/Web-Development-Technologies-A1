@@ -1,8 +1,6 @@
-using System.Data.SqlTypes;
+namespace s3893749_s3912792_a1.project.interfaces;
 
-namespace s3893749_s3912792_a1.model;
-
-public class Transaction
+public interface ITransaction
 {
     public int TransactionId { get; set; }
     public char TransactionType { get; set; }

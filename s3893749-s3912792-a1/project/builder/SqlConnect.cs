@@ -1,8 +1,8 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
-using s3893749_s3912792_a1.model;
+using s3893749_s3912792_a1.project.model;
 
-namespace s3893749_s3912792_a1.builder;
+namespace s3893749_s3912792_a1.project.builder;
 
 public class SqlConnect
 {

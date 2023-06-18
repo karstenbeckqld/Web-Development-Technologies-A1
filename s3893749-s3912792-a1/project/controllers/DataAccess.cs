@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using s3893749_s3912792_a1;
-using s3893749_s3912792_a1.builder;
-using s3893749_s3912792_a1.model;
+﻿using s3893749_s3912792_a1.project.builder;
+using s3893749_s3912792_a1.project.model;
 
-namespace s3893749_s3912792_a1.controller
+namespace s3893749_s3912792_a1.project.controllers
 
 {
     internal class DataAccess

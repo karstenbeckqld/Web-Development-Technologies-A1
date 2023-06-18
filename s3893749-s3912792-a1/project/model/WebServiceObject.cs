@@ -1,6 +1,4 @@
-using Newtonsoft.Json;
-
-namespace s3893749_s3912792_a1.model;
+namespace s3893749_s3912792_a1.project.model;
 
 /* The WebServiceObject class serves as a DTO for data received from the web service via a HTTP Get request. */
 public class WebServiceObject

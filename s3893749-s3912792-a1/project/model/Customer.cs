@@ -1,8 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
 
-namespace s3893749_s3912792_a1.model;
+namespace s3893749_s3912792_a1.project.model;
 
 public class Customer
 {
@@ -10,7 +8,6 @@ public class Customer
     private Login _login;
 
 
-    [JsonConstructor]
     public Customer(int customerId, string name, string address, string city, string postcode, Login login)
     {
         CustomerId = customerId;

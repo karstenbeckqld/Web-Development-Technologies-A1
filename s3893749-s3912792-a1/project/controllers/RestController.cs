@@ -1,6 +1,6 @@
-using s3893749_s3912792_a1.model;
+using s3893749_s3912792_a1.project.model;
 
-namespace s3893749_s3912792_a1.controller;
+namespace s3893749_s3912792_a1.project.controllers;
 
 public class RestController
 {
