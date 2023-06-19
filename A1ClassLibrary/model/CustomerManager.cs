@@ -1,10 +1,9 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
-using s3893749_s3912792_a1;
-using s3893749_s3912792_a1.interfaces;
-using s3893749_s3912792_a1.model;
+using A1ClassLibrary.Interfaces;
+using A1ClassLibrary.Utils;
 
-namespace A1ClassLibrary;
+namespace A1ClassLibrary.model;
 
 public class CustomerManager:IManager<Customer>
 {
@@ -40,7 +39,7 @@ public class CustomerManager:IManager<Customer>
             insert into Customer (CustomerID, Name, Address, City, PostCode) 
             values (@CustomerID, @Name, @Address, @City, @PostCode);
             """;
-        command.Parameters.AddWithValue(nameof(customer.CustomerId), customer.CustomerId);
+        command.Parameters.AddWithValue(nameof(customer.CustomerID), customer.CustomerID);
         command.Parameters.AddWithValue(nameof(customer.Name), customer.Name);
         command.Parameters.AddWithValue(nameof(customer.Address), customer.Address ?? (object)DBNull.Value);
         command.Parameters.AddWithValue(nameof(customer.City), customer.City ?? (object)DBNull.Value);
@@ -93,7 +92,7 @@ public class CustomerManager:IManager<Customer>
             UPDATE Customer SET Name = @Name, Address = @Address, City = @City, PostCode=@PostCode
             WHERE CustomerID = @CustomerID;
             """;
-        command.Parameters.AddWithValue(nameof(customer.CustomerId), customer.CustomerId);
+        command.Parameters.AddWithValue(nameof(customer.CustomerID), customer.CustomerID);
         command.Parameters.AddWithValue(nameof(customer.Name), customer.Name);
         command.Parameters.AddWithValue(nameof(customer.Address), customer.Address ?? (object)DBNull.Value);
         command.Parameters.AddWithValue(nameof(customer.City), customer.City ?? (object)DBNull.Value);
@@ -108,7 +107,7 @@ public class CustomerManager:IManager<Customer>
     {
         return command.GetDataTable().Select().Select(x => new Customer
         {
-            CustomerId = x.Field<int>("CustomerID"),
+            CustomerID = x.Field<int>("CustomerID"),
             Name = x.Field<string>("Name"),
             Address = x.Field<string>("Address"),
             City = x.Field<string>("City"),

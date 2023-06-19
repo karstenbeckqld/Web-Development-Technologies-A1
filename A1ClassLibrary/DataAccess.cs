@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using s3893749_s3912792_a1;
-using s3893749_s3912792_a1.builder;
-using s3893749_s3912792_a1.model;
+﻿using A1ClassLibrary.model;
+using A1ClassLibrary.Utils;
 
-namespace s3893749_s3912792_a1.controller
+namespace A1ClassLibrary
 
 /*
  *
@@ -16,7 +10,7 @@ namespace s3893749_s3912792_a1.controller
  */
 
 {
-    internal class DataAccess
+    public class DataAccess
     {
 
         public DataAccess()
@@ -33,14 +27,14 @@ namespace s3893749_s3912792_a1.controller
             foreach (var customer in customers)
             {
                 Console.WriteLine(
-                    $"Customer Id: {customer.CustomerId}, AccountHolder: {customer.Name}, Address: {customer.Address}, " +
+                    $"Customer Id: {customer.CustomerID}, AccountHolder: {customer.Name}, Address: {customer.Address}, " +
                     $"City: {customer.City}, Postcode: {customer.PostCode}\n");
 
-                customer.Login.CustomerId = customer.CustomerId;
+                customer.Login.CustomerID = customer.CustomerID;
                 
-                Console.WriteLine($"LoginID: {customer.Login.LoginId}");
+                Console.WriteLine($"LoginID: {customer.Login.LoginID}");
                 Console.WriteLine($"PasswordHash: {customer.Login.PasswordHash}");
-                Console.WriteLine($"Login CustomerID: {customer.Login.CustomerId}\n");
+                Console.WriteLine($"Login CustomerID: {customer.Login.CustomerID}\n");
                
                 Console.WriteLine($"Accounts for {customer.Name}:\n");
                 foreach (var account in customer.Accounts)
@@ -56,7 +50,7 @@ namespace s3893749_s3912792_a1.controller
                     Console.WriteLine($"Transactions for {account.AccountNumber}:\n" );
                     foreach (var transaction in account.Transactions)
                     {
-                        transaction.TransactionType = "D";
+                        transaction.TransactionType = 'D';
                         transaction.AccountNumber = account.AccountNumber;
                         Console.WriteLine($"Transaction Type: {transaction.TransactionType}");
                         Console.WriteLine($"Transaction AccNo: {transaction.AccountNumber}");

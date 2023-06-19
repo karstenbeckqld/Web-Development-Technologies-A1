@@ -1,7 +1,7 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace s3893749_s3912792_a1;
+namespace A1ClassLibrary.Utils;
 
 // The below code has been provided by Dr. Matthew Bolger during week 3 lecture and tutorial and gets used in the
 // CustomerManager, AccountManager, LoginManager and TransactionManager classes.

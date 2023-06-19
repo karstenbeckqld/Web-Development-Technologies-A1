@@ -1,7 +1,4 @@
-using System.Data.SqlTypes;
-using s3893749_s3912792_a1.interfaces;
-
-namespace s3893749_s3912792_a1.model;
+namespace A1ClassLibrary.model;
 
 public class Transaction
 {
@@ -26,12 +23,22 @@ public class Transaction
         _transactionTimeUtc = transactionTimeUtc;
     }*/
     
-    public int TransactionId { get; set; }
-    public string TransactionType { get; set; }
+    public int TransactionID { get; set; }
+    public char TransactionType { get; set; }
     public int AccountNumber { get; set; }
-    public int DestinationAccountNumber { get; set; }
+    public int? DestinationAccountNumber { get; set; }
     public decimal Amount { get; set; }  
     public string Comment { get; set; }
     public DateTime TransactionTimeUtc { get; set; }
-    public int CustomerId { get; set; }
+
+    public override string ToString()
+    {
+        return $"TransactionID: {TransactionID}\n " +
+               $"TransactionType: {TransactionType}\n " +
+               $"AccountNumber: {AccountNumber}\n " +
+               $"DestinationAccountNumber: {DestinationAccountNumber}\n " +
+               $"Amount: {Amount}\n " +
+               $"Comment: {Comment}\n " +
+               $"TransactionTimeUtc: {TransactionTimeUtc}";
+    }
 }

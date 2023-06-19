@@ -22,7 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="controller\" />
     <Folder Include="images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\A1ClassLibrary\A1ClassLibrary.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,9 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
-using s3893749_s3912792_a1.interfaces;
+using A1ClassLibrary.Interfaces;
+using A1ClassLibrary.Utils;
 
-namespace s3893749_s3912792_a1.model;
+namespace A1ClassLibrary.model;
 
 public class TransactionManager : IManager<Transaction>
 {
@@ -28,7 +29,7 @@ public class TransactionManager : IManager<Transaction>
         command.Parameters.AddWithValue(nameof(transaction.TransactionType), transaction.TransactionType);
         command.Parameters.AddWithValue(nameof(transaction.AccountNumber), transaction.AccountNumber);
         command.Parameters.AddWithValue(nameof(transaction.DestinationAccountNumber),
-            transaction.DestinationAccountNumber);
+            transaction.DestinationAccountNumber ?? (object)DBNull.Value);
         command.Parameters.AddWithValue(nameof(transaction.Amount), transaction.Amount);
         command.Parameters.AddWithValue(nameof(transaction.Comment), transaction.Comment ?? (object)DBNull.Value);
         command.Parameters.AddWithValue(nameof(transaction.TransactionTimeUtc), transaction.TransactionTimeUtc);
@@ -85,7 +86,7 @@ public class TransactionManager : IManager<Transaction>
         command.Parameters.AddWithValue(nameof(transaction.Amount), transaction.Amount);
         command.Parameters.AddWithValue(nameof(transaction.Comment), transaction.Comment ?? (object)DBNull.Value);
         command.Parameters.AddWithValue(nameof(transaction.TransactionTimeUtc), transaction.TransactionTimeUtc);
-        command.Parameters.AddWithValue(nameof(transaction.TransactionId), transaction.TransactionId);
+        command.Parameters.AddWithValue(nameof(transaction.TransactionID), transaction.TransactionID);
 
         var updates = command.ExecuteNonQuery();
 
@@ -96,8 +97,8 @@ public class TransactionManager : IManager<Transaction>
     {
         return command.GetDataTable().Select().Select(x => new Transaction
         {
-            TransactionId = x.Field<int>("TransactionID"),
-            TransactionType = x.Field<string>("TransactionType"),
+            TransactionID = x.Field<int>("TransactionID"),
+            TransactionType = x.Field<Char>("TransactionType"),
             AccountNumber = x.Field<int>("AccountNumber"),
             DestinationAccountNumber = x.Field<int>("DestinationAccountNumber"),
             Amount = x.Field<decimal>("Amount"),

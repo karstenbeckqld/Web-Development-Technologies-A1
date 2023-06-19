@@ -1,11 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-using Microsoft.Identity.Client;
-using Newtonsoft.Json;
-using A1ClassLibrary;
-using s3893749_s3912792_a1.interfaces;
-
-namespace s3893749_s3912792_a1.model;
+namespace A1ClassLibrary.model;
 
 public class Customer
 {
@@ -25,7 +18,7 @@ public class Customer
         _postCode = customerPostCode;
     }*/
 
-    public int CustomerId { get; set; }
+    public int CustomerID { get; set; }
 
     public string Name { get; set; }
 
@@ -35,7 +28,12 @@ public class Customer
 
     public string PostCode { get; set; }
     
-    public List<Account> Accounts { get; set; }
+    internal List<Account> Accounts { get; set; }
 
     public Login Login { get; set; }
+
+    public override string ToString()
+    {
+        return $"CustomerID: {CustomerID}, Name: {Name}, Address: {Address}, City: {City}, PostCode: {PostCode}";
+    }
 }
