@@ -5,7 +5,7 @@ namespace A1ClassLibrary.DBControllers;
 
 public class DbTransactionController
 {
-    private IManager<Transaction> _transactionManagerDataAccess;
+    private readonly IManager<Transaction> _transactionManagerDataAccess;
 
     public DbTransactionController(IManager<Transaction> transactionDataAccess)
     {

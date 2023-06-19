@@ -5,7 +5,7 @@ namespace A1ClassLibrary.DBControllers;
 
 public class DbCustomerController
 {
-    private IManager<Customer> _customerManagerDataAccess;
+    private readonly IManager<Customer> _customerManagerDataAccess;
 
     public DbCustomerController(IManager<Customer> customerDataAccess)
     {

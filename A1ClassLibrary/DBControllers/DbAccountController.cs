@@ -5,7 +5,7 @@ namespace A1ClassLibrary.DBControllers;
 
 public class DbAccountController
 {
-    private IManager<Account> _accountManagerDataAccess;
+    private readonly IManager<Account> _accountManagerDataAccess;
 
     internal DbAccountController(IManager<Account> accountDataAccess)
     {

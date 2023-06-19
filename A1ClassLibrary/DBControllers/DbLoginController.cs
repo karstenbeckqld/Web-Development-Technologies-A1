@@ -5,7 +5,7 @@ namespace A1ClassLibrary.DBControllers
 {
     internal class DbLoginController
     {
-        private IManager<Login> _loginManagerDataAccess;
+        private readonly IManager<Login> _loginManagerDataAccess;
 
         public DbLoginController(IManager<Login> loginManagerDataAccess)
         {
