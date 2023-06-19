@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using s3893749_s3912792_a1.builder;
-using s3893749_s3912792_a1.interfaces;
-using s3893749_s3912792_a1.model;
+﻿using A1ClassLibrary.Interfaces;
+using A1ClassLibrary.model;
 
-namespace s3893749_s3912792_a1.controller
+namespace A1ClassLibrary.DBControllers
 {
-    internal class LoginController
+    internal class DbLoginController
     {
         private IManager<Login> _loginManagerDataAccess;
 
-        public LoginController(IManager<Login> loginManagerDataAccess)
+        public DbLoginController(IManager<Login> loginManagerDataAccess)
         {
             _loginManagerDataAccess = loginManagerDataAccess;
         }

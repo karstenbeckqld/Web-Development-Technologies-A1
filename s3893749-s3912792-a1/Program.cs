@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using s3893749_s3912792_a1.builder;
-using s3893749_s3912792_a1.controller;
+using A1ClassLibrary.model;
+using A1ClassLibrary;
+using A1ClassLibrary.Utils;
 
 namespace s3893749_s3912792_a1;
-
-using model;
 
 // The Program class is the entry point to the application and configures necessary variables, as well as calls the
 // DataWebService to write web service data to the database if it's empty.
@@ -17,6 +17,10 @@ public class Program
 
         // We now receive the connection string from the DBConnect object in the jsn file. 
         var connectionString = configuration.GetConnectionString("DBConnect");
+        
+        // Here we set the DBConnect property in the static class DbConnectionString, so that the connection string is
+        // available throughout the application.
+        DbConnectionString.DBConnect = connectionString;
 
         // To insert the data to the database, we call create new instances of the different manager classes, passing
         // them the connection string to be able to access the database.
@@ -28,14 +32,12 @@ public class Program
         // Now we can pass these instances to the DataWebService's static GetAndAddCustomers method and load customers
         // to the database if it not already happened before.  
         DataWebService.GetAndAddCustomers(customerManager, accountManager, loginManager, transactionManager);
-
-        // DataAccess can get removed once everything runs.
-        //new DataAccess();
-        //new Menu(customerManager).Run();
+        
+       
 
         // Test for Get method in CustomerManager class
 
-        var customers = customerManager.Get(2200);
+        //var customers = customerManager.Get(2200);
 
         /*Console.WriteLine("Testing CustomerManager Get method with ID 2200:\n");
         foreach (var customer in customers)
@@ -55,7 +57,7 @@ public class Program
 
                 foreach (var transaction in account.Transactions)
                 {
-                    Console.WriteLine($"TransactionID: {transaction.TransactionId}\n" +
+                    Console.WriteLine($"TransactionID: {transaction.TransactionID}\n" +
                                       $"TransactionType: {transaction.TransactionType}\n" +
                                       $"AccountNumber: {transaction.AccountNumber}\n" +
                                       $"DestinationAccount: {transaction.DestinationAccountNumber}\n" +
@@ -80,7 +82,7 @@ public class Program
 
             foreach (var transaction in account.Transactions)
             {
-                Console.WriteLine($"TransactionID: {transaction.TransactionId}\n" +
+                Console.WriteLine($"TransactionID: {transaction.TransactionID}\n" +
                                   $"TransactionType: {transaction.TransactionType}\n" +
                                   $"AccountNumber: {transaction.AccountNumber}\n" +
                                   $"DestinationAccount: {transaction.DestinationAccountNumber}\n" +
@@ -89,22 +91,22 @@ public class Program
                                   $"TransactionTime: {transaction.TransactionTimeUtc}");
             }
         }*/
-        var newCustomer = new Customer{
-            CustomerId = 2400,
+        /*var newCustomer = new Customer{
+            CustomerID = 2400,
             Name = "Karsten Beck",
             Address = "123 Sample Street",
             City = "Sample City",
             PostCode = "1234"
-        };
-        new CustomerController(new CustomerManager(connectionString)).InsertCustomer(newCustomer);
+        };*/
+        //new DbCustomerController(new CustomerManager(connectionString)).InsertCustomer(newCustomer);
         
-        var allCustomers = new CustomerController(new CustomerManager(connectionString)).GetAllCustomers();
+        //var allCustomers = new DbCustomerController(new CustomerManager(connectionString)).GetAllCustomers();
 
 
-        foreach (var data in allCustomers)
+        /*foreach (var data in allCustomers)
         {
             Console.WriteLine(data.ToString());
-        }
+        }*/
     }
 }
 

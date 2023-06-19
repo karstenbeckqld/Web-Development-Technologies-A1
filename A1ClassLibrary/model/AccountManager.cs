@@ -1,9 +1,9 @@
 ﻿using System.Data;
-using System.Data.SqlTypes;
 using Microsoft.Data.SqlClient;
-using s3893749_s3912792_a1.interfaces;
+using A1ClassLibrary.Interfaces;
+using A1ClassLibrary.Utils;
 
-namespace s3893749_s3912792_a1.model
+namespace A1ClassLibrary.model
 {
     public class AccountManager:IManager<Account>
     {

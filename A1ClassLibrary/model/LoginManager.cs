@@ -1,23 +1,21 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
-using s3893749_s3912792_a1.interfaces;
+using A1ClassLibrary.Interfaces;
+using A1ClassLibrary.Utils;
 
-namespace s3893749_s3912792_a1.model;
+namespace A1ClassLibrary.model;
 
 public class LoginManager : IManager<Login>
 {
-    private readonly string  _connectionString;
-    private int _customerId;
+    private readonly string _connectionString;
+
 
     public LoginManager(string connectionString)
     {
         _connectionString = connectionString;
     }
-
-    public void SetCustomerId(int customerId)
-    {
-        _customerId = customerId;
-    }
+    
+    public int CustomerID { get; set; }
 
     public void Insert(Login login)
     {
@@ -27,20 +25,17 @@ public class LoginManager : IManager<Login>
 
         using var command = connection.CreateCommand();
         command.CommandText =
-            """
-            insert into Login (LoginID, CustomerID, PasswordHash) 
-            values (@LoginID, @CustomerID, @PasswordHash);
-            """;
-        
-        command.Parameters.AddWithValue(nameof(login.LoginId), login.LoginId);
-        command.Parameters.AddWithValue(nameof(login.CustomerId), login.CustomerId);
+            $"insert into Login (LoginID, CustomerID, PasswordHash) values (@LoginID, @CustomerID, @PasswordHash);";
+
+        command.Parameters.AddWithValue(nameof(login.LoginID), login.LoginID);
+        command.Parameters.AddWithValue(nameof(CustomerID), CustomerID);
         command.Parameters.AddWithValue(nameof(login.PasswordHash), login.PasswordHash);
 
         var updates = command.ExecuteNonQuery();
 
         Console.WriteLine(updates);
     }
-    
+
     public List<Login> GetAll()
     {
         var logins = new List<Login>();
@@ -49,16 +44,15 @@ public class LoginManager : IManager<Login>
 
         var command = connection.CreateCommand();
         command.CommandText = "select * from Login";
-        
+
         var table = new DataTable();
         new SqlDataAdapter(command).Fill(table);
 
         return CreateLoginList(command);
     }
-    
+
     public List<Login> Get(int customerId)
     {
-        
         using var connection = new SqlConnection(_connectionString);
         connection.Open();
 
@@ -68,7 +62,7 @@ public class LoginManager : IManager<Login>
 
         return CreateLoginList(command);
     }
-    
+
     public void Update(Login login)
     {
         using var connection = new SqlConnection(_connectionString);
@@ -80,8 +74,8 @@ public class LoginManager : IManager<Login>
             UPDATE Login SET LoginID=@LoginID, PasswordHash=@PasswordHash
             WHERE CustomerID = @CustomerID;
             """;
-        command.Parameters.AddWithValue(nameof(login.CustomerId), login.CustomerId);
-        command.Parameters.AddWithValue(nameof(login.LoginId), login.LoginId);
+        command.Parameters.AddWithValue(nameof(login.CustomerID), login.CustomerID);
+        command.Parameters.AddWithValue(nameof(login.LoginID), login.LoginID);
         command.Parameters.AddWithValue(nameof(login.PasswordHash), login.PasswordHash);
 
         var updates = command.ExecuteNonQuery();
@@ -93,8 +87,8 @@ public class LoginManager : IManager<Login>
     {
         return command.GetDataTable().Select().Select(x => new Login
         {
-            CustomerId = x.Field<int>("CustomerID"),
-            LoginId = x.Field<string>("LoginID"),
+            CustomerID = x.Field<int>("CustomerID"),
+            LoginID = x.Field<string>("LoginID"),
             PasswordHash = x.Field<string>("PasswordHash")
         }).ToList();
     }

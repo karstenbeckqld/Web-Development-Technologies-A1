@@ -1,8 +1,5 @@
-﻿using System.Data.SqlTypes;
-using System.Security.Principal;
-using s3893749_s3912792_a1.interfaces;
-
-namespace s3893749_s3912792_a1.model
+﻿
+namespace A1ClassLibrary.model
 {
     public class Account
     {

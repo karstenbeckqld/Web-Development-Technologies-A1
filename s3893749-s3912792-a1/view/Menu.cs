@@ -1,5 +1,6 @@
 using System.Diagnostics;
-using s3893749_s3912792_a1.model;
+using A1ClassLibrary.model;
+using A1ClassLibrary.Utils;
 
 
 namespace s3893749_s3912792_a1.view;

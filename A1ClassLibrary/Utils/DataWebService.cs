@@ -1,6 +1,6 @@
-using s3893749_s3912792_a1.model;
+using A1ClassLibrary.model;
 
-namespace s3893749_s3912792_a1.builder;
+namespace A1ClassLibrary.Utils;
 
 
  // The DataWebService class is responsible for writing the web service data to the database. It utilises the
@@ -36,8 +36,8 @@ public static class DataWebService
 
             // Because the Login table has a CustomerID column which is not set by the JSON,we set this value here based
             // on the Customer table.
-            loginManager.SetCustomerId(customer.CustomerId);
-            
+            loginManager.CustomerID = customer.CustomerID;
+
             // Now we call the Insert method from the LoginManager class to add the login data to the database. 
             loginManager.Insert(customer.Login);
 
@@ -61,13 +61,14 @@ public static class DataWebService
                     // Because the JSON doesn't provide a value for the transaction type, and the business rules state
                     // the initial transactions are all deposits, we manually set the value for the TransactionType
                     // property to D for deposit. The same is true for the AccountNumber property. 
-                    transaction.TransactionType = "D";
+                    transaction.TransactionType = 'D';
                     transaction.AccountNumber = account.AccountNumber;
                     
-                    // Because the initial transactions are all deposits for the respective account, we also set the
-                    // DestinationAccount property here the same way.
-                    transaction.DestinationAccountNumber = account.AccountNumber;
-                    
+                    // Because the initial transactions are all deposits for the respective account, we have to set the
+                    // DestinationAccount property to null. As the TransactionManager handles this by using the 
+                    // command.Parameters.AddWithValue(nameof(transaction.DestinationAccountNumber),transaction.DestinationAccountNumber ?? (object)DBNull.Value);
+                    // property, we don't have to do anything here. 
+
                     // Now we call the InsertTransaction method of the TransactionManager class to write the data to the
                     // database. 
                     transactionManager.Insert(transaction);

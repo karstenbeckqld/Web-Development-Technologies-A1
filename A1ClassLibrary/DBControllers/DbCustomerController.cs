@@ -1,14 +1,13 @@
-using s3893749_s3912792_a1.builder;
-using s3893749_s3912792_a1.interfaces;
-using s3893749_s3912792_a1.model;
+using A1ClassLibrary.Interfaces;
+using A1ClassLibrary.model;
 
-namespace s3893749_s3912792_a1.controller;
+namespace A1ClassLibrary.DBControllers;
 
-public class CustomerController
+public class DbCustomerController
 {
     private IManager<Customer> _customerManagerDataAccess;
 
-    public CustomerController(IManager<Customer> customerDataAccess)
+    public DbCustomerController(IManager<Customer> customerDataAccess)
     {
         _customerManagerDataAccess = customerDataAccess;
     }
