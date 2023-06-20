@@ -5,27 +5,27 @@ namespace A1ClassLibrary.DBControllers
 {
     internal class DbLoginController
     {
-        private readonly IManager<Login> _loginManagerDataAccess;
+        private readonly IManager<Login> _loginManagerObject;
 
-        public DbLoginController(IManager<Login> loginManagerDataAccess)
+        public DbLoginController(IManager<Login> loginManagerObject)
         {
-            _loginManagerDataAccess = loginManagerDataAccess;
+            _loginManagerObject = loginManagerObject;
         }
 
         public List<Login> GetLogin(int customerId)
         {
             // Returns all Login data for given customer ID (CustomerID, LoginID and PasswordHash)
-            return _loginManagerDataAccess.Get(customerId);
+            return _loginManagerObject.Get(customerId);
         }
 
         public List<Login> GetAllLogins()
         {
-            return _loginManagerDataAccess.GetAll();
+            return _loginManagerObject.GetAll();
         }
 
         public void InsertLogin(Login data)
         {
-            _loginManagerDataAccess.Insert(data);
+            _loginManagerObject.Insert(data);
         }
     }
 }

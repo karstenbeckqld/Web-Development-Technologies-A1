@@ -2,27 +2,6 @@ namespace A1ClassLibrary.model;
 
 public class Transaction
 {
-
-    /*private int _transactionId;
-    private string _transactionType;
-    private int _accountNumber;
-    private int _destinationAccountNumber;
-    private decimal _amount;
-    private string _comment;
-    private DateTime _transactionTimeUtc;
-
-    public Transaction(int transactionId, string transactionType, int accountNumber, int destinationAccountNumber,
-        decimal amount, string comment, DateTime transactionTimeUtc)
-    {
-        _transactionId = transactionId;
-        _transactionType = transactionType;
-        _accountNumber = accountNumber;
-        _destinationAccountNumber = destinationAccountNumber;
-        _amount = amount;
-        _comment = comment;
-        _transactionTimeUtc = transactionTimeUtc;
-    }*/
-    
     public int TransactionID { get; set; }
     public char TransactionType { get; set; }
     public int AccountNumber { get; set; }

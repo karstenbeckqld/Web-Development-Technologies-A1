@@ -4,7 +4,7 @@ namespace A1ClassLibrary.model;
 public class WebServiceDto
 {
     /* The CustomerId property receives the stored customer ID. */
-    public int CustomerId { get; set; }
+    public int CustomerID { get; set; }
     
     /* The Name property receives the stored customer name. */
     public string Name { get; set; }

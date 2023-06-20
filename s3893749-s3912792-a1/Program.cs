@@ -2,6 +2,8 @@ using Microsoft.Extensions.Configuration;
 using s3893749_s3912792_a1.builder;
 using A1ClassLibrary.model;
 using A1ClassLibrary;
+using A1ClassLibrary.BusinessLogic;
+using A1ClassLibrary.DBControllers;
 using A1ClassLibrary.Utils;
 
 namespace s3893749_s3912792_a1;
@@ -15,12 +17,12 @@ public class Program
         // The connection string to the database is stored in appsettings.json and gets loaded here. 
         var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-        // We now receive the connection string from the DBConnect object in the jsn file. 
-        var connectionString = configuration.GetConnectionString("DBConnect");
+        // We now receive the connection string from the DbConnect object in the jsn file. 
+        var connectionString = configuration.GetConnectionString("DbConnect");
         
-        // Here we set the DBConnect property in the static class DbConnectionString, so that the connection string is
+        // Here we set the DbConnect property in the static class DbConnectionString, so that the connection string is
         // available throughout the application.
-        DbConnectionString.DBConnect = connectionString;
+        DbConnectionString.DbConnect = connectionString;
 
         // To insert the data to the database, we call create new instances of the different manager classes, passing
         // them the connection string to be able to access the database.
@@ -32,9 +34,22 @@ public class Program
         // Now we can pass these instances to the DataWebService's static GetAndAddCustomers method and load customers
         // to the database if it not already happened before.  
         DataWebService.GetAndAddCustomers(customerManager, accountManager, loginManager, transactionManager);
-        
-       
 
+        TransactionService.InterAccountTransaction(4100,4101,25,"Transfer $25");
+        
+        /*var account = new DbTransactionController(new TransactionManager(DbConnectionString.DbConnect)).GetTransactions(4101);
+
+        foreach (var item in account)
+        {
+            Console.WriteLine($"TransactionID: {item.TransactionID}\n" +
+                              $"TransactionType: {item.TransactionType}\n" +
+                              $"AccountNumber: {item.AccountNumber}\n" +
+                              $"DestinationAccount: {item.DestinationAccountNumber}\n" +
+                              $"Amount: {item.Amount}\n" +
+                              $"Comment: {item.Comment}\n" +
+                              $"TransactionTime: {item.TransactionTimeUtc}");
+            
+        }*/
         // Test for Get method in CustomerManager class
 
         //var customers = customerManager.Get(2200);
@@ -99,7 +114,7 @@ public class Program
             PostCode = "1234"
         };*/
         //new DbCustomerController(new CustomerManager(connectionString)).InsertCustomer(newCustomer);
-        
+
         //var allCustomers = new DbCustomerController(new CustomerManager(connectionString)).GetAllCustomers();
 
 

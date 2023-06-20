@@ -5,25 +5,25 @@ namespace A1ClassLibrary.DBControllers;
 
 public class DbCustomerController
 {
-    private readonly IManager<Customer> _customerManagerDataAccess;
+    private readonly IManager<Customer> _customerManagerObject;
 
-    public DbCustomerController(IManager<Customer> customerDataAccess)
+    public DbCustomerController(IManager<Customer> customerObject)
     {
-        _customerManagerDataAccess = customerDataAccess;
+        _customerManagerObject = customerObject;
     }
 
     public List<Customer> GetCustomer(int customerId)
     {
-        return _customerManagerDataAccess.Get(customerId);
+        return _customerManagerObject.Get(customerId);
     }
 
     public List<Customer> GetAllCustomers()
     {
-        return _customerManagerDataAccess.GetAll();
+        return _customerManagerObject.GetAll();
     }
 
     public void InsertCustomer(Customer data)
     {
-        _customerManagerDataAccess.Insert(data);
+        _customerManagerObject.Insert(data);
     }
 }

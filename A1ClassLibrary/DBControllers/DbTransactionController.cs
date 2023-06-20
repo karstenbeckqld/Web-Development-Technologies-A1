@@ -5,25 +5,25 @@ namespace A1ClassLibrary.DBControllers;
 
 public class DbTransactionController
 {
-    private readonly IManager<Transaction> _transactionManagerDataAccess;
+    private readonly IManager<Transaction> _transactionManagerObject;
 
-    public DbTransactionController(IManager<Transaction> transactionDataAccess)
+    public DbTransactionController(IManager<Transaction> transactionObject)
     {
-        _transactionManagerDataAccess = transactionDataAccess;
+        _transactionManagerObject = transactionObject;
     }
 
-    public List<Transaction> GetTransaction(int accountNumber)
+    public List<Transaction> GetTransactions(int accountNumber)
     {
-        return _transactionManagerDataAccess.Get(accountNumber);
+        return _transactionManagerObject.Get(accountNumber);
     }
 
     public List<Transaction> GetAllTransactions()
     {
-        return _transactionManagerDataAccess.GetAll();
+        return _transactionManagerObject.GetAll();
     }
 
     public void InsertTransaction(Transaction data)
     {
-        _transactionManagerDataAccess.Insert(data);
+        _transactionManagerObject.Insert(data);
     }
 }

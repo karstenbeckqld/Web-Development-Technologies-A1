@@ -16,7 +16,7 @@ public class CustomerManager:IManager<Customer>
 
     public bool CheckCustomerDataPresent()
     {
-        var result = false;
+        //var result = false;
 
         using var connection = new SqlConnection(_connectionString);
         connection.Open();

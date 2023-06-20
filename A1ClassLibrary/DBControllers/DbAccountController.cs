@@ -5,25 +5,25 @@ namespace A1ClassLibrary.DBControllers;
 
 public class DbAccountController
 {
-    private readonly IManager<Account> _accountManagerDataAccess;
+    private readonly IManager<Account> _accountManagerObject;
 
-    internal DbAccountController(IManager<Account> accountDataAccess)
+    public DbAccountController(IManager<Account> accountObject)
     {
-        _accountManagerDataAccess = accountDataAccess;
+        _accountManagerObject = accountObject;
     }
 
-    public List<Account> GetAccountDetails(int customerId)
+    public List<Account> GetAccountDetails(int accountNumber)
     {
-        return _accountManagerDataAccess.Get(customerId);
+        return _accountManagerObject.Get(accountNumber);
     }
 
     public List<Account> GetAllAccounts()
     {
-        return _accountManagerDataAccess.GetAll();
+        return _accountManagerObject.GetAll();
     }
 
     public void InsertAccount(Account data)
     {
-        _accountManagerDataAccess.Insert(data);
+        _accountManagerObject.Insert(data);
     }
 }

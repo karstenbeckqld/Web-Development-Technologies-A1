@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="controller\" />
+    <Folder Include="enums\" />
     <Folder Include="images\" />
   </ItemGroup>
 

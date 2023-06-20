@@ -98,9 +98,9 @@ public class TransactionManager : IManager<Transaction>
         return command.GetDataTable().Select().Select(x => new Transaction
         {
             TransactionID = x.Field<int>("TransactionID"),
-            TransactionType = x.Field<Char>("TransactionType"),
+            TransactionType = char.Parse(x.Field<string>("TransactionType")),
             AccountNumber = x.Field<int>("AccountNumber"),
-            DestinationAccountNumber = x.Field<int>("DestinationAccountNumber"),
+            DestinationAccountNumber = x.Field<int?>("DestinationAccountNumber"),
             Amount = x.Field<decimal>("Amount"),
             Comment = x.Field<string>("Comment"),
             TransactionTimeUtc = x.Field<DateTime>("TransactionTimeUtc")

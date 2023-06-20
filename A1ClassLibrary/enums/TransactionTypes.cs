@@ -1,6 +1,6 @@
-namespace s3893749_s3912792_a1.enums;
+namespace A1ClassLibrary.enums;
 
-public enum TransactionTypes
+public enum TransactionType
 {
     D=1, // Credit (Deposit money)
     W=2, // Debit (Withdraw money)

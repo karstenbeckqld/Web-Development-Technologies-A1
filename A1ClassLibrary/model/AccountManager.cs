@@ -52,16 +52,16 @@ namespace A1ClassLibrary.model
 
             return CreateAccountList(command, transactionManager);
         }
-        
-        public List<Account> Get(int customerId)
+
+        public List<Account> Get(int accountNumber)
         {
             
             using var connection = new SqlConnection(_connectionString);
             connection.Open();
 
             var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM Account WHERE CustomerID=@CustomerID";
-            command.Parameters.AddWithValue("CustomerID", customerId);
+            command.CommandText = "SELECT * FROM Account WHERE AccountNumber=@AccountNumber";
+            command.Parameters.AddWithValue("AccountNumber", accountNumber);
         
             var table = new DataTable();
             new SqlDataAdapter(command).Fill(table);

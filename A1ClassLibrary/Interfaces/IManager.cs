@@ -8,5 +8,5 @@ public interface IManager<T>
 
     public void Update(T data);
 
-    public List<T> Get(int value);
+    public List<T> Get(int value); 
 }

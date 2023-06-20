@@ -15,10 +15,10 @@ public class CustomerIdValidation
         {
             var customerQueryResult = new List<Customer>();
 
-            if (DbConnectionString.DBConnect is not null)
+            if (DbConnectionString.DbConnect is not null)
             {
                 customerQueryResult =
-                    new DbCustomerController(new CustomerManager(DbConnectionString.DBConnect)).GetCustomer(customerId);
+                    new DbCustomerController(new CustomerManager(DbConnectionString.DbConnect)).GetCustomer(customerId);
             }
 
             if (customerQueryResult.Count > 0)
