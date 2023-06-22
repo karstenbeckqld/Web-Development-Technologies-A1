@@ -1,4 +1,6 @@
-﻿using s3893749_s3912792_a1.framework.core;
+﻿using System.Reflection;
+using s3893749_s3912792_a1.framework.core;
+using s3893749_s3912792_a1.framework.facades;
 
 namespace s3893749_s3912792_a1.framework.components;
 
@@ -26,14 +28,42 @@ public class Menu : Component
         
         Event @event = new Event();
 
-        int count = 0;
+        int count = 1;
         foreach (var option in _options)
         {
             Console.WriteLine("["+count+"] "+option.Key);
             count++;
         }
+
+        string selection = Console.ReadLine();
+        int number = 0;
+        bool outcome = false;
+
+        if (Int32.TryParse(selection, out number))
+        {
+            count = 1;
+            foreach (var keyValuePair in _options)
+            {
+                if (count == number)
+                {
+                   outcome = true;
+                   MethodInfo methodInfo = _type.GetMethod(keyValuePair.Value);
+                   object result = methodInfo.Invoke(_controller, new object[]{});
+                }
+                count++;
+            }
+
+            if (!outcome)
+            {
+                Console.WriteLine("Invalid Input, Please enter a valid number section");
+            }
+
+        }else
+        {
+            Console.WriteLine("Invalid Input, Please enter a valid number section");
+        }
         
-        //TODO add logic to detect and process the option calls.
+        Kernal.Instance().Process();
         
         return null;
       
