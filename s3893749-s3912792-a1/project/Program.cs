@@ -7,15 +7,10 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        //Initialization calls
-        App.RegisterView(new LoginView(),true);
-        App.RegisterView(new MainMenuView());
-        
-        //load Config
-        App.LoadConfiguration("test.conf");
-        
-        //Start app should always be last
-        App.Start();
+       
+        App.RegisterView(new DemoView());
+
+        App.Start("DemoView");
     }
     
 }
