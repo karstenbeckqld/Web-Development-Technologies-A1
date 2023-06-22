@@ -19,7 +19,7 @@ public class Program
 
         // We now receive the connection string from the DbConnect object in the jsn file. 
         var connectionString = configuration.GetConnectionString("DbConnect");
-        
+
         // Here we set the DbConnect property in the static class DbConnectionString, so that the connection string is
         // available throughout the application.
         DbConnectionString.DbConnect = connectionString;
@@ -27,101 +27,14 @@ public class Program
         // To insert the data to the database, we call create new instances of the different manager classes, passing
         // them the connection string to be able to access the database.
         var customerManager = new CustomerManager(connectionString);
-        var accountManager = new AccountManager(connectionString);
+        var accountManager = new AccountManager();
         var loginManager = new LoginManager(connectionString);
         var transactionManager = new TransactionManager(connectionString);
 
         // Now we can pass these instances to the DataWebService's static GetAndAddCustomers method and load customers
         // to the database if it not already happened before.  
         DataWebService.GetAndAddCustomers(customerManager, accountManager, loginManager, transactionManager);
-
-        TransactionService.InterAccountTransaction(4100,4101,25,"Transfer $25");
         
-        /*var account = new DbTransactionController(new TransactionManager(DbConnectionString.DbConnect)).GetTransactions(4101);
-
-        foreach (var item in account)
-        {
-            Console.WriteLine($"TransactionID: {item.TransactionID}\n" +
-                              $"TransactionType: {item.TransactionType}\n" +
-                              $"AccountNumber: {item.AccountNumber}\n" +
-                              $"DestinationAccount: {item.DestinationAccountNumber}\n" +
-                              $"Amount: {item.Amount}\n" +
-                              $"Comment: {item.Comment}\n" +
-                              $"TransactionTime: {item.TransactionTimeUtc}");
-            
-        }*/
-        // Test for Get method in CustomerManager class
-
-        //var customers = customerManager.Get(2200);
-
-        /*Console.WriteLine("Testing CustomerManager Get method with ID 2200:\n");
-        foreach (var customer in customers)
-        {
-            Console.WriteLine($"CustomerID: {customer.CustomerId}\n" +
-                              $"Name: {customer.Name}\n" +
-                              $"Address: {customer.Address}\n" +
-                              $"City: {customer.City}\n" +
-                              $"PostCode: {customer.PostCode} ");
-
-            foreach (var account in customer.Accounts)
-            {
-                Console.WriteLine($"AccountNumber: {account.AccountNumber}\n" +
-                                  $"AccountType: {account.AccountType}\n" +
-                                  $"CustomerID: {account.CustomerId}\n" +
-                                  $"Balance: {account.Balance}");
-
-                foreach (var transaction in account.Transactions)
-                {
-                    Console.WriteLine($"TransactionID: {transaction.TransactionID}\n" +
-                                      $"TransactionType: {transaction.TransactionType}\n" +
-                                      $"AccountNumber: {transaction.AccountNumber}\n" +
-                                      $"DestinationAccount: {transaction.DestinationAccountNumber}\n" +
-                                      $"Amount: {transaction.Amount}\n" +
-                                      $"Comment: {transaction.Comment}\n" +
-                                      $"TransactionTime: {transaction.TransactionTimeUtc}");
-                }
-            }
-        }*/
-
-        /*Console.WriteLine();
-        Console.WriteLine("Testing AccountManager GetAll:\n");
-        // Test for GetAll method in AccountManager class. 
-        var accounts = accountManager.GetAll();
-
-
-        foreach (var account in accounts)
-        {
-            Console.WriteLine($"AccountNumber: {account.AccountNumber}\n" +
-                              $"AccountType: {account.AccountType}\n" +
-                              $"CustomerID: {account.CustomerId} ");
-
-            foreach (var transaction in account.Transactions)
-            {
-                Console.WriteLine($"TransactionID: {transaction.TransactionID}\n" +
-                                  $"TransactionType: {transaction.TransactionType}\n" +
-                                  $"AccountNumber: {transaction.AccountNumber}\n" +
-                                  $"DestinationAccount: {transaction.DestinationAccountNumber}\n" +
-                                  $"Amount: {transaction.Amount}\n" +
-                                  $"Comment: {transaction.Comment}\n" +
-                                  $"TransactionTime: {transaction.TransactionTimeUtc}");
-            }
-        }*/
-        /*var newCustomer = new Customer{
-            CustomerID = 2400,
-            Name = "Karsten Beck",
-            Address = "123 Sample Street",
-            City = "Sample City",
-            PostCode = "1234"
-        };*/
-        //new DbCustomerController(new CustomerManager(connectionString)).InsertCustomer(newCustomer);
-
-        //var allCustomers = new DbCustomerController(new CustomerManager(connectionString)).GetAllCustomers();
-
-
-        /*foreach (var data in allCustomers)
-        {
-            Console.WriteLine(data.ToString());
-        }*/
     }
 }
 

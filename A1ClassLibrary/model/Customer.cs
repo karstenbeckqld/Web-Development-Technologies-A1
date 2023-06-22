@@ -2,7 +2,7 @@ namespace A1ClassLibrary.model;
 
 public class Customer
 {
-    public int CustomerID { get; set; }
+    public required int CustomerID { get; set; }
 
     public string Name { get; set; }
 

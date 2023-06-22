@@ -26,4 +26,9 @@ public class DbAccountController
     {
         _accountManagerObject.Insert(data);
     }
+
+    public void UpdateAccount(Account data)
+    {
+        _accountManagerObject.Update(data);
+    }
 }

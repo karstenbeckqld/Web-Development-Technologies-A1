@@ -1,17 +1,57 @@
-﻿using System.Data;
+﻿using System.Collections;
+using System.Collections.Specialized;
+using System.Data;
 using Microsoft.Data.SqlClient;
 using A1ClassLibrary.Interfaces;
 using A1ClassLibrary.Utils;
 
 namespace A1ClassLibrary.model
 {
-    public class AccountManager:IManager<Account>
+    public class AccountManager : IManager<Account>
     {
-        private readonly string _connectionString;
+        private readonly string _connectionString = DbConnectionString.DbConnect;
+        private string[] QueryString { get; set; }
 
-        public AccountManager(string connectionString)
+        public AccountManager()
         {
-            _connectionString = connectionString;
+            QueryString = new string[2];
+        }
+
+        public AccountManager Query(string key, string value)
+        {
+            QueryString[0] = key;
+            QueryString[1] = value;
+            return this;
+        }
+
+        public List<Account> Result()
+        {
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            var command = connection.CreateCommand();
+
+
+            Console.WriteLine("Key/Value Pair: " + QueryString[0] + " = " + QueryString[1]);
+
+            command.CommandText = "SELECT * FROM Account WHERE @key = @value";
+            command.Parameters.AddWithValue("key", QueryString[0]);
+            command.Parameters.AddWithValue("value", QueryString[1]);
+
+
+            var table = new DataTable();
+            new SqlDataAdapter(command).Fill(table);
+
+            var transactionManager = new TransactionManager(_connectionString);
+            
+            return command.GetDataTable().Select().Select(x => new Account
+            {
+                CustomerId = x.Field<int>("CustomerID"),
+                AccountType = char.Parse(x.Field<string>("AccountType")),
+                AccountNumber = x.Field<int>("AccountNumber"),
+                Balance = x.Field<decimal>("Balance"),
+                Transactions = transactionManager.Get(x.Field<int>("AccountNumber"))
+            }).ToList();
         }
 
         public void Insert(Account account)
@@ -35,16 +75,15 @@ namespace A1ClassLibrary.model
 
             Console.WriteLine(updates);
         }
-        
+
         public List<Account> GetAll()
         {
-           
             using var connection = new SqlConnection(_connectionString);
             connection.Open();
 
             var command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM Account";
-        
+
             var table = new DataTable();
             new SqlDataAdapter(command).Fill(table);
 
@@ -55,14 +94,13 @@ namespace A1ClassLibrary.model
 
         public List<Account> Get(int accountNumber)
         {
-            
             using var connection = new SqlConnection(_connectionString);
             connection.Open();
 
             var command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM Account WHERE AccountNumber=@AccountNumber";
             command.Parameters.AddWithValue("AccountNumber", accountNumber);
-        
+
             var table = new DataTable();
             new SqlDataAdapter(command).Fill(table);
 
@@ -70,7 +108,7 @@ namespace A1ClassLibrary.model
 
             return CreateAccountList(command, transactionManager);
         }
-        
+
         public void Update(Account account)
         {
             using var connection = new SqlConnection(_connectionString);
@@ -96,7 +134,7 @@ namespace A1ClassLibrary.model
             return command.GetDataTable().Select().Select(x => new Account
             {
                 CustomerId = x.Field<int>("CustomerID"),
-                AccountType = x.Field<string>("AccountType"),
+                AccountType = char.Parse(x.Field<string>("AccountType")),
                 AccountNumber = x.Field<int>("AccountNumber"),
                 Balance = x.Field<decimal>("Balance"),
                 Transactions = transactionManager.Get(x.Field<int>("AccountNumber"))

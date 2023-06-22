@@ -61,7 +61,7 @@ public class CustomerManager:IManager<Customer>
         var table = new DataTable();
         new SqlDataAdapter(command).Fill(table);
         
-        var accountManager = new AccountManager(_connectionString);
+        var accountManager = new AccountManager();
 
         return CreateCustomerList(command, accountManager);
     }
@@ -76,7 +76,7 @@ public class CustomerManager:IManager<Customer>
         command.CommandText = "SELECT * FROM Customer WHERE CustomerID=@CustomerID";
         command.Parameters.AddWithValue("CustomerID", customerId);
 
-        var accountManager = new AccountManager(_connectionString);
+        var accountManager = new AccountManager();
 
         return CreateCustomerList(command, accountManager);
     }

@@ -3,8 +3,8 @@ namespace A1ClassLibrary.model
 {
     public class Account
     {
-        public int AccountNumber { get; set; }
-        public string AccountType { get; set; }
+        public required int AccountNumber { get; set; }
+        public char AccountType { get; set; }
         public int CustomerId { get; set; }
         public decimal Balance { get; set; }
         public List<Transaction> Transactions { get; set; }
