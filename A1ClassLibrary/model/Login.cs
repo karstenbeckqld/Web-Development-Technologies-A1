@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:s3893749-s3912792-a1/project/model/Login.cs
+namespace s3893749_s3912792_a1.project.model;
+========
 namespace A1ClassLibrary.model;
+>>>>>>>> main:A1ClassLibrary/model/Login.cs
 
 /* The Login class stores the Login object for each customer. */
 public class Login
