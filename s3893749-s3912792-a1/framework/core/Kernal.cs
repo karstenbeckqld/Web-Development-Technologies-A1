@@ -1,4 +1,5 @@
-﻿using s3893749_s3912792_a1.project.model;
+﻿using A1ClassLibrary.model;
+using Microsoft.Extensions.Configuration;
 
 namespace s3893749_s3912792_a1.framework.core;
 
@@ -8,10 +9,23 @@ public sealed class Kernal
     private Dictionary<string, View> _views;
     private string _activeView;
     private Customer _customer;
+    private IConfigurationRoot _configuration;
+    private Dictionary<string, ServiceProvider> _providers;
 
     public Kernal()
     {
         _views = new Dictionary<string, View>();
+        _providers = new Dictionary<string, ServiceProvider>();
+    }
+
+    public void SetConfigurationFile(string path)
+    {
+        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+    }
+
+    public IConfigurationRoot GetConfig()
+    {
+        return _configuration;
     }
 
     public void RegisterView(View view)
@@ -33,7 +47,7 @@ public sealed class Kernal
     {
         if (_activeView == null)
         {
-            ConsoleUtils.WriteError("No view is currently set as active, please set a view by using App.SwitchView(name).");
+            ConsoleUtils.WriteError("No view is currently set as active, please set a view by using App.SwitchView(name).",1);
             return;
         }
 
@@ -43,7 +57,7 @@ public sealed class Kernal
         }
         else
         {
-            ConsoleUtils.WriteError("Active view '"+_activeView+"' does not exist in registry of application views");
+            ConsoleUtils.WriteError("Active view '"+_activeView+"' does not exist in registry of application views",1);
         }
     }
 
@@ -66,10 +80,23 @@ public sealed class Kernal
     {
         if (!_views.ContainsKey(view))
         {
-            ConsoleUtils.WriteError("Unknown view '"+view+"' called by method Kernal.SetViewVariable(key,value)");
+            ConsoleUtils.WriteError("Unknown view '"+view+"' called by method Kernal.SetViewVariable(key,value)",1);
             return;
         }
        _views[view].SetLocalScopeVariable(key,value);
+    }
+
+    public void RegisterServiceProvider(ServiceProvider provider)
+    {
+        _providers.Add(provider.GetType().Name.Substring(0,provider.GetType().Name.Length-15),provider);
+    }
+
+    public void Boot()
+    {
+        foreach (var provider in _providers)
+        {
+            provider.Value.Boot();
+        }
     }
     
     
