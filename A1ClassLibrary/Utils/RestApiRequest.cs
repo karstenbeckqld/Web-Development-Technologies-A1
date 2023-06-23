@@ -1,13 +1,5 @@
-using Newtonsoft.Json;
-<<<<<<<< HEAD:s3893749-s3912792-a1/project/RestApiRequest.cs
-using s3893749_s3912792_a1.project.model;
-
-namespace s3893749_s3912792_a1.project;
-========
 using A1ClassLibrary.model;
-
-namespace A1ClassLibrary.Utils;
->>>>>>>> main:A1ClassLibrary/Utils/RestApiRequest.cs
+using Newtonsoft.Json;
 
 /* The RestApiRequest class contacts the web service to get the customers present in the provided JSON file. It collects
  * all present data, including Accounts, Transactions and Login data and stores it in a List of type CustomerObjectList
