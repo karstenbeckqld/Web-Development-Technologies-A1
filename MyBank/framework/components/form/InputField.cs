@@ -23,7 +23,10 @@ public class InputField
 
     public string ReadLine()
     {
-        Console.WriteLine(_prompt);
+        if (_prompt != null)
+        {
+            Console.WriteLine(_prompt);
+        }
         bool valid = false;
         string input = "";
 
