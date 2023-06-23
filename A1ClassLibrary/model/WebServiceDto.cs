@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using A1ClassLibrary.model;
+using s3893749_s3912792_a1.project.model;
+
 <<<<<<<< HEAD:s3893749-s3912792-a1/project/model/WebServiceObject.cs
 namespace s3893749_s3912792_a1.project.model;
 
