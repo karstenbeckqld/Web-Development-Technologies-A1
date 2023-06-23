@@ -4,26 +4,26 @@ namespace s3893749_s3912792_a1.framework.core;
 
 public class ConsoleUtils
 {
-    public static void WriteError(string message)
+    public static void WriteError(string message, int index)
     {
-        Write(message,ConsoleColor.Red,"ERROR");
+        Write(message,ConsoleColor.Red,"ERROR", index);
 
     }
 
-    public static void WriteInfo(string message)
+    public static void WriteInfo(string message, int index)
     {
-        Write(message,ConsoleColor.Yellow,"INFO ");
+        Write(message,ConsoleColor.Yellow,"INFO ", index);
 
     }
     
-    public static void WriteLog(string message)
+    public static void WriteLog(string message, int index)
     {
-        Write(message,ConsoleColor.Blue,"LOG  ");
+        Write(message,ConsoleColor.Blue,"LOG  ", index);
     }
 
-    private static void Write(string message, ConsoleColor color, string type)
+    private static void Write(string message, ConsoleColor color, string type, int index)
     {
-        var methodInfo = new StackTrace().GetFrame(2).GetMethod();
+        var methodInfo = new StackTrace().GetFrame(index).GetMethod();
         var className = methodInfo.ReflectedType.FullName;
         
         Console.Write(DateTime.Now+"    ");
