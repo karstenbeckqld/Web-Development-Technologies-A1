@@ -1,3 +1,4 @@
+using System.Runtime.Intrinsics.X86;
 using A1ClassLibrary.DBControllers;
 using A1ClassLibrary.enums;
 using A1ClassLibrary.model;
@@ -18,7 +19,9 @@ public static class PerformInterAccountTransaction
         
         var balanceCheck = new BalanceValidator
             {
-                SourceBalance = sourceAccount.Balance, Amount = amount, AccountType = sourceAccount.AccountType
+                SourceBalance = sourceAccount.Balance, 
+                Amount = amount, 
+                AccountType = sourceAccount.AccountType
             }
             .CheckMinBalance();
 
@@ -78,15 +81,13 @@ public static class PerformInterAccountTransaction
         sqlCommand.Transaction = transaction;
         sqlCommand.ExecuteNonQuery();
 
-
         sqlCommand.CommandText =
             "UPDATE Account SET Balance = @SourceBalance WHERE AccountNumber = @SourceAccountNumber;";
         sqlCommand.Parameters.AddWithValue("SourceBalance", newSourceBalance);
         sqlCommand.Parameters.AddWithValue("SourceAccountNumber", sourceAccountNumber);
         sqlCommand.Transaction = transaction;
         sqlCommand.ExecuteNonQuery();
-
-
+        
         sqlCommand.CommandText =
             """
             insert into [Transaction] (TransactionType, AccountNumber, DestinationAccountNumber, Amount, Comment, TransactionTimeUtc) 

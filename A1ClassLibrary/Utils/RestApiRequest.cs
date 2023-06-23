@@ -34,7 +34,7 @@ public static class RestApiRequest
          DateFormatString = "dd/MM/yyyy hh:mm:ss tt"
         });
 
-        /* Finally, the method returns the list of WebServiceObjects. */
+        /* Finally, the method returns the list of Customer. */
         return jsonData;
     }
 }

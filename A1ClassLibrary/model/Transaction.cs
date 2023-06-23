@@ -1,8 +1,10 @@
+using A1ClassLibrary.Utils;
+
 namespace A1ClassLibrary.model;
 
 public class Transaction
 {
-    public int TransactionID { get; set; }
+    [SkipProperty] public int TransactionID { get; set; }
     public required char TransactionType { get; set; }
     public required int AccountNumber { get; set; }
     public int? DestinationAccountNumber { get; set; }

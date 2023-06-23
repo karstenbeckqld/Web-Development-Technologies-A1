@@ -17,7 +17,7 @@ public class Program
         // The connection string to the database is stored in appsettings.json and gets loaded here. 
         var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-        // We now receive the connection string from the DbConnect object in the jsn file. 
+        // We now receive the connection string from the DbConnect object in the JSON file. 
         var connectionString = configuration.GetConnectionString("DbConnect");
 
         // Here we set the DbConnect property in the static class DbConnectionString, so that the connection string is
@@ -34,7 +34,7 @@ public class Program
         // Now we can pass these instances to the DataWebService's static GetAndAddCustomers method and load customers
         // to the database if it not already happened before.  
         DataWebService.GetAndAddCustomers(customerManager, accountManager, loginManager, transactionManager);
-        
+
     }
 }
 
