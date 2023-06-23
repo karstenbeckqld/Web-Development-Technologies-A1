@@ -397,3 +397,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 .idea/
+A1ClassLibrary/Dependencies
+A1ClassLibrary/obj
+A1ClassLibrary/bin
+s3893749-s3912792-a1/obj

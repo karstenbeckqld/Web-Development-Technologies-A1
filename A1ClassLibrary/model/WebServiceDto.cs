@@ -1,7 +1,14 @@
+<<<<<<<< HEAD:s3893749-s3912792-a1/project/model/WebServiceObject.cs
 namespace s3893749_s3912792_a1.project.model;
 
 /* The WebServiceObject class serves as a DTO for data received from the web service via a HTTP Get request. */
 public class WebServiceObject
+========
+namespace A1ClassLibrary.model;
+
+/* The WebServiceDto class serves as a DTO for data received from the web service via a HTTP Get request. */
+public class WebServiceDto
+>>>>>>>> main:A1ClassLibrary/model/WebServiceDto.cs
 {
     /* The CustomerId property receives the stored customer ID. */
     public int CustomerId { get; set; }
@@ -22,5 +29,5 @@ public class WebServiceObject
     public List<Account> Accounts { get; set; }
 
     /* The Login property receives the stored customer login object. */
-    public Login login { get; set; }
+    public Login Login { get; set; }
 }
