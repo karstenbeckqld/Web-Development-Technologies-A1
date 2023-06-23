@@ -1,16 +1,18 @@
-﻿using s3893749_s3912792_a1.framework.core;
-using s3893749_s3912792_a1.project.model;
+﻿using A1ClassLibrary.model;
+using Microsoft.Extensions.Configuration;
+using s3893749_s3912792_a1.framework.core;
+
 
 namespace s3893749_s3912792_a1.framework.facades;
 
 public class App
 {
-    public static void RegisterView(s3893749_s3912792_a1.framework.core.View view)
+    public static void RegisterView(View view)
     {
         Kernal.Instance().RegisterView(view);
     }
     
-    public static void RegisterView(s3893749_s3912792_a1.framework.core.View  view,bool defaultView)
+    public static void RegisterView(View  view,bool defaultView)
     {
         Kernal.Instance().RegisterView(view);
 
@@ -37,18 +39,34 @@ public class App
 
     public static void Start(string view)
     {
+        Kernal.Instance().Boot();
         Kernal.Instance().SetActiveView(view);
         Kernal.Instance().Process();
     }
 
-    public static void ConsoleLog(string message)
+    public static ConsoleFacade Console()
     {
-        ConsoleUtils.WriteLog(message);
+        return new ConsoleFacade();
     }
     
     public static void SetViewVariable(string view, string key, object value)
     {
         Kernal.Instance().SetViewVariable(view,key,value);
+    }
+
+    public static void LoadConfiguration(string path)
+    {
+        Kernal.Instance().SetConfigurationFile(path);
+    }
+
+    public static IConfigurationRoot Config()
+    {
+        return Kernal.Instance().GetConfig();
+    }
+
+    public static void RegisterServiceProvider(ServiceProvider provider)
+    {
+        Kernal.Instance().RegisterServiceProvider(provider);
     }
     
     
