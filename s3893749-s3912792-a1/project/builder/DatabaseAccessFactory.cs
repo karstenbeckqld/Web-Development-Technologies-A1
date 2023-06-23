@@ -1,10 +1,7 @@
-
-
 using A1ClassLibrary.model;
 using A1ClassLibrary.Interfaces;
-using A1ClassLibrary.model;
 
-namespace s3893749_s3912792_a1.builder;
+namespace s3893749_s3912792_a1.project.builder;
 
 public class DatabaseAccessFactory<T>
 {
