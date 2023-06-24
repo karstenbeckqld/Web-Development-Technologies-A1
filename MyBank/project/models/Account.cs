@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using A1ClassLibrary.Utils;
+using EasyDB.attributes;
 
-namespace A1ClassLibrary.model;
+namespace MyBank.project.models;
 
 // The Account class represents a user defined type that holds data from the Account table in the database. 
 public class Account

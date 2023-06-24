@@ -1,6 +1,6 @@
-using A1ClassLibrary.Utils;
+using EasyDB.attributes;
 
-namespace A1ClassLibrary.model;
+namespace MyBank.project.models;
 
 //The Login class stores data from the Login table in the database.
 public class Login

@@ -1,8 +1,8 @@
 #nullable enable
 using System.Diagnostics.CodeAnalysis;
-using A1ClassLibrary.Utils;
+using EasyDB.attributes;
 
-namespace A1ClassLibrary.model;
+namespace MyBank.project.models;
 
 // The Customer class represents a user defined type that holds data from the Customer, Account and Login tables. 
 public class Customer
