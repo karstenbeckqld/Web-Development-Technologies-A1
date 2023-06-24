@@ -1,7 +1,5 @@
 #nullable enable
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using A1ClassLibrary.DBControllers;
 using A1ClassLibrary.Utils;
 
 namespace A1ClassLibrary.model;
@@ -24,7 +22,8 @@ public class Customer
         PostCode = postCode;
     }
 
-    public required int CustomerID { get; set; }
+    
+    [PrimaryKey] public required int CustomerID { get; set; }
 
     public string Name { get; set; }
 
