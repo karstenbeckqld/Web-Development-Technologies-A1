@@ -17,7 +17,9 @@ public class MainMenuView : View
         AddComponent(loginSuccess);
 
         var menu = new Menu();
-        
+
+        QueueWrite("--- {{Customer.name}} ---");
+
         menu.AddOption("Deposit");
         menu.AddOption("Withdraw");
         menu.AddOption("Transfer");
