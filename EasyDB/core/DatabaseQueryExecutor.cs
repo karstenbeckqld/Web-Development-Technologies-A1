@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace Database;
+namespace EasyDB.core;
 
 public static class DatabaseQueryExecutor
 {

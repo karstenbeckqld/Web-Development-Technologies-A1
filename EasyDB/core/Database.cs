@@ -1,8 +1,8 @@
-﻿using Database.attributes;
-using Database.extensions;
+﻿using EasyDB.attributes;
+using EasyDB.extensions;
 using Microsoft.Data.SqlClient;
 
-namespace Database;
+namespace EasyDB.core;
 
 public class Database<T>
 {

@@ -1,4 +1,4 @@
-﻿namespace Database;
+﻿namespace EasyDB.core;
 
 public class DatabaseResponse
 {
