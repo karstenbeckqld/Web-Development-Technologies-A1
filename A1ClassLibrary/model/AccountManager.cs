@@ -46,8 +46,8 @@ namespace A1ClassLibrary.model
             
             return command.GetDataTable().Select().Select(x => new Account
             {
-                CustomerId = x.Field<int>("CustomerID"),
-                AccountType = char.Parse(x.Field<string>("AccountType")),
+                CustomerID = x.Field<int>("CustomerID"),
+                AccountType = x.Field<string>("AccountType"),
                 AccountNumber = x.Field<int>("AccountNumber"),
                 Balance = x.Field<decimal>("Balance"),
                 Transactions = transactionManager.Get(x.Field<int>("AccountNumber"))
@@ -68,7 +68,7 @@ namespace A1ClassLibrary.model
             """;
             command.Parameters.AddWithValue("accountNumber", account.AccountNumber);
             command.Parameters.AddWithValue("accountType", account.AccountType);
-            command.Parameters.AddWithValue("customerId", account.CustomerId);
+            command.Parameters.AddWithValue("customerId", account.CustomerID);
             command.Parameters.AddWithValue("accountBalance", account.Balance);
 
             var updates = command.ExecuteNonQuery();
@@ -133,8 +133,8 @@ namespace A1ClassLibrary.model
         {
             return command.GetDataTable().Select().Select(x => new Account
             {
-                CustomerId = x.Field<int>("CustomerID"),
-                AccountType = char.Parse(x.Field<string>("AccountType")),
+                CustomerID = x.Field<int>("CustomerID"),
+                AccountType = x.Field<string>("AccountType"),
                 AccountNumber = x.Field<int>("AccountNumber"),
                 Balance = x.Field<decimal>("Balance"),
                 Transactions = transactionManager.Get(x.Field<int>("AccountNumber"))

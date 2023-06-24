@@ -1,27 +1,26 @@
 namespace A1ClassLibrary.model;
 
-/* The Login class stores the Login object for each customer. */
+//The Login class stores data from the Login table in the database.
 public class Login
 {
-    
-    /*private string _loginId;
-    private int _customerId;
-    private string _passwordHash;
-    
-
-    public Login(string loginId, int customerId, string passwordHash)
+    public Login()
     {
-        _loginId = loginId;
-        _customerId = customerId;
-        _passwordHash = passwordHash;
-    }*/
+    }
+
+    public Login(string loginId, string passwordHash, int customerId)
+    {
+        LoginID = loginId;
+        PasswordHash = passwordHash;
+        CustomerID = customerId;
+    }
+
     /* The LoginId property stores the login id for a customer. */
     public string LoginID { get; set; }
-    
+
     /* The PasswordHash property stores the password for a customer. */
     public string PasswordHash { get; set; }
-    
-    /* The CustomerId property stores a customer's ID. */
+
+    /* The CustomerID property stores a customer's ID. */
     public int CustomerID { get; set; }
 
     public override string ToString()

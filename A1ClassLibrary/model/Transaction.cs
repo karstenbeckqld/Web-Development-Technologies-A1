@@ -1,9 +1,28 @@
+using System.Diagnostics.CodeAnalysis;
 using A1ClassLibrary.Utils;
 
 namespace A1ClassLibrary.model;
 
+// The Transaction class represents a user defined type that holds data from the Transaction table in the database. 
 public class Transaction
 {
+    public Transaction()
+    {
+        
+    }
+
+    [SetsRequiredMembers]
+    public Transaction(char transactionType, int accountNumber, int? destinationAccountNumber, decimal amount,
+        string comment, DateTime transactionTimeUtc)
+    {
+        TransactionType = transactionType;
+        AccountNumber = accountNumber;
+        DestinationAccountNumber = destinationAccountNumber ?? null;
+        Amount = amount;
+        Comment = comment ?? null;
+        TransactionTimeUtc = transactionTimeUtc;
+    }
+    
     [SkipProperty] public int TransactionID { get; set; }
     public required char TransactionType { get; set; }
     public required int AccountNumber { get; set; }

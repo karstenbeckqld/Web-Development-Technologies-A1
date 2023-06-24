@@ -1,4 +1,6 @@
-﻿using A1ClassLibrary.model;
+﻿using System;
+using System.Collections.Generic;
+using A1ClassLibrary.model;
 using A1ClassLibrary.Utils;
 
 namespace A1ClassLibrary
@@ -43,7 +45,7 @@ namespace A1ClassLibrary
                     account.Balance += account.Transactions.Sum(transaction => transaction.Amount);
                    
                     Console.WriteLine($"Account No: {account.AccountNumber}");
-                    Console.WriteLine($"Account CustomerID: {account.CustomerId}");
+                    Console.WriteLine($"Account CustomerID: {account.CustomerID}");
                     Console.WriteLine($"Account Balance: {account.Balance}");
                     Console.WriteLine($"Account Type: {account.AccountType}\n");
 

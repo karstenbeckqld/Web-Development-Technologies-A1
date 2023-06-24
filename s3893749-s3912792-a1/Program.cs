@@ -1,8 +1,6 @@
-using Microsoft.Extensions.Configuration;
-using s3893749_s3912792_a1.builder;
-using A1ClassLibrary.model;
-using A1ClassLibrary;
 using A1ClassLibrary.BusinessLogic;
+using Microsoft.Extensions.Configuration;
+using A1ClassLibrary.model;
 using A1ClassLibrary.DBControllers;
 using A1ClassLibrary.Utils;
 
@@ -35,6 +33,14 @@ public class Program
         // to the database if it not already happened before.  
         DataWebService.GetAndAddCustomers(customerManager, accountManager, loginManager, transactionManager);
 
+        var sourceAccount = new Database<Account>().GetEntity("AccountNumber", "4100").ExecuteWithList();
+        var destinationAccount = new Database<Account>().GetEntity("AccountNumber", "4101").ExecuteWithList();
+
+        var login = new Database<Login>().GetEntity("CustomerID","12345678").ExecuteWithList();
+        
+        Console.WriteLine(login.ToString());
+       // PerformInterAccountTransaction.Transaction(sourceAccount[0],destinationAccount[0],25,"Transfer by PIAT");
+        
     }
 }
 

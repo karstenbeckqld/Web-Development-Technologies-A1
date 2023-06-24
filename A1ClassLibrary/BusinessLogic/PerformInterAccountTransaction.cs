@@ -9,56 +9,49 @@ namespace A1ClassLibrary.BusinessLogic;
 
 public static class PerformInterAccountTransaction
 {
-
     public static void Transaction(Account sourceAccount, Account destinationAccount, decimal amount, string comment)
     {
-        var sourceAccountNumber = sourceAccount.AccountNumber;
-        var destinationAccountNumber = destinationAccount.AccountNumber;
-        var sourceBalance = sourceAccount.Balance - amount;
-        var destinationBalance = destinationAccount.Balance + amount;
+        /*DateTime currentTime = DateTime.Now;*/ // Use current date and time
+        const string format = "yyyy-MM-dd HH:mm:ss.FFFFFFF"; // format required in the column in database*/
         
+        var utcDate = DateTime.UtcNow;
+       
+        var currentDateTime = utcDate.ToString(format);
+
+        var sourceBalance = sourceAccount.Balance;
+        var destinationBalance = destinationAccount.Balance;
+
         var balanceCheck = new BalanceValidator
             {
-                SourceBalance = sourceAccount.Balance, 
-                Amount = amount, 
+                SourceBalance = sourceAccount.Balance,
+                Amount = amount,
                 AccountType = sourceAccount.AccountType
             }
             .CheckMinBalance();
 
         if (balanceCheck)
         {
-            ExecuteTransaction(sourceAccountNumber, destinationAccountNumber, sourceBalance, destinationBalance, amount,
-                comment);
+            sourceAccount.Balance = sourceBalance - amount;
+            destinationAccount.Balance = destinationBalance + amount;
+
+
+            var sourceAccountTransaction = new Transaction((char)TransactionType.Transaction,
+                sourceAccount.AccountNumber, destinationAccount.AccountNumber, amount, comment, utcDate);
+
+            var destinationAccountTransaction = new Transaction((char)TransactionType.Transaction,
+                sourceAccount.AccountNumber, null, amount, comment, utcDate);
+
+            Execute(sourceAccount, destinationAccount, sourceAccountTransaction, destinationAccountTransaction);
         }
-        
     }
-       public static void InterAccountTransaction(int sourceAccountNumber, int destinationAccountNumber, decimal amount,
-        string comment)
+
+    private static void Execute(Account sourceAccount, Account destinationAccount, Transaction sourceAccountTransaction,
+        Transaction destinationAccountTransaction)
     {
-        var sourceAccount =
-            new DbAccountController(new AccountManager()).GetAccountDetails(
-                sourceAccountNumber);
-        var destinationAccount =
-            new DbAccountController(new AccountManager()).GetAccountDetails(
-                destinationAccountNumber);
-
-        //var sourceAccount2 = new AccountManager().Query().Get(sourceAccountNumber);
-        
-        
-        var sourceBalance = sourceAccount[0].Balance - amount;
-        var destinationBalance = destinationAccount[0].Balance + amount;
-
-        var balanceCheck = new BalanceValidator
-            {
-                SourceBalance = sourceAccount[0].Balance, Amount = amount, AccountType = sourceAccount[0].AccountType
-            }
-            .CheckMinBalance();
-
-        if (balanceCheck)
-        {
-            ExecuteTransaction(sourceAccountNumber, destinationAccountNumber, sourceBalance, destinationBalance, amount,
-                comment);
-        }
+        new Database<Account>().Update(sourceAccount).ExecuteWithBool();
+        new Database<Account>().Update(destinationAccount).ExecuteWithBool();
+        new Database<Transaction>().Insert(sourceAccountTransaction).ExecuteWithBool();
+        new Database<Transaction>().Insert(destinationAccountTransaction).ExecuteWithBool();
     }
 
     private static void ExecuteTransaction(int sourceAccountNumber, int destinationAccountNumber,
@@ -87,13 +80,13 @@ public static class PerformInterAccountTransaction
         sqlCommand.Parameters.AddWithValue("SourceAccountNumber", sourceAccountNumber);
         sqlCommand.Transaction = transaction;
         sqlCommand.ExecuteNonQuery();
-        
+
         sqlCommand.CommandText =
             """
             insert into [Transaction] (TransactionType, AccountNumber, DestinationAccountNumber, Amount, Comment, TransactionTimeUtc) 
             values (@DestinationTransactionType1, @AccountNumber1, @DestinationAccountNumber1, @Amount1, @Comment1, @TransactionTimeUtc1);
             """;
-        sqlCommand.Parameters.AddWithValue("DestinationTransactionType1", (char) TransactionType.Transaction);
+        sqlCommand.Parameters.AddWithValue("DestinationTransactionType1", (char)TransactionType.Transaction);
         sqlCommand.Parameters.AddWithValue("AccountNumber1", sourceAccountNumber);
         sqlCommand.Parameters.AddWithValue("DestinationAccountNumber1", destinationAccountNumber);
         sqlCommand.Parameters.AddWithValue("Amount1", amount);
@@ -107,7 +100,7 @@ public static class PerformInterAccountTransaction
             insert into [Transaction] (TransactionType, AccountNumber, DestinationAccountNumber, Amount, Comment, TransactionTimeUtc) 
             values (@TransactionType, @AccountNumber2, @DestinationAccountNumber2, @Amount2, @Comment2, @TransactionTimeUtc2);
             """;
-        sqlCommand.Parameters.AddWithValue("TransactionType", (char) TransactionType.Transaction);
+        sqlCommand.Parameters.AddWithValue("TransactionType", (char)TransactionType.Transaction);
         sqlCommand.Parameters.AddWithValue("AccountNumber2", destinationAccountNumber);
         sqlCommand.Parameters.AddWithValue("DestinationAccountNumber2", DBNull.Value);
         sqlCommand.Parameters.AddWithValue("Amount2", amount);
@@ -118,4 +111,34 @@ public static class PerformInterAccountTransaction
 
         transaction.Commit();
     }
+
+
+    /*public static void InterAccountTransaction(int sourceAccountNumber, int destinationAccountNumber, decimal amount,
+             string comment)
+         {
+             var sourceAccount =
+                 new DbAccountController(new AccountManager()).GetAccountDetails(
+                     sourceAccountNumber);
+             var destinationAccount =
+                 new DbAccountController(new AccountManager()).GetAccountDetails(
+                     destinationAccountNumber);
+     
+             //var sourceAccount2 = new AccountManager().Query().Get(sourceAccountNumber);
+             
+             
+             var sourceBalance = sourceAccount[0].Balance - amount;
+             var destinationBalance = destinationAccount[0].Balance + amount;
+     
+             var balanceCheck = new BalanceValidator
+                 {
+                     SourceBalance = sourceAccount[0].Balance, Amount = amount, AccountType = sourceAccount[0].AccountType
+                 }
+                 .CheckMinBalance();
+     
+             if (balanceCheck)
+             {
+                 ExecuteTransaction(sourceAccountNumber, destinationAccountNumber, sourceBalance, destinationBalance, amount,
+                     comment);
+             }
+         }*/
 }

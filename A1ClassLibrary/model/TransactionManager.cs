@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Microsoft.Data.SqlClient;
 using A1ClassLibrary.Interfaces;
 using A1ClassLibrary.Utils;
@@ -82,7 +85,7 @@ public class TransactionManager : IManager<Transaction>
         command.Parameters.AddWithValue(nameof(transaction.TransactionType), transaction.TransactionType);
         command.Parameters.AddWithValue(nameof(transaction.AccountNumber), transaction.AccountNumber);
         command.Parameters.AddWithValue(nameof(transaction.DestinationAccountNumber),
-            transaction.DestinationAccountNumber);
+            transaction.DestinationAccountNumber ?? (object)DBNull.Value);
         command.Parameters.AddWithValue(nameof(transaction.Amount), transaction.Amount);
         command.Parameters.AddWithValue(nameof(transaction.Comment), transaction.Comment ?? (object)DBNull.Value);
         command.Parameters.AddWithValue(nameof(transaction.TransactionTimeUtc), transaction.TransactionTimeUtc);

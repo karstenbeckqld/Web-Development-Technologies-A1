@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Net.Http;
 using Newtonsoft.Json;
 using A1ClassLibrary.model;
 
