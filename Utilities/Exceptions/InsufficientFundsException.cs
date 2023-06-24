@@ -1,6 +1,6 @@
-namespace A1ClassLibrary.Exceptions;
+namespace Utilities.Exceptions;
 
-class InsufficientFundsException : Exception
+public class InsufficientFundsException : Exception
 {
     public InsufficientFundsException(string message)
         : base(String.Format(message))

@@ -1,4 +1,4 @@
-namespace A1ClassLibrary.enums;
+namespace Utilities.enums;
 
 public enum TransactionType
 {

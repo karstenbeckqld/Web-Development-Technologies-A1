@@ -1,4 +1,4 @@
-namespace A1ClassLibrary.Exceptions;
+namespace Utilities.Exceptions;
 
 class InvalidCustomerIdException : Exception
 {

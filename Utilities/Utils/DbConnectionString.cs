@@ -1,4 +1,4 @@
-namespace A1ClassLibrary.Utils;
+namespace Utilities.Utils;
 
 public static class DbConnectionString
 {
