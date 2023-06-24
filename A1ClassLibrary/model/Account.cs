@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using A1ClassLibrary.DBControllers;
-using A1ClassLibrary.model;
+﻿using System.Diagnostics.CodeAnalysis;
 using A1ClassLibrary.Utils;
 
 namespace A1ClassLibrary.model;
@@ -22,7 +19,7 @@ public class Account
         Balance = balance;
     }
 
-    public int AccountNumber { get; set; }
+    [PrimaryKey]public int AccountNumber { get; set; }
     public string AccountType { get; set; }
     public required int CustomerID { get; set; }
     public decimal Balance { get; set; }
