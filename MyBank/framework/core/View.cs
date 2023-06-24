@@ -1,4 +1,6 @@
-﻿namespace MyBank.framework.core;
+﻿using MyBank.framework.facades;
+
+namespace MyBank.framework.core;
 
 public class View
 {
@@ -48,7 +50,15 @@ public class View
         
         foreach (var s in _writeOnProcess)
         {
-            Console.WriteLine(s);
+            if (s.Contains("{{Customer.name}}"))
+            {
+                Console.WriteLine(s.Replace("{{Customer.name}}", App.GetCurrentUser().Name));
+            }
+            else
+            {
+                Console.WriteLine(s);
+
+            }
         }
         
         int i = 0;

@@ -48,8 +48,8 @@ public class Program
         //our views map directly to controllers and enable
         //easy user friendly interaction
         
-        App.RegisterView(new DemoView());
         App.RegisterView(new MainMenuView());
+        App.RegisterView(new LoginView());
 
         //|==============================================|
         //|                    START                     |
@@ -60,7 +60,7 @@ public class Program
         //the kernal will then load the first view and
         //commence our application loop.
 
-        App.Start("DemoView");
+        App.Start("LoginView");
 
     }
 }

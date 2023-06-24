@@ -9,6 +9,13 @@ public class MainMenuView : View
     public MainMenuView()
     {
 
+        var loginSuccess = new Message();
+        
+        loginSuccess.SetVariableKey("LoginSuccess");
+        loginSuccess.SetColor(ConsoleColor.Green);
+        
+        AddComponent(loginSuccess);
+
         var menu = new Menu();
         
         menu.AddOption("Deposit");
@@ -21,7 +28,7 @@ public class MainMenuView : View
         
         menu.SetController("MainMenuController");
 
-        _components.Add(menu);
+        AddComponent(menu);
     }
     
 }
