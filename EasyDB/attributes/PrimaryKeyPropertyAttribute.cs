@@ -1,5 +1,4 @@
-
-namespace A1ClassLibrary.Utils;
+namespace Database.attributes;
 
 public class PrimaryKeyAttribute:Attribute
 {
