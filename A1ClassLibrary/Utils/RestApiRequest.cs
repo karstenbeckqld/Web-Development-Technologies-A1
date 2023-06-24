@@ -1,9 +1,8 @@
+using A1ClassLibrary.model;
 using System.Collections.Generic;
 using System.Net.Http;
 using Newtonsoft.Json;
-using A1ClassLibrary.model;
-
-namespace A1ClassLibrary.Utils;
+using Newtonsoft.Json;
 
 /* The RestApiRequest class contacts the web service to get the customers present in the provided JSON file. It collects
  * all present data, including Accounts, Transactions and Login data and stores it in a List of type CustomerObjectList
@@ -36,7 +35,7 @@ public static class RestApiRequest
          DateFormatString = "dd/MM/yyyy hh:mm:ss tt"
         });
 
-        /* Finally, the method returns the list of Customer. */
+        /* Finally, the method returns the list of WebServiceObjects. */
         return jsonData;
     }
 }
