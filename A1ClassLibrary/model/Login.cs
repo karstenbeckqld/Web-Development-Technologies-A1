@@ -1,8 +1,11 @@
+using A1ClassLibrary.Utils;
+
 namespace A1ClassLibrary.model;
 
 //The Login class stores data from the Login table in the database.
 public class Login
 {
+
     public Login()
     {
     }
@@ -15,7 +18,7 @@ public class Login
     }
 
     /* The LoginId property stores the login id for a customer. */
-    public string LoginID { get; set; }
+    [PrimaryKey]public string LoginID { get; set; }
 
     /* The PasswordHash property stores the password for a customer. */
     public string PasswordHash { get; set; }
