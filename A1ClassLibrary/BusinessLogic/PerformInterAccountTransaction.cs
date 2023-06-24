@@ -1,9 +1,11 @@
 using System.Runtime.Intrinsics.X86;
+using System.Transactions;
 using A1ClassLibrary.DBControllers;
 using A1ClassLibrary.enums;
 using A1ClassLibrary.model;
 using A1ClassLibrary.Utils;
 using Microsoft.Data.SqlClient;
+using Transaction = A1ClassLibrary.model.Transaction;
 
 namespace A1ClassLibrary.BusinessLogic;
 
@@ -35,10 +37,10 @@ public static class PerformInterAccountTransaction
             destinationAccount.Balance = destinationBalance + amount;
 
 
-            var sourceAccountTransaction = new Transaction((char)TransactionType.Transaction,
+            var sourceAccountTransaction = new Transaction(TransactionType.Transaction.ToString(),
                 sourceAccount.AccountNumber, destinationAccount.AccountNumber, amount, comment, utcDate);
 
-            var destinationAccountTransaction = new Transaction((char)TransactionType.Transaction,
+            var destinationAccountTransaction = new Transaction(TransactionType.Transaction.ToString(),
                 sourceAccount.AccountNumber, null, amount, comment, utcDate);
 
             Execute(sourceAccount, destinationAccount, sourceAccountTransaction, destinationAccountTransaction);
@@ -48,10 +50,12 @@ public static class PerformInterAccountTransaction
     private static void Execute(Account sourceAccount, Account destinationAccount, Transaction sourceAccountTransaction,
         Transaction destinationAccountTransaction)
     {
-        new Database<Account>().Update(sourceAccount).ExecuteWithBool();
-        new Database<Account>().Update(destinationAccount).ExecuteWithBool();
-        new Database<Transaction>().Insert(sourceAccountTransaction).ExecuteWithBool();
-        new Database<Transaction>().Insert(destinationAccountTransaction).ExecuteWithBool();
+        
+        new Database<Account>().Update(sourceAccount).ExecuteWithBool(true);
+        new Database<Account>().Update(destinationAccount).ExecuteWithBool(true);
+        new Database<Transaction>().Insert(sourceAccountTransaction).ExecuteWithBool(true);
+        new Database<Transaction>().Insert(destinationAccountTransaction).ExecuteWithBool(true);
+        
     }
 
     private static void ExecuteTransaction(int sourceAccountNumber, int destinationAccountNumber,

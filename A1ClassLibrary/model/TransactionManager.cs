@@ -101,7 +101,7 @@ public class TransactionManager : IManager<Transaction>
         return command.GetDataTable().Select().Select(x => new Transaction
         {
             TransactionID = x.Field<int>("TransactionID"),
-            TransactionType = char.Parse(x.Field<string>("TransactionType")),
+            TransactionType = x.Field<string>("TransactionType"),
             AccountNumber = x.Field<int>("AccountNumber"),
             DestinationAccountNumber = x.Field<int?>("DestinationAccountNumber"),
             Amount = x.Field<decimal>("Amount"),

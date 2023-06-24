@@ -8,23 +8,22 @@ public class Transaction
 {
     public Transaction()
     {
-        
     }
 
     [SetsRequiredMembers]
-    public Transaction(char transactionType, int accountNumber, int? destinationAccountNumber, decimal amount,
+    public Transaction(string transactionType, int accountNumber, int? destinationAccountNumber, decimal amount,
         string comment, DateTime transactionTimeUtc)
     {
         TransactionType = transactionType;
         AccountNumber = accountNumber;
-        DestinationAccountNumber = destinationAccountNumber ?? null;
+        DestinationAccountNumber = destinationAccountNumber;
         Amount = amount;
-        Comment = comment ?? null;
+        Comment = comment;
         TransactionTimeUtc = transactionTimeUtc;
     }
     
     [SkipProperty] public int TransactionID { get; set; }
-    public required char TransactionType { get; set; }
+    public required string TransactionType { get; set; }
     public required int AccountNumber { get; set; }
     public int? DestinationAccountNumber { get; set; }
     public decimal Amount { get; set; }  

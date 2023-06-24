@@ -33,12 +33,17 @@ public class Program
         // to the database if it not already happened before.  
         DataWebService.GetAndAddCustomers(customerManager, accountManager, loginManager, transactionManager);
 
-        var sourceAccount = new Database<Account>().GetEntity("AccountNumber", "4100").ExecuteWithList();
-        var destinationAccount = new Database<Account>().GetEntity("AccountNumber", "4101").ExecuteWithList();
+        //var sourceAccount = new Database<Account>().GetEntity("AccountNumber", "4100").ExecuteWithList();
+        //var destinationAccount = new Database<Account>().GetEntity("AccountNumber", "4101").ExecuteWithList();
 
-        var login = new Database<Login>().GetEntity("CustomerID","12345678").ExecuteWithList();
-        
-        Console.WriteLine(login.ToString());
+        //var login = new Database<Login>().GetEntity("LoginID","12345678").ExecuteWithList();
+        var test = new Database<Transaction>().GetEntity("AccountNumber", "4101").ExecuteWithList();
+
+        foreach (var item in test)
+        {
+            Console.WriteLine(item.ToString());
+        }
+        //Console.WriteLine(login[0].ToString());
        // PerformInterAccountTransaction.Transaction(sourceAccount[0],destinationAccount[0],25,"Transfer by PIAT");
         
     }

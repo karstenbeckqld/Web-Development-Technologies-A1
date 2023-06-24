@@ -61,7 +61,7 @@ public static class DataWebService
                     // Because the JSON doesn't provide a value for the transaction type, and the business rules state
                     // the initial transactions are all deposits, we manually set the value for the TransactionType
                     // property to D for deposit. The same is true for the AccountNumber property. 
-                    transaction.TransactionType = 'D';
+                    transaction.TransactionType = "D";
                     transaction.AccountNumber = account.AccountNumber;
                     
                     // Because the initial transactions are all deposits for the respective account, we have to set the

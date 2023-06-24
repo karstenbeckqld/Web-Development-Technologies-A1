@@ -52,7 +52,7 @@ namespace A1ClassLibrary
                     Console.WriteLine($"Transactions for {account.AccountNumber}:\n" );
                     foreach (var transaction in account.Transactions)
                     {
-                        transaction.TransactionType = 'D';
+                        transaction.TransactionType = "D";
                         transaction.AccountNumber = account.AccountNumber;
                         Console.WriteLine($"Transaction Type: {transaction.TransactionType}");
                         Console.WriteLine($"Transaction AccNo: {transaction.AccountNumber}");
