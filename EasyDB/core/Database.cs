@@ -36,9 +36,12 @@ public class Database<T>
             
             foreach (var keyValuePair in _where)
             {
-                query += keyValuePair.Key + "=" + "@" + keyValuePair.Key+",";
+                query += keyValuePair.Key + "=" + "@" + keyValuePair.Key + " AND ";
                 parameters.Add("@"+keyValuePair.Key,keyValuePair.Value);
+               
             }
+
+            query = query.Substring(0,query.Length-5);
             
             query = query.TrimEnd(',');
         }
