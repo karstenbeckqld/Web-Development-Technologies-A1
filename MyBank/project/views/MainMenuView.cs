@@ -13,6 +13,7 @@ public class MainMenuView : View
         
         loginSuccess.SetVariableKey("LoginSuccess");
         loginSuccess.SetColor(ConsoleColor.Green);
+        loginSuccess.ClearAfterWrite(true);
         
         AddComponent(loginSuccess);
         
