@@ -57,11 +57,6 @@ public class View
         //Call our process method on each component
         foreach (var component in _components)
         {
-            if (i == _components.Count - 1)
-            {
-                //The variables are cleared just prior to the final component processing
-                _variables.Clear();
-            }
             component.Process();
             i++;
         }
@@ -78,6 +73,11 @@ public class View
         {
             _variables.Add(key,value);
         }
+    }
+
+    public void ClearVariable(string key)
+    {
+        _variables.Remove(key);
     }
     
 }
