@@ -1,3 +1,4 @@
+using A1ClassLibrary.DBControllers;
 using A1ClassLibrary.model;
 
 namespace A1ClassLibrary.Utils;
@@ -18,7 +19,7 @@ public static class DataWebService
     {
         // If the database already contains customers, we assume it has been written before and don't proceed with the
         // process of adding records.
-        if (customerManager.CheckCustomerDataPresent())
+        if (Database<Customer>.CheckForDatabaseDataPresence())
         {
             return;
         }
@@ -33,6 +34,7 @@ public static class DataWebService
             // First we call the InsertCustomer method from the CustomerManager to insert the customer data into the
             // database.
             customerManager.Insert(customer);
+            
 
             // Because the Login table has a CustomerID column which is not set by the JSON,we set this value here based
             // on the Customer table.

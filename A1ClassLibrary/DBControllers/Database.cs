@@ -8,7 +8,7 @@ namespace A1ClassLibrary.DBControllers;
 
 public class Database<T>
 {
-    private readonly string _connectionString = DbConnectionString.DbConnect;
+    private static readonly string _connectionString = DbConnectionString.DbConnect;
 
     private string Query { get; set; }
     private Dictionary<string, object> SqlParameters { get; set; }
@@ -38,7 +38,7 @@ public class Database<T>
         return Query;
     }
 
-    public bool CheckForDatabaseDataPresence()
+    public static bool CheckForDatabaseDataPresence()
     {
         using var connection = new SqlConnection(_connectionString);
         connection.Open();
@@ -52,7 +52,7 @@ public class Database<T>
     public Database<T> GetAll()
     {
         // Here we define the command and query and open the connection.
-        Query = "SELECT * FROM [" + _tableName + "]";
+        Query = $"SELECT * FROM [{_tableName}]";
 
         PropertyInfo[] properties;
 
@@ -81,7 +81,7 @@ public class Database<T>
     {
         var t = typeof(T);
         var table = t.Name;
-        var query = "INSERT INTO [" + table + "] (";
+        var query = $"INSERT INTO [{table}] (";
         var values = " VALUES (";
 
 
@@ -100,11 +100,11 @@ public class Database<T>
         Query = query + values;
 
 
-        Console.WriteLine(Query);
-        foreach (var parameter in SqlParameters)
-        {
-            Console.WriteLine(parameter.Key + ": " + parameter.Value);
-        }
+        // Console.WriteLine(Query);
+        // foreach (var parameter in SqlParameters)
+        // {
+        //     Console.WriteLine(parameter.Key + ": " + parameter.Value);
+        // }
 
         return this;
     }
@@ -128,11 +128,11 @@ public class Database<T>
         Query = query;
 
 
-        Console.WriteLine(query);
-        foreach (var parameter in SqlParameters)
-        {
-            Console.WriteLine(parameter.Key + ", " + parameter.Value);
-        }
+        // Console.WriteLine(query);
+        // foreach (var parameter in SqlParameters)
+        // {
+        //     Console.WriteLine(parameter.Key + ", " + parameter.Value);
+        // }
 
         return this;
     }
@@ -170,13 +170,13 @@ public class Database<T>
 
         command.CommandText = Query;
 
-        Console.WriteLine(Query);
+        //Console.WriteLine(Query);
 
         if (!_where.IsNullOrEmpty())
         {
             command.Parameters.AddWithValue(_where.FirstOrDefault().Key, _where.FirstOrDefault().Value);
 
-            Console.WriteLine(_where.FirstOrDefault().Key + " = " + _where.FirstOrDefault().Value);
+            //Console.WriteLine(_where.FirstOrDefault().Key + " = " + _where.FirstOrDefault().Value);
         }
         else
         {
@@ -188,7 +188,7 @@ public class Database<T>
                 }
 
 
-                Console.WriteLine(parameter.Key + " = " + parameter.Value);
+                //Console.WriteLine(parameter.Key + " = " + parameter.Value);
             }
         }
 

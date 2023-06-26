@@ -1,3 +1,4 @@
+using A1ClassLibrary.core;
 using A1ClassLibrary.DBControllers;
 using A1ClassLibrary.enums;
 using A1ClassLibrary.Interfaces;
@@ -5,6 +6,7 @@ using A1ClassLibrary.model;
 using A1ClassLibrary.Utils;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic.CompilerServices;
 using Transaction = A1ClassLibrary.model.Transaction;
 
 namespace A1ClassLibrary.BusinessLogic;
@@ -36,6 +38,8 @@ public static class PerformWithdrawal
 
         if (balanceCheck)
         {
+            var transactions = new List<Dictionary<string, object>>();
+            
             sourceAccount.Balance -= amount;
 
             if (numberOfSourceAccountTransactions >= 2)
@@ -44,15 +48,18 @@ public static class PerformWithdrawal
                     "Service Charge", utcDate);
 
                 sourceAccount.Balance -= serviceCharge;
-                new Database<Transaction>().Insert(sourceAccountServiceFee).Execute();
+                
+                transactions.Add(new Dictionary<string, object>{{"INSERT", sourceAccountServiceFee}});
             }
 
             var sourceAccountTransaction = new Transaction("W", sourceAccount.AccountNumber,
                 null, amount, comment, utcDate);
 
-            new Database<Account>().Update(sourceAccount).Execute();
-            new Database<Transaction>().Insert(sourceAccountTransaction).Execute();
-            result = true;
+            transactions.Add(new Dictionary<string, object>{{"UPDATE", sourceAccount}});
+            
+            transactions.Add(new Dictionary<string, object>{{"INSERT", sourceAccountTransaction}});
+            
+            result = ExecuteTransaction.Execute(transactions);
         }
 
         return result;

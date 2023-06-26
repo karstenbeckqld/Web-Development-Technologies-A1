@@ -8,7 +8,7 @@ using Transaction = A1ClassLibrary.model.Transaction;
 
 namespace A1ClassLibrary.BusinessLogic;
 
-public static class PerformTransaction
+public struct PerformTransaction
 {
     public static bool Transaction(Account sourceAccount, Account destinationAccount, decimal amount, string comment)
     {
@@ -45,6 +45,8 @@ public static class PerformTransaction
         
         if (balanceCheck)
         {
+            var transactions = new List<Dictionary<string, object>>();
+
             sourceAccount.Balance -= amount;
             destinationAccount.Balance += amount;
 
@@ -54,8 +56,7 @@ public static class PerformTransaction
                     "Service Charge", utcDate);
 
                 sourceAccount.Balance -= serviceCharge;
-
-                new Database<Transaction>().Insert(sourceAccountServiceFee).Execute();
+                transactions.Add(new Dictionary<string, object> { { "INSERT", sourceAccountServiceFee } });
             }
 
             var sourceAccountTransaction = new Transaction("T", sourceAccount.AccountNumber,
@@ -64,14 +65,12 @@ public static class PerformTransaction
             var destinationAccountTransaction =
                 new Transaction("T", destinationAccount.AccountNumber, null, amount, comment, utcDate);
             
+            transactions.Add(new Dictionary<string, object> { { "UPDATE", sourceAccount } });
+            transactions.Add(new Dictionary<string, object> { { "UPDATE", destinationAccount } });
+            transactions.Add(new Dictionary<string, object> { { "INSERT", sourceAccountTransaction } });
+            transactions.Add(new Dictionary<string, object> { { "INSERT", destinationAccountTransaction } });
 
-            new Database<Account>().Update(sourceAccount).Execute();
-            new Database<Account>().Update(destinationAccount).Execute();
-            new Database<Transaction>().Insert(sourceAccountTransaction).Execute();
-            new Database<Transaction>().Insert(destinationAccountTransaction).Execute();
-
-
-            result = true;
+            result = ExecuteTransaction.Execute(transactions);
         }
 
         return result;
