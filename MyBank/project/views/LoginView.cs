@@ -11,13 +11,15 @@ public class LoginView : View
         var loginFailedMessage = new Message();
         loginFailedMessage.SetColor(ConsoleColor.Red);
         loginFailedMessage.SetVariableKey("LoginFailed");
+        loginFailedMessage.ClearAfterWrite(true);
         
         AddComponent(loginFailedMessage);
         
         var logoutMessage = new Message();
         logoutMessage.SetColor(ConsoleColor.Green);
         logoutMessage.SetVariableKey("LogoutSuccess");
-        
+        logoutMessage.ClearAfterWrite(true);
+
         AddComponent(logoutMessage);
         
         var form = new Form();
