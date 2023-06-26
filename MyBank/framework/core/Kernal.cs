@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using MyBank.framework.facades;
 using Customer = MyBank.project.models.Customer;
 
 namespace MyBank.framework.core;
@@ -69,6 +71,26 @@ public sealed class Kernal
     public void setCustomer(Customer customer)
     {
         _customer = customer;
+        if (customer != null)
+        {
+            foreach (var viewObject in _views.Values)
+            {
+                if (viewObject.GetType().GetInterface("MyBank.framework.views.interfaces.IDefeeredConstructor") != null)
+                {
+                    try
+                    {
+                        Type type = viewObject.GetType();
+                        MethodInfo methodInfo = type.GetMethod("Construct");
+                        object result = methodInfo.Invoke(viewObject, new object[] { });
+                    }
+                    catch (Exception e)
+                    {
+                        App.Console().Error(e.Message);
+                    }
+                }
+                
+            }
+        }
     }
 
     public Customer getCustomer()
@@ -97,6 +119,7 @@ public sealed class Kernal
         {
             provider.Value.Boot();
         }
+        
     }
     
     
