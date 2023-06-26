@@ -15,10 +15,15 @@ public class MainMenuView : View
         loginSuccess.SetColor(ConsoleColor.Green);
         
         AddComponent(loginSuccess);
+        
+        var fullname = new Message();
+        
+        fullname.SetColor(ConsoleColor.Yellow);
+        fullname.SetContent("--- {{Customer.Name}} ---");
+        
+        AddComponent(fullname);
 
-        var menu = new Menu();
-
-        QueueWrite("--- {{Customer.name}} ---");
+        var menu = new Menu<string>();
 
         menu.AddOption("Deposit");
         menu.AddOption("Withdraw");
