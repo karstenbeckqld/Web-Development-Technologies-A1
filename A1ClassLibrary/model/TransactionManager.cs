@@ -26,7 +26,7 @@ public class TransactionManager : IManager<Transaction>
         using var command = connection.CreateCommand();
         command.CommandText =
             """
-            insert into [Transaction] (TransactionType, AccountNumber, DestinationAccountNumber, Amount, Comment, TransactionTimeUtc) 
+            insert into [Withdraw] (TransactionType, AccountNumber, DestinationAccountNumber, Amount, Comment, TransactionTimeUtc) 
             values (@TransactionType, @AccountNumber, @DestinationAccountNumber, @Amount, @Comment, @TransactionTimeUtc);
             """;
         command.Parameters.AddWithValue(nameof(transaction.TransactionType), transaction.TransactionType);
@@ -48,7 +48,7 @@ public class TransactionManager : IManager<Transaction>
         connection.Open();
 
         var command = connection.CreateCommand();
-        command.CommandText = "select * from [Transaction]";
+        command.CommandText = "select * from [Withdraw]";
 
         var table = new DataTable();
         new SqlDataAdapter(command).Fill(table);
@@ -62,7 +62,7 @@ public class TransactionManager : IManager<Transaction>
         connection.Open();
 
         var command = connection.CreateCommand();
-        command.CommandText = "SELECT * FROM [Transaction] WHERE AccountNumber=@AccountNumber";
+        command.CommandText = "SELECT * FROM [Withdraw] WHERE AccountNumber=@AccountNumber";
         command.Parameters.AddWithValue("AccountNumber", accountNumber);
 
         return CreateTransactionList(command);
@@ -77,7 +77,7 @@ public class TransactionManager : IManager<Transaction>
         using var command = connection.CreateCommand();
         command.CommandText =
             """
-            UPDATE [Transaction] SET TransactionType = @TransactionType, AccountNumber = @AccountNumber, 
+            UPDATE [Withdraw] SET TransactionType = @TransactionType, AccountNumber = @AccountNumber, 
                                      DestinationAccountNumber = @DestinationAccountNumber, 
                                      Amount = @Amount, Comment = @Comment, TransactionTimeUtc = @TransactionTimeUtc 
             WHERE TransactionID = @TransactionID;

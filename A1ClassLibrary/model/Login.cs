@@ -1,7 +1,9 @@
+using A1ClassLibrary.Interfaces;
+
 namespace A1ClassLibrary.model;
 
 //The Login class stores data from the Login table in the database.
-public class Login
+public class Login :IModel
 {
     public Login()
     {

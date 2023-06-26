@@ -1,13 +1,15 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using A1ClassLibrary.attributes;
 using A1ClassLibrary.DBControllers;
+using A1ClassLibrary.Interfaces;
 using A1ClassLibrary.Utils;
 
 namespace A1ClassLibrary.model;
 
 // The Customer class represents a user defined type that holds data from the Customer, Account and Login tables. 
-public class Customer
+public class Customer :IModel
 {
     public Customer()
     {

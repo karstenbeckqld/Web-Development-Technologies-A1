@@ -54,12 +54,12 @@ namespace A1ClassLibrary
                     {
                         transaction.TransactionType = "D";
                         transaction.AccountNumber = account.AccountNumber;
-                        Console.WriteLine($"Transaction Type: {transaction.TransactionType}");
-                        Console.WriteLine($"Transaction AccNo: {transaction.AccountNumber}");
-                        Console.WriteLine($"Transaction DestinAcc: {transaction.DestinationAccountNumber}");
-                        Console.WriteLine($"Transaction Amount: {transaction.Amount}");
-                        Console.WriteLine($"Transaction Comment: {transaction.Comment}");
-                        Console.WriteLine($"Transaction Time: {transaction.TransactionTimeUtc}\n");
+                        Console.WriteLine($"Withdraw Type: {transaction.TransactionType}");
+                        Console.WriteLine($"Withdraw AccNo: {transaction.AccountNumber}");
+                        Console.WriteLine($"Withdraw DestinAcc: {transaction.DestinationAccountNumber}");
+                        Console.WriteLine($"Withdraw Amount: {transaction.Amount}");
+                        Console.WriteLine($"Withdraw Comment: {transaction.Comment}");
+                        Console.WriteLine($"Withdraw Time: {transaction.TransactionTimeUtc}\n");
                     }
                 }
             }

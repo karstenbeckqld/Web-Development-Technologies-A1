@@ -1,10 +1,8 @@
-using System.Collections.Specialized;
-using System.Data;
 using System.Reflection;
 using A1ClassLibrary.model;
 using A1ClassLibrary.Utils;
 using Microsoft.Data.SqlClient;
-using static System.DBNull;
+using Microsoft.IdentityModel.Tokens;
 
 namespace A1ClassLibrary.DBControllers;
 
@@ -13,7 +11,32 @@ public class Database<T>
     private readonly string _connectionString = DbConnectionString.DbConnect;
 
     private string Query { get; set; }
-    private Dictionary<string, string> SqlParameters { get; set; }
+    private Dictionary<string, object> SqlParameters { get; set; }
+
+    private readonly Dictionary<string, string> _where;
+
+    private readonly Type _objectType;
+
+    private readonly string _tableName;
+
+    public Database()
+    {
+        _where = new Dictionary<string, string>();
+        SqlParameters = new Dictionary<string, object>();
+        _objectType = typeof(T);
+        _tableName = _objectType.Name;
+    }
+
+    public Database<T> Where(string key, string value)
+    {
+        _where.Add(key, value);
+        return this;
+    }
+
+    public string GetQuery()
+    {
+        return Query;
+    }
 
     public bool CheckForDatabaseDataPresence()
     {
@@ -26,84 +49,29 @@ public class Database<T>
         return count > 0;
     }
 
-    public List<T> GetAllEntities()
+    public Database<T> GetAll()
     {
-        var result = new List<T>();
-
-        // Establish SQL Server connection
-        using var connection = new SqlConnection(_connectionString);
-
-        // We set the table name to the name of the type which has been set up to match.
-        var tableName = typeof(T).Name;
-
         // Here we define the command and query and open the connection.
-        var query = $"SELECT * FROM [{tableName}]";
-        var command = new SqlCommand(query, connection);
-        connection.Open();
+        Query = "SELECT * FROM [" + _tableName + "]";
 
-        // Now we call a reader to read the data from the database.
-        var reader = command.ExecuteReader();
+        PropertyInfo[] properties;
 
-
-        while (reader.Read())
+        if (_objectType == typeof(Customer) || _objectType == typeof(Account))
         {
-            // As long as the reader receives data, we create a new instance of an object of type T.
-            T obj = Activator.CreateInstance<T>();
+            properties = _objectType.GetFilteredProperties();
+        }
+        else
+        {
+            properties = _objectType.GetProperties();
+        }
 
-            // We save the type of T in the objectType variable.
-            //var objectType = obj.GetType();
-
-            // Here we apply a filter for properties we don't need and that would make the server crash. This is because,
-            // for example, the Customer class contains an Accounts and Login property which are not part of the Customer
-            // table in the database. To avoid for these properties to get read, we filter them out beforehand.
-            //var pInfo = objectType.GetFilteredProperties();
-            var pInfo = obj.GetType().GetProperties();
-
-            // Now we simply loop through the data in the database and add it to the object instance.
-            foreach (var property in pInfo)
+        foreach (var property in properties)
+        {
+            if (property != null)
             {
-                if (reader[property.Name] != Value)
-                {
-                    property.SetValue(obj, reader[property.Name]);
-                }
+                  SqlParameters.Add(property.Name, property.Name);
             }
-
-            // Now we add the object instance to the list.
-            result.Add(obj);
-        }
-
-        reader.Close();
-        return result;
-    }
-
-    public Database<T> GetEntity(string key, string value)
-    {
-        var t = typeof(T);
-        string table = t.Name;
-        string query = $"SELECT ";
-
-        var parameters = new Dictionary<string, string>();
-        parameters.Add(key, value);
-
-        //var pInfo = t.GetFilteredProperties();
-        var pInfo = t.GetProperties();
-
-        foreach (var p in pInfo)
-        {
-            query += p.Name + ",";
-        }
-
-        query = query.TrimEnd(',') + " FROM [" + table + "] WHERE " + parameters.FirstOrDefault().Key + " = @" +
-                parameters.FirstOrDefault().Key;
-
-        Query = query;
-        SqlParameters = parameters;
-
-
-        Console.WriteLine(query);
-        foreach (var parameter in parameters)
-        {
-            Console.WriteLine(parameter.Key + ", " + parameter.Value);
+          
         }
 
         return this;
@@ -115,27 +83,25 @@ public class Database<T>
         var table = t.Name;
         var query = "INSERT INTO [" + table + "] (";
         var values = " VALUES (";
-        var parameters = new Dictionary<string, string>();
 
-        var pInfo = t.GetFilteredProperties();
 
-        foreach (var p in pInfo)
+        var properties = t.GetFilteredProperties();
+
+        foreach (var property in properties)
         {
-            query += p.Name + ",";
-            values += "@" + p.Name + ",";
-            parameters.Add("@" + p.Name,
-                p.GetValue(model) != null ? p.GetValue(model)?.ToString() : Value.ToString());
+            query += property.Name + ",";
+            values += "@" + property.Name + ",";
+            SqlParameters.Add(property.Name, property.GetValue(model));
         }
 
         query = query.TrimEnd(',') + ")";
         values = values.TrimEnd(',') + ")";
 
         Query = query + values;
-        SqlParameters = parameters;
 
 
         Console.WriteLine(Query);
-        foreach (var parameter in parameters)
+        foreach (var parameter in SqlParameters)
         {
             Console.WriteLine(parameter.Key + ": " + parameter.Value);
         }
@@ -149,25 +115,21 @@ public class Database<T>
         var table = t.Name;
         var query = "UPDATE " + table + " SET ";
 
-        var parameters = new Dictionary<string, string>();
-
         var pInfo = t.GetFilteredProperties();
 
         foreach (var p in pInfo)
         {
             query += p.Name + "=" + "@" + p.Name + ",";
-            parameters.Add("@" + p.Name,
-                p.GetValue(model) != null ? p.GetValue(model)?.ToString() : Value.ToString());
+            SqlParameters.Add("@" + p.Name, p.GetValue(model));
         }
 
         query = query.TrimEnd(',') + " WHERE " + pInfo[0].Name + "=" + "@" + pInfo[0].Name;
 
         Query = query;
-        SqlParameters = parameters;
 
 
         Console.WriteLine(query);
-        foreach (var parameter in parameters)
+        foreach (var parameter in SqlParameters)
         {
             Console.WriteLine(parameter.Key + ", " + parameter.Value);
         }
@@ -175,89 +137,61 @@ public class Database<T>
         return this;
     }
 
-    public int ExecuteWithBool(bool flag)
+    public int Execute()
     {
-        int updates = 0;
-        // Establish SQL Server connection
         using var connection = new SqlConnection(_connectionString);
         connection.Open();
 
-        if (flag)
+        using var command = connection.CreateCommand();
+
+        command.CommandText = Query;
+        foreach (var parameter in SqlParameters)
         {
-            using var transaction = connection.BeginTransaction();
-
-
-            // Here we define the command.
-            using var command = connection.CreateCommand();
-
-            command.CommandText = Query;
-            foreach (var parameter in SqlParameters)
-            {
-                command.Parameters.AddWithValue(parameter.Key, parameter.Value ?? (object)Value);
-            }
-
-            command.Transaction = transaction;
-            updates = command.ExecuteNonQuery();
-            
-            transaction.Commit();
-        }
-        else
-        {
-            using var command = connection.CreateCommand();
-
-            command.CommandText = Query;
-            foreach (var parameter in SqlParameters)
-            {
-                command.Parameters.AddWithValue(parameter.Key, parameter.Value ?? (object)Value);
-            }
-
-            updates = command.ExecuteNonQuery();
+            command.Parameters.AddWithValue(parameter.Key, parameter.Value ?? DBNull.Value);
         }
 
+        var updates = command.ExecuteNonQuery();
 
         return updates;
     }
 
-    public List<T> ExecuteWithList()
+    public List<T> GetResult()
     {
-        var list = new List<T>();
-        // Establish SQL Server connection
         using var connection = new SqlConnection(_connectionString);
-        connection.Open();
 
-        // Here we define the command.
         using var command = connection.CreateCommand();
+
+        if (!_where.IsNullOrEmpty())
+        {
+            Query += " WHERE " + _where.FirstOrDefault().Key + " = @" + _where.FirstOrDefault().Key;
+        }
+
+        connection.Open();
 
         command.CommandText = Query;
 
-        foreach (var parameter in SqlParameters)
+        Console.WriteLine(Query);
+
+        if (!_where.IsNullOrEmpty())
         {
-            command.Parameters.AddWithValue(parameter.Key, parameter.Value ?? (object)Value);
+            command.Parameters.AddWithValue(_where.FirstOrDefault().Key, _where.FirstOrDefault().Value);
+
+            Console.WriteLine(_where.FirstOrDefault().Key + " = " + _where.FirstOrDefault().Value);
+        }
+        else
+        {
+            foreach (var parameter in SqlParameters)
+            {
+                if (parameter.Value != null)
+                {
+                    command.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                }
+
+
+                Console.WriteLine(parameter.Key + " = " + parameter.Value);
+            }
         }
 
-
-        using var adapter = new SqlDataAdapter(command);
-
-        return command.GetDataTable().Select().Select(row =>
-        {
-            var obj = Activator.CreateInstance<T>();
-            /*var objectType = obj.GetType();
-            var pInfo = objectType.GetFilteredProperties();*/
-            var pInfo = obj.GetType().GetProperties();
-            foreach (var p in pInfo)
-            {
-                if (p.Name != null)
-                {
-                     p.SetValue(obj, row[p.Name]);
-                } else if (p.Name == DBNull.Value.ToString())
-                {
-                    p.SetValue(obj, null);
-                }
-               
-            }
-
-
-            return obj;
-        }).ToList();
+        return CreateDataTable.ReturnRows<T>(command, _objectType);
     }
 }

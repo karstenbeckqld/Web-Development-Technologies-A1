@@ -1,10 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
+using A1ClassLibrary.attributes;
+using A1ClassLibrary.Interfaces;
 using A1ClassLibrary.Utils;
 
 namespace A1ClassLibrary.model;
 
-// The Transaction class represents a user defined type that holds data from the Transaction table in the database. 
-public class Transaction
+// The Withdraw class represents a user defined type that holds data from the Withdraw table in the database. 
+public class Transaction : IModel
 {
     public Transaction()
     {
@@ -29,6 +31,8 @@ public class Transaction
     public decimal Amount { get; set; }  
     public string Comment { get; set; }
     public DateTime TransactionTimeUtc { get; set; }
+    
+    [SkipProperty] public int CustomerID { get; set; }
 
     public override string ToString()
     {
@@ -40,4 +44,6 @@ public class Transaction
                $"Comment: {Comment} - " +
                $"TransactionTimeUtc: {TransactionTimeUtc}";
     }
+
+  
 }

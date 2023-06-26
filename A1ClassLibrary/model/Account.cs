@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using A1ClassLibrary.attributes;
 using A1ClassLibrary.DBControllers;
+using A1ClassLibrary.Interfaces;
 using A1ClassLibrary.model;
 using A1ClassLibrary.Utils;
 
 namespace A1ClassLibrary.model;
 
 // The Account class represents a user defined type that holds data from the Account table in the database. 
-public class Account
+public class Account: IModel
 {
     public Account()
     {

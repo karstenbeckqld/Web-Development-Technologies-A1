@@ -32,20 +32,26 @@ public class Program
         // Now we can pass these instances to the DataWebService's static GetAndAddCustomers method and load customers
         // to the database if it not already happened before.  
         DataWebService.GetAndAddCustomers(customerManager, accountManager, loginManager, transactionManager);
-
-        //var sourceAccount = new Database<Account>().GetEntity("AccountNumber", "4100").ExecuteWithList();
-        //var destinationAccount = new Database<Account>().GetEntity("AccountNumber", "4101").ExecuteWithList();
-
-        //var login = new Database<Login>().GetEntity("LoginID","12345678").ExecuteWithList();
-        var test = new Database<Transaction>().GetEntity("AccountNumber", "4101").ExecuteWithList();
-
-        foreach (var item in test)
-        {
-            Console.WriteLine(item.ToString());
-        }
-        //Console.WriteLine(login[0].ToString());
-       // PerformInterAccountTransaction.Transaction(sourceAccount[0],destinationAccount[0],25,"Transfer by PIAT");
         
+
+        var sourceAccount = new Database<Account>().GetAll().Where("AccountNumber", "4100").GetResult();
+        var destinationAccount = new Database<Account>().GetAll().Where("AccountNumber", "4101").GetResult();
+
+        // Console.WriteLine("\nSelected Accounts: \n" + sourceAccount[0] + "\n" + destinationAccount[0] + "\n");
+
+        // var deposit = PerformDeposit.Deposit(sourceAccount[0], 100, "Here is some money.");
+        // Console.WriteLine($"Deposit successful: {deposit}");
+        //
+        // Console.WriteLine();
+        //
+        var transaction =
+            PerformTransaction.Transaction(sourceAccount[0], destinationAccount[0], 80, "");
+        Console.WriteLine($"Transfer successful: {transaction}");
+        //
+        // Console.WriteLine();
+
+        // var withdrawal = PerformWithdrawal.Withdraw(sourceAccount[0], 20, "");
+        // Console.WriteLine($"Withdrawal successful: {withdrawal}");
     }
 }
 
