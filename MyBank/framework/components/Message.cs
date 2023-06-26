@@ -8,6 +8,7 @@ public class Message : Component
     private string _targetVariable;
     private ConsoleColor _color;
     private string _content;
+    private bool _clearAfterWrite;
 
 
     public void SetVariableKey(string key)
@@ -29,9 +30,14 @@ public class Message : Component
             {
                 _content = _content.Replace("{{Customer.Name}}", App.GetCurrentUser().Name);
             }
+            
             Console.WriteLine(_content);
             Console.ResetColor();
-
+            
+            if (_clearAfterWrite)
+            {
+             _view.ClearVariable(_targetVariable);   
+            }
             return null;
         }
         
@@ -46,7 +52,11 @@ public class Message : Component
         }
         
         Console.ResetColor();
-
+        
+        if (_clearAfterWrite)
+        {
+            _view.ClearVariable(_targetVariable);   
+        }
         return null;
     }
 
@@ -63,6 +73,11 @@ public class Message : Component
     public string GetKey()
     {
         return _targetVariable;
+    }
+
+    public void ClearAfterWrite(bool clear)
+    {
+        _clearAfterWrite = clear;
     }
     
 }
