@@ -42,10 +42,10 @@ public struct PerformTransaction
                 AccountType = sourceAccount.AccountType
             }
             .CheckMinBalance();
-        
+
         if (balanceCheck)
         {
-            var transactions = new List<Dictionary<string, object>>();
+            var transactions = new List<Dictionary<string, Dictionary<string, object>>>();
 
             sourceAccount.Balance -= amount;
             destinationAccount.Balance += amount;
@@ -56,7 +56,10 @@ public struct PerformTransaction
                     "Service Charge", utcDate);
 
                 sourceAccount.Balance -= serviceCharge;
-                transactions.Add(new Dictionary<string, object> { { "INSERT", sourceAccountServiceFee } });
+                transactions.Add(new Dictionary<string, Dictionary<string, object>>
+                {
+                    { "INSERT", new Dictionary<string, object> { { "Transaction", sourceAccountServiceFee } } }
+                });
             }
 
             var sourceAccountTransaction = new Transaction("T", sourceAccount.AccountNumber,
@@ -64,11 +67,19 @@ public struct PerformTransaction
 
             var destinationAccountTransaction =
                 new Transaction("T", destinationAccount.AccountNumber, null, amount, comment, utcDate);
-            
-            transactions.Add(new Dictionary<string, object> { { "UPDATE", sourceAccount } });
-            transactions.Add(new Dictionary<string, object> { { "UPDATE", destinationAccount } });
-            transactions.Add(new Dictionary<string, object> { { "INSERT", sourceAccountTransaction } });
-            transactions.Add(new Dictionary<string, object> { { "INSERT", destinationAccountTransaction } });
+
+            transactions.Add(new Dictionary<string, Dictionary<string, object>>
+                { { "UPDATE", new Dictionary<string, object> { { "Account", sourceAccount } } } });
+            transactions.Add(new Dictionary<string, Dictionary<string, object>>
+                { { "UPDATE", new Dictionary<string, object> { { "Account", destinationAccount } } } });
+            transactions.Add(new Dictionary<string, Dictionary<string, object>>
+            {
+                { "INSERT", new Dictionary<string, object> { { "Transaction", sourceAccountTransaction } } }
+            });
+            transactions.Add(new Dictionary<string, Dictionary<string, object>>
+            {
+                { "INSERT", new Dictionary<string, object> { { "Transaction", destinationAccountTransaction } } }
+            });
 
             result = ExecuteTransaction.Execute(transactions);
         }

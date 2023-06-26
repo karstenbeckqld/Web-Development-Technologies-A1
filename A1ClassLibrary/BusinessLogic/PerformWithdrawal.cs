@@ -38,8 +38,8 @@ public static class PerformWithdrawal
 
         if (balanceCheck)
         {
-            var transactions = new List<Dictionary<string, object>>();
-            
+            var transactions = new List<Dictionary<string, Dictionary<string, object>>>();
+
             sourceAccount.Balance -= amount;
 
             if (numberOfSourceAccountTransactions >= 2)
@@ -48,17 +48,24 @@ public static class PerformWithdrawal
                     "Service Charge", utcDate);
 
                 sourceAccount.Balance -= serviceCharge;
-                
-                transactions.Add(new Dictionary<string, object>{{"INSERT", sourceAccountServiceFee}});
+
+                transactions.Add(new Dictionary<string, Dictionary<string, object>>
+                {
+                    { "INSERT", new Dictionary<string, object> { { "Transaction", sourceAccountServiceFee } } }
+                });
             }
 
             var sourceAccountTransaction = new Transaction("W", sourceAccount.AccountNumber,
                 null, amount, comment, utcDate);
 
-            transactions.Add(new Dictionary<string, object>{{"UPDATE", sourceAccount}});
-            
-            transactions.Add(new Dictionary<string, object>{{"INSERT", sourceAccountTransaction}});
-            
+            transactions.Add(new Dictionary<string, Dictionary<string, object>>
+                { { "UPDATE", new Dictionary<string, object> { { "Account", sourceAccount } } } });
+
+            transactions.Add(new Dictionary<string, Dictionary<string, object>>
+            {
+                { "INSERT", new Dictionary<string, object> { { "Transaction", sourceAccountTransaction } } }
+            });
+
             result = ExecuteTransaction.Execute(transactions);
         }
 

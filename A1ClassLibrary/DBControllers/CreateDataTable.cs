@@ -45,8 +45,7 @@ public static class CreateDataTable
                     property.SetValue(obj, row.Field<object>(property.Name));
                 }
             }
-
-
+            
             list.Add(obj);
         }
 

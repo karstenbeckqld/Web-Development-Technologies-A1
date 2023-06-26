@@ -24,20 +24,26 @@ public class Program
 
         // To insert the data to the database, we call create new instances of the different manager classes, passing
         // them the connection string to be able to access the database.
-        var customerManager = new CustomerManager(connectionString);
-        var accountManager = new AccountManager();
-        var loginManager = new LoginManager(connectionString);
-        var transactionManager = new TransactionManager(connectionString);
+        // var customerManager = new CustomerManager(connectionString);
+        // var accountManager = new AccountManager();
+        // var loginManager = new LoginManager(connectionString);
+        // var transactionManager = new TransactionManager(connectionString);
 
         // Now we can pass these instances to the DataWebService's static GetAndAddCustomers method and load customers
         // to the database if it not already happened before.  
-        DataWebService.GetAndAddCustomers(customerManager, accountManager, loginManager, transactionManager);
+        DataWebService.GetAndAddCustomers();
         
 
-        var sourceAccount = new Database<Account>().GetAll().Where("AccountNumber", "4300").GetResult();
-        var destinationAccount = new Database<Account>().GetAll().Where("AccountNumber", "4101").GetResult();
+        var accounts1 = new Database<Account>().GetAll().Where("AccountNumber", "4300").GetResult();
+        var accounts2 = new Database<Account>().GetAll().Where("AccountNumber", "4101").GetResult();
+        var accounts3 = new Database<Account>().GetAll().GetResult();
 
-        Console.WriteLine("\nSelected Accounts: \n" + sourceAccount[0] + "\n" + destinationAccount[0] + "\n");
+        Console.WriteLine("\nSelected Accounts: \n" + accounts1[0] + "\n" + accounts2[0] + "\n");
+        foreach (var account in accounts3)
+        {
+             Console.WriteLine($"Accounts:\n {account}");
+        }
+       
 
         // var deposit = PerformDeposit.Deposit(sourceAccount[0], 100, "Here is some money.");
         // Console.WriteLine($"Deposit successful: {deposit}");

@@ -10,7 +10,7 @@ public static class PerformDeposit
 {
     public static bool Deposit(Account destinationAccount, decimal amount, string comment)
     {
-        var transactions = new List<Dictionary<string, object>>();
+        var transactions = new List<Dictionary<string, Dictionary<string,object>>>();
         
         var result = false;
 
@@ -25,10 +25,9 @@ public static class PerformDeposit
 
         var destinationAccountDeposit = new Transaction("D", destinationAccount.AccountNumber,
             null, amount, comment, utcDate);
-
         
-        transactions.Add(new Dictionary<string, object>{{"UPDATE",destinationAccount}});
-        transactions.Add(new Dictionary<string, object>{{"INSERT",destinationAccountDeposit}});
+        transactions.Add(new Dictionary<string, Dictionary<string, object>> { { "UPDATE", new Dictionary<string, object>{{"Account",destinationAccount}} } });
+        transactions.Add(new Dictionary<string, Dictionary<string, object>> { { "INSERT", new Dictionary<string, object>{{"Transaction",destinationAccountDeposit}} } });
 
         result = ExecuteTransaction.Execute(transactions);
 

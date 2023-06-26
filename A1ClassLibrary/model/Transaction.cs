@@ -6,7 +6,7 @@ using A1ClassLibrary.Utils;
 namespace A1ClassLibrary.model;
 
 // The Withdraw class represents a user defined type that holds data from the Withdraw table in the database. 
-public class Transaction : IModel
+public class Transaction 
 {
     public Transaction()
     {
@@ -31,8 +31,6 @@ public class Transaction : IModel
     public decimal Amount { get; set; }  
     public string Comment { get; set; }
     public DateTime TransactionTimeUtc { get; set; }
-    
-    [SkipProperty] public int CustomerID { get; set; }
 
     public override string ToString()
     {

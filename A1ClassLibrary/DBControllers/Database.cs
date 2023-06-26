@@ -8,7 +8,7 @@ namespace A1ClassLibrary.DBControllers;
 
 public class Database<T>
 {
-    private static readonly string _connectionString = DbConnectionString.DbConnect;
+    private readonly string _connectionString = DbConnectionString.DbConnect;
 
     private string Query { get; set; }
     private Dictionary<string, object> SqlParameters { get; set; }
@@ -19,12 +19,15 @@ public class Database<T>
 
     private readonly string _tableName;
 
+    private int _extenalCustomerId;
+
     public Database()
     {
         _where = new Dictionary<string, string>();
         SqlParameters = new Dictionary<string, object>();
         _objectType = typeof(T);
         _tableName = _objectType.Name;
+        _extenalCustomerId = 0;
     }
 
     public Database<T> Where(string key, string value)
@@ -33,12 +36,13 @@ public class Database<T>
         return this;
     }
 
-    public string GetQuery()
+    public Database<T> SetCustomerId(int value)
     {
-        return Query;
+        _extenalCustomerId = value;
+        return this;
     }
 
-    public static bool CheckForDatabaseDataPresence()
+    public bool CheckForDatabaseDataPresence()
     {
         using var connection = new SqlConnection(_connectionString);
         connection.Open();
@@ -69,9 +73,8 @@ public class Database<T>
         {
             if (property != null)
             {
-                  SqlParameters.Add(property.Name, property.Name);
+                SqlParameters.Add(property.Name, property.Name);
             }
-          
         }
 
         return this;
@@ -80,18 +83,31 @@ public class Database<T>
     public Database<T> Insert(T model)
     {
         var t = typeof(T);
-        var table = t.Name;
-        var query = $"INSERT INTO [{table}] (";
-        var values = " VALUES (";
 
+        var table = t.Name;
+
+        var query = $"INSERT INTO [{table}] (";
+
+        var values = " VALUES (";
 
         var properties = t.GetFilteredProperties();
 
         foreach (var property in properties)
         {
             query += property.Name + ",";
+            
+            Console.WriteLine(query);
+            
             values += "@" + property.Name + ",";
+            
+            Console.WriteLine(values);
+            
             SqlParameters.Add(property.Name, property.GetValue(model));
+        }
+        
+        if (_extenalCustomerId > 0)
+        {
+            SqlParameters["CustomerID"] = _extenalCustomerId;
         }
 
         query = query.TrimEnd(',') + ")";
@@ -100,11 +116,11 @@ public class Database<T>
         Query = query + values;
 
 
-        // Console.WriteLine(Query);
-        // foreach (var parameter in SqlParameters)
-        // {
-        //     Console.WriteLine(parameter.Key + ": " + parameter.Value);
-        // }
+        Console.WriteLine(Query);
+        foreach (var parameter in SqlParameters)
+        {
+            Console.WriteLine(parameter.Key + ": " + parameter.Value);
+        }
 
         return this;
     }
@@ -151,6 +167,13 @@ public class Database<T>
         }
 
         var updates = command.ExecuteNonQuery();
+
+
+        // Console.WriteLine($"Query: {Query}\n");
+        // foreach (var parameter in SqlParameters)
+        // {
+        //     Console.WriteLine($"Parameters: Key: {parameter.Key}, Value: {parameter.Value}");
+        // }
 
         return updates;
     }

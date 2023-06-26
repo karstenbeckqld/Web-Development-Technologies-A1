@@ -5,36 +5,67 @@ namespace A1ClassLibrary.core;
 
 public static class ExecuteTransaction
 {
-    public static bool Execute(List<Dictionary<string, object>> transactions)
+    public static bool Execute(List<Dictionary<string, Dictionary<string,object>>> transactions)
     {
         var count = 0;
-        foreach (var dictionary in transactions)
+        
+        foreach (var keyValuePair in transactions.SelectMany(dictionary => dictionary))
         {
-            foreach (var keyValuePair in dictionary)
+            switch (keyValuePair.Key)
             {
-                switch (keyValuePair.Key)
-                {
-                    case "INSERT":
+                case "INSERT":
 
-                        var type = keyValuePair.Value.GetType();
-                        var obj = Activator.CreateInstance(type);
+                    foreach (var (key,obj) in keyValuePair.Value)
+                    {
+                        switch (key)
+                        {
+                            case "Account":
+                                count = new Database<Account>().Insert((Account)obj).Execute();
+                                break;
+                            case "Transaction":
+                                count = new Database<Transaction>().Insert((Transaction)obj).Execute();
+                                break;
+                            case "Customer":
+                                count = new Database<Customer>().Insert((Customer)obj).Execute();
+                                break;
+                            case "Login":
+                                count = new Database<Login>().Insert((Login)obj).Execute();
+                                break;
+                            default:
+                                Console.WriteLine("Nothing inserted into database.");
+                                break;
+                        }
+                    }
+                    break;
+                    
+                    
+                case "UPDATE":
                         
-                        Console.WriteLine(obj.GetType().Name);
-                        Console.WriteLine($"\nType: {keyValuePair.Value.GetType().Name}");
-                        Console.WriteLine($"Key: {keyValuePair.Key}, Value: {keyValuePair.Value}\n");
-
-                        count += new Database<Transaction>().Insert((Transaction)keyValuePair.Value).Execute();
-                        break;
-                    case "UPDATE":
-
-                        Console.WriteLine($"\nType: {keyValuePair.Value.GetType().Name}");
-                        Console.WriteLine($"Key: {keyValuePair.Key}, Value: {keyValuePair.Value}\n");
-
-                        count += new Database<Account>().Update((Account)keyValuePair.Value).Execute();
-                        break;
-                }
+                    foreach (var (key,obj) in keyValuePair.Value)
+                    {
+                        switch (key)
+                        {
+                            case "Account":
+                                count = new Database<Account>().Update((Account)obj).Execute();
+                                break;
+                            case "Transaction":
+                                count = new Database<Transaction>().Update((Transaction)obj).Execute();
+                                break;
+                            case "Customer":
+                                count = new Database<Customer>().Update((Customer)obj).Execute();
+                                break;
+                            case "Login":
+                                count = new Database<Login>().Update((Login)obj).Execute();
+                                break;
+                            default:
+                                Console.WriteLine("Nothing inserted into database.");
+                                break;
+                        }
+                    }
+                    break;
             }
         }
+        
         return count > 0;
     }
 }

@@ -9,7 +9,7 @@ using A1ClassLibrary.Utils;
 namespace A1ClassLibrary.model;
 
 // The Account class represents a user defined type that holds data from the Account table in the database. 
-public class Account: IModel
+public class Account
 {
     public Account()
     {

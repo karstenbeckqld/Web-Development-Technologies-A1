@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="images\" />
+    <Folder Include="view\" />
   </ItemGroup>
 
   <ItemGroup>

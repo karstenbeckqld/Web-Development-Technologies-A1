@@ -14,12 +14,11 @@ public static class DataWebService
     // The GetAndAddCustomers method takes the different managers classes for customers, accounts, transactions and
     // logins as parameters. These contain the individual database access methods.
 
-    public static void GetAndAddCustomers(CustomerManager customerManager, AccountManager accountManager,
-        LoginManager loginManager, TransactionManager transactionManager)
+    public static void GetAndAddCustomers()
     {
         // If the database already contains customers, we assume it has been written before and don't proceed with the
         // process of adding records.
-        if (Database<Customer>.CheckForDatabaseDataPresence())
+        if (new Database<Customer>().CheckForDatabaseDataPresence())
         {
             return;
         }
@@ -31,18 +30,15 @@ public static class DataWebService
 
         foreach (var customer in customers)
         {
-            // First we call the InsertCustomer method from the CustomerManager to insert the customer data into the
-            // database.
-            customerManager.Insert(customer);
+            // First we call the Insert method from the Database class with a Customer object to insert the customer
+            // data into the database.
+            new Database<Customer>().Insert(customer).Execute();
+
+            // Because the Login table has a CustomerID column which is not set by the JSON file, we use the SetCustomerId
+            // method in the Database class to first set this value based on the customer Id from the customer object and
+            // then call the Insert method passing the Login object. 
+            new Database<Login>().SetCustomerId(customer.CustomerID).Insert(customer.Login).Execute();
             
-
-            // Because the Login table has a CustomerID column which is not set by the JSON,we set this value here based
-            // on the Customer table.
-            loginManager.CustomerID = customer.CustomerID;
-
-            // Now we call the Insert method from the LoginManager class to add the login data to the database. 
-            loginManager.Insert(customer.Login);
-
             foreach (var account in customer.Accounts)
             {
                 
@@ -55,7 +51,7 @@ public static class DataWebService
                 account.Balance += account.Transactions.Sum(transaction => transaction.Amount);
                 
                 // Finally, we add the account data to the database. 
-                accountManager.Insert(account);
+                new Database<Account>().Insert(account).Execute();
 
                 // The next loop adds the transactions to the database. 
                 foreach (var transaction in account.Transactions)
@@ -65,15 +61,10 @@ public static class DataWebService
                     // property to D for deposit. The same is true for the AccountNumber property. 
                     transaction.TransactionType = "D";
                     transaction.AccountNumber = account.AccountNumber;
-                    
-                    // Because the initial transactions are all deposits for the respective account, we have to set the
-                    // DestinationAccount property to null. As the TransactionManager handles this by using the 
-                    // command.Parameters.AddWithValue(nameof(transaction.DestinationAccountNumber),transaction.DestinationAccountNumber ?? (object)DBNull.Value);
-                    // property, we don't have to do anything here. 
 
-                    // Now we call the InsertTransaction method of the TransactionManager class to write the data to the
-                    // database. 
-                    transactionManager.Insert(transaction);
+                    // Now we call the Insert method of the Database class passing a Transaction object to write the
+                    // data to the database.
+                    new Database<Transaction>().Insert(transaction).Execute();
                 }
             }
         }
