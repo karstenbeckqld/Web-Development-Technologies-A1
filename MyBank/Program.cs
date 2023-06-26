@@ -50,6 +50,8 @@ public class Program
         
         App.RegisterView(new MainMenuView());
         App.RegisterView(new LoginView());
+        App.RegisterView(new MyStatementsView());
+        App.RegisterView(new AccountSelectionView());
 
         //|==============================================|
         //|                    START                     |
