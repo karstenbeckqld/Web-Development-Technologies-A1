@@ -21,7 +21,7 @@ public class MainMenuController
 
     public void MyStatement()
     {
-        
+        App.SwitchView("AccountSelectionView");
     }
 
     public void ListAccounts()
@@ -31,7 +31,6 @@ public class MainMenuController
 
     public void Logout()
     {
-        Console.Clear();
         App.SetCurrentUser(null);
         App.SetViewVariable("LoginView","LogoutSuccess","You have been successfully logged out.");
         App.SwitchView("LoginView");
