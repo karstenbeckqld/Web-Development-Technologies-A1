@@ -1,4 +1,5 @@
 using System.Reflection;
+
 using EasyDB.attributes;
 
 namespace EasyDB.extensions;

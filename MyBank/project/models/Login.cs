@@ -1,9 +1,15 @@
+<<<<<<< HEAD:A1ClassLibrary/model/Login.cs
+using A1ClassLibrary.Interfaces;
+
+namespace A1ClassLibrary.model;
+=======
 using EasyDB.attributes;
 
 namespace MyBank.project.models;
+>>>>>>> main:MyBank/project/models/Login.cs
 
 //The Login class stores data from the Login table in the database.
-public class Login
+public class Login 
 {
 
     public Login()

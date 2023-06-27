@@ -23,8 +23,17 @@
   </ItemGroup>
 
   <ItemGroup>
+<<<<<<< HEAD:s3893749-s3912792-a1/s3893749-s3912792-a1.csproj
+    <Folder Include="images\" />
+    <Folder Include="view\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\A1ClassLibrary\A1ClassLibrary.csproj" />
+=======
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
     <ProjectReference Include="..\EasyDB\EasyDB.csproj" />
+>>>>>>> main:MyBank/MyBank.csproj
   </ItemGroup>
 
 </Project>

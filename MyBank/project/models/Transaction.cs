@@ -1,30 +1,35 @@
 using System.Diagnostics.CodeAnalysis;
+<<<<<<< HEAD:A1ClassLibrary/model/Transaction.cs
+using A1ClassLibrary.attributes;
+using A1ClassLibrary.Interfaces;
+using A1ClassLibrary.Utils;
+=======
 using EasyDB.attributes;
+>>>>>>> main:MyBank/project/models/Transaction.cs
 
 namespace MyBank.project.models;
 
-// The Transaction class represents a user defined type that holds data from the Transaction table in the database. 
-public class Transaction
+// The Withdraw class represents a user defined type that holds data from the Withdraw table in the database. 
+public class Transaction 
 {
     public Transaction()
     {
-        
     }
 
     [SetsRequiredMembers]
-    public Transaction(char transactionType, int accountNumber, int? destinationAccountNumber, decimal amount,
+    public Transaction(string transactionType, int accountNumber, int? destinationAccountNumber, decimal amount,
         string comment, DateTime transactionTimeUtc)
     {
         TransactionType = transactionType;
         AccountNumber = accountNumber;
-        DestinationAccountNumber = destinationAccountNumber ?? null;
+        DestinationAccountNumber = destinationAccountNumber;
         Amount = amount;
-        Comment = comment ?? null;
+        Comment = comment;
         TransactionTimeUtc = transactionTimeUtc;
     }
     
     [SkipProperty] public int TransactionID { get; set; }
-    public required char TransactionType { get; set; }
+    public required string TransactionType { get; set; }
     public required int AccountNumber { get; set; }
     public int? DestinationAccountNumber { get; set; }
     public decimal Amount { get; set; }  
@@ -41,4 +46,6 @@ public class Transaction
                $"Comment: {Comment} - " +
                $"TransactionTimeUtc: {TransactionTimeUtc}";
     }
+
+  
 }
