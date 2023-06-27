@@ -10,30 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0-preview.5.23280.8" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="SimpleHashing.Net" Version="2.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-<<<<<<< HEAD:s3893749-s3912792-a1/s3893749-s3912792-a1.csproj
-    <Folder Include="images\" />
-    <Folder Include="view\" />
+    <ProjectReference Include="..\EasyDB\EasyDB.csproj" />
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\A1ClassLibrary\A1ClassLibrary.csproj" />
-=======
-    <ProjectReference Include="..\Utilities\Utilities.csproj" />
-    <ProjectReference Include="..\EasyDB\EasyDB.csproj" />
->>>>>>> main:MyBank/MyBank.csproj
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
   </ItemGroup>
 
 </Project>

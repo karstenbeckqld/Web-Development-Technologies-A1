@@ -1,11 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-<<<<<<< HEAD:A1ClassLibrary/model/Transaction.cs
-using A1ClassLibrary.attributes;
-using A1ClassLibrary.Interfaces;
-using A1ClassLibrary.Utils;
-=======
 using EasyDB.attributes;
->>>>>>> main:MyBank/project/models/Transaction.cs
 
 namespace MyBank.project.models;
 

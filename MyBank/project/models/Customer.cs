@@ -1,13 +1,5 @@
-#nullable enable
 using System.Diagnostics.CodeAnalysis;
-<<<<<<< HEAD:A1ClassLibrary/model/Customer.cs
-using A1ClassLibrary.attributes;
-using A1ClassLibrary.DBControllers;
-using A1ClassLibrary.Interfaces;
-using A1ClassLibrary.Utils;
-=======
 using EasyDB.attributes;
->>>>>>> main:MyBank/project/models/Customer.cs
 
 namespace MyBank.project.models;
 

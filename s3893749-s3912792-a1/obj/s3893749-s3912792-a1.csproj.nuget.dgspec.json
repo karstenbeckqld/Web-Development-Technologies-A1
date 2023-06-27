@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/s3893749-s3912792-a1/s3893749-s3912792-a1.csproj": {}
+    "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\s3893749-s3912792-a1\\s3893749-s3912792-a1.csproj": {}
   },
   "projects": {
-    "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/A1ClassLibrary/A1ClassLibrary.csproj": {
+    "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\A1ClassLibrary\\A1ClassLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/A1ClassLibrary/A1ClassLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\A1ClassLibrary\\A1ClassLibrary.csproj",
         "projectName": "A1ClassLibrary",
-        "projectPath": "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/A1ClassLibrary/A1ClassLibrary.csproj",
-        "packagesPath": "/Users/karstenbeck/.nuget/packages/",
-        "outputPath": "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/A1ClassLibrary/obj/",
+        "projectPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\A1ClassLibrary\\A1ClassLibrary.csproj",
+        "packagesPath": "C:\\Users\\karstenbeck\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\A1ClassLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/karstenbeck/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\karstenbeck\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -63,34 +65,42 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.304/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/s3893749-s3912792-a1/s3893749-s3912792-a1.csproj": {
+    "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\s3893749-s3912792-a1\\s3893749-s3912792-a1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/s3893749-s3912792-a1/s3893749-s3912792-a1.csproj",
+        "projectUniqueName": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\s3893749-s3912792-a1\\s3893749-s3912792-a1.csproj",
         "projectName": "s3893749-s3912792-a1",
-        "projectPath": "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/s3893749-s3912792-a1/s3893749-s3912792-a1.csproj",
-        "packagesPath": "/Users/karstenbeck/.nuget/packages/",
-        "outputPath": "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/s3893749-s3912792-a1/obj/",
+        "projectPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\s3893749-s3912792-a1\\s3893749-s3912792-a1.csproj",
+        "packagesPath": "C:\\Users\\karstenbeck\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\s3893749-s3912792-a1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/karstenbeck/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\karstenbeck\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/A1ClassLibrary/A1ClassLibrary.csproj": {
-                "projectPath": "/Users/karstenbeck/Library/CloudStorage/OneDrive-Personal/OUA/Web Development Technologies (COSC2363-2337-SP2-23)/Assignments/A1/A1ClassLibrary/A1ClassLibrary.csproj"
+              "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\A1ClassLibrary\\A1ClassLibrary.csproj": {
+                "projectPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\A1ClassLibrary\\A1ClassLibrary.csproj"
+              },
+              "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\EasyDB\\EasyDB.csproj": {
+                "projectPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\EasyDB\\EasyDB.csproj"
+              },
+              "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\Utilities\\Utilities.csproj": {
+                "projectPath": "C:\\Users\\karstenbeck\\OneDrive\\OUA\\Web Development Technologies (COSC2363-2337-SP2-23)\\Assignments\\A1\\Utilities\\Utilities.csproj"
               }
             }
           }
@@ -138,7 +148,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.304/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

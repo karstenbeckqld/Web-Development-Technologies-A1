@@ -1,15 +1,5 @@
-<<<<<<< HEAD:A1ClassLibrary/model/Account.cs
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using A1ClassLibrary.attributes;
-using A1ClassLibrary.DBControllers;
-using A1ClassLibrary.Interfaces;
-using A1ClassLibrary.model;
-using A1ClassLibrary.Utils;
-=======
 ﻿using System.Diagnostics.CodeAnalysis;
 using EasyDB.attributes;
->>>>>>> main:MyBank/project/models/Account.cs
 
 namespace MyBank.project.models;
 

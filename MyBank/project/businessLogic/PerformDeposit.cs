@@ -1,9 +1,8 @@
-using A1ClassLibrary.core;
-using A1ClassLibrary.model;
 using Microsoft.IdentityModel.Tokens;
-using Transaction = A1ClassLibrary.model.Transaction;
+using MyBank.project.models;
+using A1ClassLibrary.BusinessLogic;
 
-namespace A1ClassLibrary.BusinessLogic;
+namespace MyBank.project.businessLogic;
 
 public static class PerformDeposit
 {
