@@ -1,4 +1,5 @@
-﻿using MyBank.framework.facades;
+﻿using MyBank.framework.core;
+using MyBank.framework.facades;
 
 namespace MyBank.project.controllers;
 
@@ -31,6 +32,7 @@ public class MainMenuController
 
     public void Logout()
     {
+        Console.Clear();
         App.SetCurrentUser(null);
         App.SetViewVariable("LoginView","LogoutSuccess","You have been successfully logged out.");
         App.SwitchView("LoginView");
