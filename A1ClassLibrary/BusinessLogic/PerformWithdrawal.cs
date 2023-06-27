@@ -44,14 +44,14 @@ public static class PerformWithdrawal
 
                 sourceAccount.Balance -= serviceCharge;
                 
-                transactions.Add(new BuildExecutionQueue("INSERT", "Transfer", sourceAccountServiceFee).BuildQueue());
+                transactions.Add(new BuildExecutionQueue("INSERT", "Transaction", sourceAccountServiceFee).BuildQueue());
             }
 
             var sourceAccountTransaction = new Transaction("W", sourceAccount.AccountNumber,
                 null, amount, comment, utcDate);
             
             transactions.Add(new BuildExecutionQueue("UPDATE", "Account", sourceAccount).BuildQueue());
-            transactions.Add(new BuildExecutionQueue("INSERT", "Transfer", sourceAccountTransaction).BuildQueue());
+            transactions.Add(new BuildExecutionQueue("INSERT", "Transaction", sourceAccountTransaction).BuildQueue());
             
             result = ExecuteTransaction.Execute(transactions);
         }

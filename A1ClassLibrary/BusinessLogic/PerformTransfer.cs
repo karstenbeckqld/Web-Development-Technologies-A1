@@ -57,7 +57,7 @@ public struct PerformTransfer
 
                 sourceAccount.Balance -= serviceCharge;
                 
-                transactions.Add(new BuildExecutionQueue("INSERT", "Transfer", sourceAccountServiceFee).BuildQueue());
+                transactions.Add(new BuildExecutionQueue("INSERT", "Transaction", sourceAccountServiceFee).BuildQueue());
             }
 
             var sourceAccountTransaction = new Transaction("T", sourceAccount.AccountNumber,
@@ -68,8 +68,8 @@ public struct PerformTransfer
 
             transactions.Add(new BuildExecutionQueue("UPDATE", "Account", sourceAccount).BuildQueue());
             transactions.Add(new BuildExecutionQueue("UPDATE", "Account", destinationAccount).BuildQueue());
-            transactions.Add(new BuildExecutionQueue("INSERT", "Transfer", sourceAccountTransaction).BuildQueue()); 
-            transactions.Add(new BuildExecutionQueue("INSERT", "Transfer", destinationAccountTransaction).BuildQueue());
+            transactions.Add(new BuildExecutionQueue("INSERT", "Transaction", sourceAccountTransaction).BuildQueue()); 
+            transactions.Add(new BuildExecutionQueue("INSERT", "Transaction", destinationAccountTransaction).BuildQueue());
 
             result = ExecuteTransaction.Execute(transactions);
         }

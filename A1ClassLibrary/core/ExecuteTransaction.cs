@@ -58,7 +58,7 @@ public static class ExecuteTransaction
                                 count = new Database<Login>().Update((Login)obj).Execute();
                                 break;
                             default:
-                                Console.WriteLine("Nothing inserted into database.");
+                                Console.WriteLine("Nothing updated in database.");
                                 break;
                         }
                     }

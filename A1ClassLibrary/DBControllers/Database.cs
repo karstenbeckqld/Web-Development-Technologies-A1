@@ -19,7 +19,7 @@ public class Database<T>
 
     private readonly string _tableName;
 
-    private int _extenalCustomerId;
+    private int _externalCustomerId;
 
     public Database()
     {
@@ -27,7 +27,7 @@ public class Database<T>
         SqlParameters = new Dictionary<string, object>();
         _objectType = typeof(T);
         _tableName = _objectType.Name;
-        _extenalCustomerId = 0;
+        _externalCustomerId = 0;
     }
 
     public Database<T> Where(string key, string value)
@@ -38,7 +38,7 @@ public class Database<T>
 
     public Database<T> SetCustomerId(int value)
     {
-        _extenalCustomerId = value;
+        _externalCustomerId = value;
         return this;
     }
 
@@ -55,8 +55,7 @@ public class Database<T>
 
     public Database<T> GetAll()
     {
-        // Here we define the command and query and open the connection.
-        Query = $"SELECT * FROM [{_tableName}]";
+        Query = "SELECT * FROM " + _tableName;
 
         PropertyInfo[] properties;
 
@@ -86,7 +85,7 @@ public class Database<T>
 
         var table = t.Name;
 
-        var query = $"INSERT INTO [{table}] (";
+        var query = "INSERT INTO [" + _tableName + "] (";
 
         var values = " VALUES (";
 
@@ -101,9 +100,9 @@ public class Database<T>
             SqlParameters.Add(property.Name, property.GetValue(model));
         }
 
-        if (_extenalCustomerId > 0)
+        if (_externalCustomerId > 0)
         {
-            SqlParameters["CustomerID"] = _extenalCustomerId;
+            SqlParameters["CustomerID"] = _externalCustomerId;
         }
 
         query = query.TrimEnd(',') + ")";
@@ -125,7 +124,7 @@ public class Database<T>
     {
         var t = typeof(T);
         var table = t.Name;
-        var query = "UPDATE " + table + " SET ";
+        var query = "UPDATE [" + table + "] SET ";
 
         var pInfo = t.GetFilteredProperties();
 
@@ -164,13 +163,6 @@ public class Database<T>
 
         var updates = command.ExecuteNonQuery();
 
-
-        // Console.WriteLine($"Query: {Query}\n");
-        // foreach (var parameter in SqlParameters)
-        // {
-        //     Console.WriteLine($"Parameters: Key: {parameter.Key}, Value: {parameter.Value}");
-        // }
-
         return updates;
     }
 
@@ -189,25 +181,15 @@ public class Database<T>
 
         command.CommandText = Query;
 
-        //Console.WriteLine(Query);
-
         if (!_where.IsNullOrEmpty())
         {
             command.Parameters.AddWithValue(_where.FirstOrDefault().Key, _where.FirstOrDefault().Value);
-
-            //Console.WriteLine(_where.FirstOrDefault().Key + " = " + _where.FirstOrDefault().Value);
         }
         else
         {
-            foreach (var parameter in SqlParameters)
+            foreach (var parameter in SqlParameters.Where(parameter => parameter.Value != null))
             {
-                if (parameter.Value != null)
-                {
-                    command.Parameters.AddWithValue(parameter.Key, parameter.Value);
-                }
-
-
-                //Console.WriteLine(parameter.Key + " = " + parameter.Value);
+                command.Parameters.AddWithValue(parameter.Key, parameter.Value);
             }
         }
 
