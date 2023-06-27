@@ -95,16 +95,12 @@ public class Database<T>
         foreach (var property in properties)
         {
             query += property.Name + ",";
-            
-            Console.WriteLine(query);
-            
+
             values += "@" + property.Name + ",";
-            
-            Console.WriteLine(values);
-            
+
             SqlParameters.Add(property.Name, property.GetValue(model));
         }
-        
+
         if (_extenalCustomerId > 0)
         {
             SqlParameters["CustomerID"] = _extenalCustomerId;

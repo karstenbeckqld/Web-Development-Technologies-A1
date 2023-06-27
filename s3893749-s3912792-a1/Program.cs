@@ -34,29 +34,29 @@ public class Program
         DataWebService.GetAndAddCustomers();
         
 
-        var accounts1 = new Database<Account>().GetAll().Where("AccountNumber", "4300").GetResult();
-        var accounts2 = new Database<Account>().GetAll().Where("AccountNumber", "4101").GetResult();
-        var accounts3 = new Database<Account>().GetAll().GetResult();
-
-        Console.WriteLine("\nSelected Accounts: \n" + accounts1[0] + "\n" + accounts2[0] + "\n");
-        foreach (var account in accounts3)
-        {
-             Console.WriteLine($"Accounts:\n {account}");
-        }
+        // var accounts1 = new Database<Account>().GetAll().Where("AccountNumber", "4300").GetResult();
+        // var accounts2 = new Database<Account>().GetAll().Where("AccountNumber", "4101").GetResult();
+        // var accounts3 = new Database<Account>().GetAll().GetResult();
+        //
+        // Console.WriteLine("\nSelected Accounts: \n" + accounts1[0] + "\n" + accounts2[0] + "\n");
+        // foreach (var account in accounts3)
+        // {
+        //      Console.WriteLine($"Accounts:\n {account}");
+        // }
        
 
-        // var deposit = PerformDeposit.Deposit(sourceAccount[0], 100, "Here is some money.");
+        // var deposit = PerformDeposit.Deposit(accounts2[0], 100, "Here is some money.");
         // Console.WriteLine($"Deposit successful: {deposit}");
-        //
+        
         // Console.WriteLine();
         //
         // var transaction =
-        //     PerformTransaction.Transaction(sourceAccount[0], destinationAccount[0], 80, "");
+        //     PerformTransfer.Transfer(accounts2[0], accounts1[0], 80, "");
         // Console.WriteLine($"Transfer successful: {transaction}");
         //
         // Console.WriteLine();
-
-        // var withdrawal = PerformWithdrawal.Withdraw(destinationAccount[0], 20, "");
+        //
+        // var withdrawal = PerformWithdrawal.Withdraw(accounts1[0], 20, "");
         // Console.WriteLine($"Withdrawal successful: {withdrawal}");
     }
 }

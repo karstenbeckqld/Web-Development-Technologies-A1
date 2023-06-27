@@ -8,9 +8,9 @@ using Transaction = A1ClassLibrary.model.Transaction;
 
 namespace A1ClassLibrary.BusinessLogic;
 
-public struct PerformTransaction
+public struct PerformTransfer
 {
-    public static bool Transaction(Account sourceAccount, Account destinationAccount, decimal amount, string comment)
+    public static bool Transfer(Account sourceAccount, Account destinationAccount, decimal amount, string comment)
     {
         var result = false;
 
@@ -56,10 +56,8 @@ public struct PerformTransaction
                     "Service Charge", utcDate);
 
                 sourceAccount.Balance -= serviceCharge;
-                transactions.Add(new Dictionary<string, Dictionary<string, object>>
-                {
-                    { "INSERT", new Dictionary<string, object> { { "Transaction", sourceAccountServiceFee } } }
-                });
+                
+                transactions.Add(new BuildExecutionQueue("INSERT", "Transfer", sourceAccountServiceFee).BuildQueue());
             }
 
             var sourceAccountTransaction = new Transaction("T", sourceAccount.AccountNumber,
@@ -68,18 +66,10 @@ public struct PerformTransaction
             var destinationAccountTransaction =
                 new Transaction("T", destinationAccount.AccountNumber, null, amount, comment, utcDate);
 
-            transactions.Add(new Dictionary<string, Dictionary<string, object>>
-                { { "UPDATE", new Dictionary<string, object> { { "Account", sourceAccount } } } });
-            transactions.Add(new Dictionary<string, Dictionary<string, object>>
-                { { "UPDATE", new Dictionary<string, object> { { "Account", destinationAccount } } } });
-            transactions.Add(new Dictionary<string, Dictionary<string, object>>
-            {
-                { "INSERT", new Dictionary<string, object> { { "Transaction", sourceAccountTransaction } } }
-            });
-            transactions.Add(new Dictionary<string, Dictionary<string, object>>
-            {
-                { "INSERT", new Dictionary<string, object> { { "Transaction", destinationAccountTransaction } } }
-            });
+            transactions.Add(new BuildExecutionQueue("UPDATE", "Account", sourceAccount).BuildQueue());
+            transactions.Add(new BuildExecutionQueue("UPDATE", "Account", destinationAccount).BuildQueue());
+            transactions.Add(new BuildExecutionQueue("INSERT", "Transfer", sourceAccountTransaction).BuildQueue()); 
+            transactions.Add(new BuildExecutionQueue("INSERT", "Transfer", destinationAccountTransaction).BuildQueue());
 
             result = ExecuteTransaction.Execute(transactions);
         }

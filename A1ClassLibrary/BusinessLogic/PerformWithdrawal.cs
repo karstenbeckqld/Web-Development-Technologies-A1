@@ -1,12 +1,7 @@
 using A1ClassLibrary.core;
-using A1ClassLibrary.DBControllers;
-using A1ClassLibrary.enums;
-using A1ClassLibrary.Interfaces;
 using A1ClassLibrary.model;
 using A1ClassLibrary.Utils;
-using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic.CompilerServices;
 using Transaction = A1ClassLibrary.model.Transaction;
 
 namespace A1ClassLibrary.BusinessLogic;
@@ -48,24 +43,16 @@ public static class PerformWithdrawal
                     "Service Charge", utcDate);
 
                 sourceAccount.Balance -= serviceCharge;
-
-                transactions.Add(new Dictionary<string, Dictionary<string, object>>
-                {
-                    { "INSERT", new Dictionary<string, object> { { "Transaction", sourceAccountServiceFee } } }
-                });
+                
+                transactions.Add(new BuildExecutionQueue("INSERT", "Transfer", sourceAccountServiceFee).BuildQueue());
             }
 
             var sourceAccountTransaction = new Transaction("W", sourceAccount.AccountNumber,
                 null, amount, comment, utcDate);
-
-            transactions.Add(new Dictionary<string, Dictionary<string, object>>
-                { { "UPDATE", new Dictionary<string, object> { { "Account", sourceAccount } } } });
-
-            transactions.Add(new Dictionary<string, Dictionary<string, object>>
-            {
-                { "INSERT", new Dictionary<string, object> { { "Transaction", sourceAccountTransaction } } }
-            });
-
+            
+            transactions.Add(new BuildExecutionQueue("UPDATE", "Account", sourceAccount).BuildQueue());
+            transactions.Add(new BuildExecutionQueue("INSERT", "Transfer", sourceAccountTransaction).BuildQueue());
+            
             result = ExecuteTransaction.Execute(transactions);
         }
 
