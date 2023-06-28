@@ -1,7 +1,6 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Microsoft.Extensions.Configuration;
-using MyBank.framework.facades;
-using Customer = MyBank.project.models.Customer;
+using MyBankDbAccess.Models;
 
 namespace MyBank.framework.core;
 
@@ -105,7 +104,8 @@ public sealed class Kernal
             ConsoleUtils.WriteError("Unknown view '"+view+"' called by method Kernal.SetViewVariable(key,value)",1);
             return;
         }
-       _views[view].SetLocalScopeVariable(key,value);
+
+        _views[view].SetLocalScopeVariable(key, value);
     }
 
     public void RegisterServiceProvider(ServiceProvider provider)

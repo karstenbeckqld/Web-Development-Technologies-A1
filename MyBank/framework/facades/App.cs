@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MyBank.framework.core;
-using Customer = MyBank.project.models.Customer;
+using MyBankDbAccess.Models;
 
 namespace MyBank.framework.facades;
 
