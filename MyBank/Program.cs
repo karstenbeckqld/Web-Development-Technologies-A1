@@ -1,5 +1,3 @@
-using EasyDB;
-using Microsoft.Extensions.Configuration;
 using MyBank.framework.facades;
 using MyBank.project.service.providers;
 using MyBank.project.views;
@@ -29,7 +27,7 @@ public class Program
         
         //As our database connection and ORM is handled
         //by a class library we need to pass it our url.
-        DatabaseConfigurator.SetDatabaseURI(App.Config().GetConnectionString("DBConnect"));
+        //DatabaseConfigurator.SetDatabaseURI(App.Config().GetConnectionString("DBConnect"));
         
         //|==============================================|
         //|         Register Service Providers           |

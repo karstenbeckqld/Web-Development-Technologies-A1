@@ -1,6 +1,5 @@
 #nullable enable
 using System.Diagnostics.CodeAnalysis;
-using EasyDB.attributes;
 
 namespace MyBank.project.models;
 
@@ -23,7 +22,7 @@ public class Customer
     }
 
     
-    [PrimaryKey] public required int CustomerID { get; set; }
+     public required int CustomerID { get; set; }
 
     public string Name { get; set; }
 
@@ -32,8 +31,8 @@ public class Customer
     public string? City { get; set; }
 
     public string? PostCode { get; set; }
-    [SkipProperty] public List<Account> Accounts { get; set; }
-    [SkipProperty] public Login Login { get; set; }
+    public List<Account> Accounts { get; set; }
+    public Login Login { get; set; }
 
 
     public override string ToString()

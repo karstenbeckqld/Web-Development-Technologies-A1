@@ -1,4 +1,3 @@
-using EasyDB.attributes;
 
 namespace MyBank.project.models;
 
@@ -18,7 +17,7 @@ public class Login
     }
 
     /* The LoginId property stores the login id for a customer. */
-    [PrimaryKey]public string LoginID { get; set; }
+    public string LoginID { get; set; }
 
     /* The PasswordHash property stores the password for a customer. */
     public string PasswordHash { get; set; }

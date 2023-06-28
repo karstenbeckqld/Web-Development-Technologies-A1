@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using EasyDB.attributes;
 
 namespace MyBank.project.models;
 
@@ -19,11 +18,11 @@ public class Account
         Balance = balance;
     }
 
-    [PrimaryKey]public int AccountNumber { get; set; }
+    public int AccountNumber { get; set; }
     public string AccountType { get; set; }
     public required int CustomerID { get; set; }
     public decimal Balance { get; set; }
-    [SkipProperty] public List<Transaction> Transactions { get; set; }
+     public List<Transaction> Transactions { get; set; }
 
     public override string ToString()
     {

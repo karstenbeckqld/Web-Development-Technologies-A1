@@ -1,5 +1,4 @@
-﻿using EasyDB.core;
-using MyBank.framework.components;
+﻿using MyBank.framework.components;
 using MyBank.framework.core;
 using MyBank.framework.facades;
 using MyBank.framework.views.interfaces;
@@ -23,8 +22,9 @@ public class AccountSelectionView : View, IDefeeredConstructor
         
         var accountMenu = new Menu<Account>();
 
-        List<Account> accounts = new Database<Account>().Where("CustomerID", App.GetCurrentUser().CustomerID.ToString())
-            .GetAll();
+        //List<Account> accounts = new Database<Account>().Where("CustomerID", App.GetCurrentUser().CustomerID.ToString())
+        //    .GetAll();
+        var accounts = new List<Account>();
         
         accountMenu.AddAll(accounts,"AccountType","AccountNumber");
         

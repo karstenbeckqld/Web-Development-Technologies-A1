@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using EasyDB.attributes;
 
 namespace MyBank.project.models;
 
@@ -23,7 +22,7 @@ public class Transaction
         TransactionTimeUtc = transactionTimeUtc;
     }
     
-    [SkipProperty] public int TransactionID { get; set; }
+    public int TransactionID { get; set; }
     public required char TransactionType { get; set; }
     public required int AccountNumber { get; set; }
     public int? DestinationAccountNumber { get; set; }
