@@ -22,9 +22,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Utilities\Utilities.csproj" />
-    <ProjectReference Include="..\EasyDB\EasyDB.csproj" />
-  </ItemGroup>
-
 </Project>
