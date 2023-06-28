@@ -1,5 +1,4 @@
 ﻿using MyBank.framework.core;
-using MyBank.project.models;
 
 namespace MyBank.framework.components;
 
@@ -15,9 +14,9 @@ public class Table<T> : Component
     }
     public override Event Process()
     {
-        foreach (var value in (List<Transaction>)_view.GetVariableOrNull(_displayKey))
+        foreach (var value in (List<T>)_view.GetVariableOrNull(_displayKey))
         {
-            Console.WriteLine(value.AccountNumber);
+            Console.WriteLine(value.ToString());
         }
         
         return null;
