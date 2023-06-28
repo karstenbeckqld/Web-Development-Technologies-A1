@@ -21,7 +21,7 @@ public class MainMenuController
 
     public void MyStatement()
     {
-        
+        App.SwitchView("AccountSelectionView");
     }
 
     public void ListAccounts()
@@ -39,7 +39,7 @@ public class MainMenuController
 
     public void Exit()
     {
-        Console.WriteLine("Exiting Program_Jack...\nGoodbye!");
+        Console.WriteLine("Exiting Program...\nGoodbye!");
         Environment.Exit(0);
     }
 }

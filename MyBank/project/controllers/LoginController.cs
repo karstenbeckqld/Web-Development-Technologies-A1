@@ -1,7 +1,7 @@
-using MyBankDbAccess.NewDatabase;
 using MyBank.framework.controllers.interfaces;
 using MyBank.framework.core;
 using MyBank.framework.facades;
+using MyBankDbAccess.Core;
 using MyBankDbAccess.Models;
 using SimpleHashing.Net;
 
@@ -14,7 +14,7 @@ public class LoginController : IFormController
     public void OnSuccess(Event @event)
     {
         Console.Clear();
-        Customer customer = new Database<Customer>().Where("CustomerID", _customerId.ToString()).GetFirst();
+        Customer customer = new Database<Customer>().Where("CustomerID", _customerId.ToString()).GetAll().GetResult()[0];
         App.SetCurrentUser(customer);
         
         App.SetViewVariable("MainMenuView","LoginSuccess","You have been successfully logged in.");
@@ -29,7 +29,7 @@ public class LoginController : IFormController
 
     public bool OnSubmit(Event @event)
     {
-        Login login = new Database<Login>().Where("LoginID", @event.Get("Login ID")).GetFirst();
+        Login login = new Database<Login>().Where("LoginID", @event.Get("Login ID")).GetAll().GetResult()[0];
 
         if (login == null) return false;
         

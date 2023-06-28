@@ -13,12 +13,18 @@ public class MainMenuView : View
         
         loginSuccess.SetVariableKey("LoginSuccess");
         loginSuccess.SetColor(ConsoleColor.Green);
+        loginSuccess.ClearAfterWrite(true);
         
         AddComponent(loginSuccess);
+        
+        var fullname = new Message();
+        
+        fullname.SetColor(ConsoleColor.Yellow);
+        fullname.SetContent("--- {{Customer.Name}} ---");
+        
+        AddComponent(fullname);
 
-        var menu = new Menu();
-
-        QueueWrite("--- {{Customer.name}} ---");
+        var menu = new Menu<string>();
 
         menu.AddOption("Deposit");
         menu.AddOption("Withdraw");
