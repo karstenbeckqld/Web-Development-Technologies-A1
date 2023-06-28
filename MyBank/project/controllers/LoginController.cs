@@ -1,6 +1,7 @@
 using MyBank.framework.controllers.interfaces;
 using MyBank.framework.core;
 using MyBank.framework.facades;
+using MyBankDbAccess.Core;
 using MyBankDbAccess.Models;
 using SimpleHashing.Net;
 
@@ -13,8 +14,8 @@ public class LoginController : IFormController
     public void OnSuccess(Event @event)
     {
         Console.Clear();
-        //Customer customer = new Database<Customer>().Where("CustomerID", _customerId.ToString()).GetFirst();
-       // App.SetCurrentUser(customer);
+        Customer customer = new Database<Customer>().Where("CustomerID", _customerId.ToString()).GetAll().GetResult()[0];
+        App.SetCurrentUser(customer);
         
         App.SetViewVariable("MainMenuView","LoginSuccess","You have been successfully logged in.");
         App.SwitchView("MainMenuView");
@@ -28,12 +29,12 @@ public class LoginController : IFormController
 
     public bool OnSubmit(Event @event)
     {
-        //Login login = new Database<Login>().Where("LoginID", @event.Get("Login ID")).GetFirst();
+        Login login = new Database<Login>().Where("LoginID", @event.Get("Login ID")).GetAll().GetResult()[0];
 
-       // if (login == null) return false;
+        if (login == null) return false;
         
-       // if (!new SimpleHash().Verify(@event.Get("Password"), login.PasswordHash)) return false;
-       // _customerId = login.CustomerID;
+        if (!new SimpleHash().Verify(@event.Get("Password"), login.PasswordHash)) return false;
+        _customerId = login.CustomerID;
         return true;
     }
 }

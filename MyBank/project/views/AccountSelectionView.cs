@@ -2,7 +2,8 @@
 using MyBank.framework.core;
 using MyBank.framework.facades;
 using MyBank.framework.views.interfaces;
-using MyBank.project.models;
+using MyBankDbAccess.Core;
+using MyBankDbAccess.Models;
 
 namespace MyBank.project.views;
 
@@ -22,9 +23,8 @@ public class AccountSelectionView : View, IDefeeredConstructor
         
         var accountMenu = new Menu<Account>();
 
-        //List<Account> accounts = new Database<Account>().Where("CustomerID", App.GetCurrentUser().CustomerID.ToString())
-        //    .GetAll();
-        var accounts = new List<Account>();
+        List<Account> accounts = new Database<Account>().Where("CustomerID", App.GetCurrentUser().CustomerID.ToString()).GetAll()
+            .GetResult();
         
         accountMenu.AddAll(accounts,"AccountType","AccountNumber");
         
