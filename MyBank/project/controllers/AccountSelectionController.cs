@@ -16,7 +16,8 @@ public class AccountSelectionController
         App.SetViewVariable("MyStatementsView","Account","Account: "+account.AccountNumber+", Balance: $"+account.Balance);
         App.SetViewVariable("MyStatementsView","Heading","My Statement | Savings");
         App.SetViewVariable("MyStatementsView","AccountNumber",account.AccountNumber);
-        
+        App.SetViewVariable("MyStatementsView","SavingsTransactions",new Database<Transaction>().Where("AccountNumber",account.AccountNumber.ToString()).GetAll().GetResult());
+
         App.SwitchView("MyStatementsView");
     }
 
@@ -28,6 +29,7 @@ public class AccountSelectionController
         App.SetViewVariable("MyStatementsView","Account","Account: "+account.AccountNumber+", Balance: $"+account.Balance);
         App.SetViewVariable("MyStatementsView","Heading","My Statement | Credit");
         App.SetViewVariable("MyStatementsView","AccountNumber",account.AccountNumber);
+        App.SetViewVariable("MyStatementsView","CreditTransactions",new Database<Transaction>().Where("AccountNumber",account.AccountNumber.ToString()).GetAll().GetResult());
 
         App.SwitchView("MyStatementsView");
     }
