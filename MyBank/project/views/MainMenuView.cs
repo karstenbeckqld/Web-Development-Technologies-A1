@@ -1,4 +1,4 @@
-﻿using MyBank.framework.components;
+using MyBank.framework.components;
 using MyBank.framework.core;
 
 namespace MyBank.project.views;

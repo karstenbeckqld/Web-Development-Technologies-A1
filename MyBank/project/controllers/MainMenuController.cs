@@ -1,4 +1,4 @@
-﻿using MyBank.framework.facades;
+using MyBank.framework.facades;
 
 namespace MyBank.project.controllers;
 
@@ -39,7 +39,7 @@ public class MainMenuController
 
     public void Exit()
     {
-        Console.WriteLine("Exiting Program...\nGoodbye!");
+        Console.WriteLine("Exiting Program_Jack...\nGoodbye!");
         Environment.Exit(0);
     }
 }

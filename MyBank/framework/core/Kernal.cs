@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Customer = MyBank.project.models.Customer;
+using MyBankDbAccess.Models;
 
 namespace MyBank.framework.core;
 
@@ -30,7 +30,7 @@ public sealed class Kernal
 
     public void RegisterView(View view)
     {
-        _views.Add(view.GetType().Name,view);
+        _views.Add(view.GetType().Name, view);
     }
 
     public static Kernal Instance()
@@ -47,7 +47,8 @@ public sealed class Kernal
     {
         if (_activeView == null)
         {
-            ConsoleUtils.WriteError("No view is currently set as active, please set a view by using App.SwitchView(name).",1);
+            ConsoleUtils.WriteError(
+                "No view is currently set as active, please set a view by using App.SwitchView(name).", 1);
             return;
         }
 
@@ -57,7 +58,8 @@ public sealed class Kernal
         }
         else
         {
-            ConsoleUtils.WriteError("Active view '"+_activeView+"' does not exist in registry of application views",1);
+            ConsoleUtils.WriteError("Active view '" + _activeView + "' does not exist in registry of application views",
+                1);
         }
     }
 
@@ -80,15 +82,17 @@ public sealed class Kernal
     {
         if (!_views.ContainsKey(view))
         {
-            ConsoleUtils.WriteError("Unknown view '"+view+"' called by method Kernal.SetViewVariable(key,value)",1);
+            ConsoleUtils.WriteError("Unknown view '" + view + "' called by method Kernal.SetViewVariable(key,value)",
+                1);
             return;
         }
-       _views[view].SetLocalScopeVariable(key,value);
+
+        _views[view].SetLocalScopeVariable(key, value);
     }
 
     public void RegisterServiceProvider(ServiceProvider provider)
     {
-        _providers.Add(provider.GetType().Name.Substring(0,provider.GetType().Name.Length-15),provider);
+        _providers.Add(provider.GetType().Name.Substring(0, provider.GetType().Name.Length - 15), provider);
     }
 
     public void Boot()
@@ -98,7 +102,4 @@ public sealed class Kernal
             provider.Value.Boot();
         }
     }
-    
-    
-
 }

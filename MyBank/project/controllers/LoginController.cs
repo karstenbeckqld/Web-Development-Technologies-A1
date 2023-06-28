@@ -1,8 +1,8 @@
-﻿using EasyDB.core;
+using MyBankDbAccess.NewDatabase;
 using MyBank.framework.controllers.interfaces;
 using MyBank.framework.core;
 using MyBank.framework.facades;
-using MyBank.project.models;
+using MyBankDbAccess.Models;
 using SimpleHashing.Net;
 
 namespace MyBank.project.controllers;

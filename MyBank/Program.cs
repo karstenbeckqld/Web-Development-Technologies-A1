@@ -1,66 +1,69 @@
-using EasyDB;
 using Microsoft.Extensions.Configuration;
-using MyBank.framework.facades;
-using MyBank.project.service.providers;
-using MyBank.project.views;
+using MyBankDatabase.Utils;
+using MyBankDbAccess.BusinessLogic;
+using MyBankDbAccess.Core;
+using MyBankDbAccess.Models;
+using MyBankDbAccess.Utils;
 
-namespace MyBank;
+namespace MyBankDbAccess;
 
-//|==============================================|
-//|                Program Class                 |
-//|==============================================|
-
-//Our program class initializes the application and
-//sets up all our classes that require booting.
+// The Program class is the entry point to the application and configures necessary variables, as well as calls the
+// DataWebService to write web service data to the database if it's empty.
 public class Program
 {
     public static void Main(string[] args)
     {
+        // The connection string to the database is stored in appsettings.json and gets loaded here. 
+        var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-        //|==============================================|
-        //|             Initialize Config                |
-        //|==============================================|
+        // We now receive the connection string from the DbConnect object in the JSON file. 
+        var connectionString = configuration.GetConnectionString("DbConnect");
 
-        //Our config file is called appsettings and is 
-        //initialized by our program, items such as the
-        //database connection are stored in the config.
-        
-        App.LoadConfiguration("appsettings.json");
-        
-        //As our database connection and ORM is handled
-        //by a class library we need to pass it our url.
-        DatabaseConfigurator.SetDatabaseURI(App.Config().GetConnectionString("DBConnect"));
-        
-        //|==============================================|
-        //|         Register Service Providers           |
-        //|==============================================|
-        
-        //Our service providers initialize on boot and 
-        //provide service functionality to the application.
-        
-        App.RegisterServiceProvider(new ModelManagerServiceProvider());
-        
-        //|==============================================|
-        //|                 Register Views               |
-        //|==============================================|
-        
-        //We next register all our views with the app
-        //our views map directly to controllers and enable
-        //easy user friendly interaction
-        
-        App.RegisterView(new MainMenuView());
-        App.RegisterView(new LoginView());
+        // Here we set the DbConnect property in the static class DbConnectionString, so that the connection string is
+        // available throughout the application.
+        DbConnectionString.DbConnect = connectionString;
 
-        //|==============================================|
-        //|                    START                     |
-        //|==============================================|
+        // To insert the data to the database, we call create new instances of the different manager classes, passing
+        // them the connection string to be able to access the database.
+        // var customerManager = new CustomerManager(connectionString);
+        // var accountManager = new AccountManager();
+        // var loginManager = new LoginManager(connectionString);
+        // var transactionManager = new TransactionManager(connectionString);
+
+        // Now we can pass these instances to the DataWebService's static GetAndAddCustomers method and load customers
+        // to the database if it not already happened before.  
+        DataWebService.GetAndAddCustomers();
+
+        var customAccount = new Account
+        {
+            AccountNumber = 3210,
+            AccountType = "S",
+            CustomerID = 2100,
+            Balance = 97
+        };
+
+        var accounts1 = new Database<Account>().GetAll().Where("AccountNumber", "4300").GetResult();
+        var accounts2 = new Database<Account>().GetAll().Where("AccountNumber", "4101").GetResult();
+        // var accounts3 = new Database<Account>().GetAll().GetResult();
+        //
+        Console.WriteLine("\nSelected Accounts: \n" + accounts1[0] + "\n" + accounts2[0] + "\n");
+       
+       
+
+        // var deposit = PerformDeposit.Deposit(accounts2[0], 100, "Here is some money.");
+        // Console.WriteLine($"Deposit successful: {deposit}");
         
-        //Our start method will call the Kernal and tell
-        //it to boot the service providers, once completed
-        //the kernal will then load the first view and
-        //commence our application loop.
-
-        App.Start("LoginView");
-
+        // Console.WriteLine();
+        //
+        var transaction =
+            PerformTransfer.Transfer(accounts1[0], accounts2[0], 76, "transferring $76");
+        Console.WriteLine($"Transfer successful: {transaction}");
+        //
+        // Console.WriteLine();
+        //
+        // var withdrawal = PerformWithdrawal.Withdraw(customAccount, 20, "");
+        // Console.WriteLine($"Withdrawal successful: {withdrawal}");
     }
 }
+
+// To Branch 1.8
