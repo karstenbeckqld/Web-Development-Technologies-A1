@@ -23,16 +23,20 @@ public class MyStatementsView : View, IDefeeredConstructor
         account.SetColor(ConsoleColor.DarkYellow);
         AddComponent(account);
 
-        var menu = new Menu<string>();
-        menu.AddOption("Back");
-        menu.SetController("MyStatementsController");
-            
-        AddComponent(menu);
+        
+        var savings = new Table<Transaction>();
+        
+        savings.SetVariableKey("SavingsTransactions");
+        savings.SetPaginateLimit(4);
 
-        var table = new Table<Transaction>();
+        AddComponent(savings);
         
-        table.SetVariableKey("Transactions");
+        var credit = new Table<Transaction>();
         
-        AddComponent(table);
+        credit.SetVariableKey("CreditTransactions");
+        credit.SetPaginateLimit(4);
+
+        AddComponent(credit);
+
     }
 }
