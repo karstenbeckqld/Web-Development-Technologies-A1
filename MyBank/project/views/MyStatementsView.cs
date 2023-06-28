@@ -1,7 +1,7 @@
 ﻿using MyBank.framework.components;
 using MyBank.framework.core;
 using MyBank.framework.views.interfaces;
-using MyBank.project.models;
+using MyBankDbAccess.Models;
 
 namespace MyBank.project.views;
 
