@@ -3,14 +3,12 @@ using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using MyBankDbAccess.Extensions;
 using MyBankDbAccess.Models;
-using MyBankDatabase.Utils;
 
 namespace MyBankDbAccess.Core;
 
 public class Database<T>
 {
-    private readonly string _connectionString = DbConnectionString.DbConnect;
-
+    private readonly string _connectionString = DatabaseConfigurator.GetDatabaseURI();
     private string Query { get; set; }
     private Dictionary<string, object> SqlParameters { get; set; }
 
