@@ -30,7 +30,6 @@ public class MainMenuView : View
         menu.AddOption("Withdraw");
         menu.AddOption("Transfer");
         menu.AddOption("My Statement","MyStatement");
-        menu.AddOption("List Accounts","ListAccounts");
         menu.AddOption("Logout");
         menu.AddOption("Exit");
         
