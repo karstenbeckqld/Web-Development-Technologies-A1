@@ -12,13 +12,21 @@ public class AccountSelectionView : View, IDefeeredConstructor
 
     public void Construct()
     {
+
+        var redirectMessage = new Message();
         
-        var message = new Message();
+        redirectMessage.SetVariableKey("RedirectMessage");
+        redirectMessage.SetColor(ConsoleColor.Yellow);
         
-        message.SetContent("Please select an account, S = Savings, C = Credit");
-        message.SetColor(ConsoleColor.Yellow);
+        AddComponent(redirectMessage);
         
-        AddComponent(message);
+        
+        var accountTypeMessage = new Message();
+        
+        accountTypeMessage.SetContent("Please select an account, S = Savings, C = Credit");
+        accountTypeMessage.SetColor(ConsoleColor.DarkYellow);
+        
+        AddComponent(accountTypeMessage);
         
         
         var accountMenu = new Menu<Account>();
@@ -28,9 +36,10 @@ public class AccountSelectionView : View, IDefeeredConstructor
         
         accountMenu.AddAll(accounts,"AccountType","AccountNumber");
         
-        accountMenu.SetController("AccountSelectionController");
-        
         accountMenu.AddOption("Back");
+        
+        accountMenu.SetController("AccountSelectionController");
+
         
         AddComponent(accountMenu);
 
