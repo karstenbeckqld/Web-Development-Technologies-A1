@@ -27,6 +27,7 @@ public class AccountSelectionController
         //If we have no redirect simply return.
         if (App.GetViewVariable("AccountSelectionView", "Redirect") == null)
         {
+            App.Console().Error("No 'Redirect' key set for the AccountSelectionController");
             return;
         }
 
@@ -42,7 +43,7 @@ public class AccountSelectionController
         //Perform our logic
         switch (App.GetViewVariable("AccountSelectionView", "Redirect"))
         {
-                
+            //If we are redirecting to MyStatements then process this code.
             case "MyStatementsView":
                 
                 App.SetViewVariable("MyStatementsView", "Account", "Account: " + account.AccountNumber + ", Balance: " + ((float)account.Balance).ToString("c2") +
@@ -65,6 +66,7 @@ public class AccountSelectionController
             App.SwitchView(view);
     }
 
+    //Navigate back
     public void Back()
     {
         App.SwitchView("MainMenuView");
