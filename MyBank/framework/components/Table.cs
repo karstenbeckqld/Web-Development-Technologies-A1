@@ -58,7 +58,7 @@ public class Table<T> : Component
             Console.WriteLine("|----|--------------|----------|------------------- |--------------------------------|-----------------------|");
 
             Console.WriteLine("Page: "+(_currentPage+1)+" of "+(pageCount+1)+" (Showing "+(_paginateLimit)+" records per page)");
-            Console.WriteLine("Please enter the page number to toggle page, or 'back' to return");
+            Console.WriteLine("Please enter the page number to toggle page, or '0' to return");
 
             if (_error != String.Empty)
             {
@@ -69,7 +69,7 @@ public class Table<T> : Component
             
             string input = Console.ReadLine();
         
-            if (input.ToLower().Equals("back"))
+            if (input.ToLower().Equals("0"))
             {
                 _currentPage = 0;
                 _error = String.Empty;
