@@ -98,6 +98,11 @@ public sealed class Kernal
         return _customer;
     }
 
+    public View GetView(string view)
+    {
+        return _views[view];
+    }
+
     public void SetViewVariable(string view, string key, object value)
     {
         if (!_views.ContainsKey(view))
