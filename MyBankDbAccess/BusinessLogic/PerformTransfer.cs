@@ -2,13 +2,22 @@ using Microsoft.IdentityModel.Tokens;
 using MyBankDbAccess.core;
 using MyBankDbAccess.Core;
 using MyBankDbAccess.Exceptions;
+using MyBankDbAccess.Injector;
 using MyBankDbAccess.Models;
 
 namespace MyBankDbAccess.BusinessLogic;
 
-public struct PerformTransfer
+public class PerformTransfer
 {
-    public static bool Transfer(Account sourceAccount, Account destinationAccount, decimal amount, string comment)
+
+    private readonly BalanceValidationLogic _balanceValidator;
+
+    public PerformTransfer()
+    {
+        _balanceValidator = new BalanceValidationLogic(new BalanceValidator());
+    }
+    
+    public bool Transfer(Account sourceAccount, Account destinationAccount, decimal amount, string comment)
     {
         var result = false;
 
@@ -38,13 +47,16 @@ public struct PerformTransfer
 
             var numberOfSourceAccountTransactions = CheckTransactions.GetNumberOfTransactions(sourceAccount);
 
-            var balanceCheck = new BalanceValidator
-                {
-                    SourceBalance = sourceAccount.Balance,
-                    Amount = amount,
-                    AccountType = sourceAccount.AccountType
-                }
-                .CheckMinBalance();
+            var balanceCheck =
+                _balanceValidator.PerformBalanceValidation(sourceAccount.Balance, sourceAccount.AccountType, amount);
+
+            // var balanceCheck = new BalanceValidator
+            //     {
+            //         SourceBalance = sourceAccount.Balance,
+            //         Amount = amount,
+            //         AccountType = sourceAccount.AccountType
+            //     }
+            //     .CheckMinBalance();
 
             if (balanceCheck)
             {

@@ -23,7 +23,7 @@ public class Transaction
         TransactionTimeUtc = transactionTimeUtc;
     }
     
-    [SkipProperty] public int TransactionID { get; set; }
+    [SkipProperty]  public int TransactionID { get; set; }
     public required string TransactionType { get; set; }
     public required int AccountNumber { get; set; }
     public int? DestinationAccountNumber { get; set; }

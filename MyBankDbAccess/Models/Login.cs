@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using MyBankDbAccess.attributes;
 
 namespace MyBankDbAccess.Models;
@@ -10,6 +11,7 @@ public class Login
     {
     }
 
+    [SetsRequiredMembers]
     public Login(string loginId, string passwordHash, int customerId)
     {
         LoginID = loginId;
@@ -17,14 +19,14 @@ public class Login
         CustomerID = customerId;
     }
 
-    /* The LoginId property stores the login id for a customer. */
-    [PrimaryKey]public string LoginID { get; set; }
+    // The LoginId property stores the login id for a customer.
+    [PrimaryKey]public required string LoginID { get; init; }
 
-    /* The PasswordHash property stores the password for a customer. */
+    // The PasswordHash property stores the password for a customer.
     public string PasswordHash { get; set; }
 
-    /* The CustomerID property stores a customer's ID. */
-    public int CustomerID { get; set; }
+    // The CustomerID property stores a customer's ID.
+    public int CustomerID { get; init; }
 
     public override string ToString()
     {

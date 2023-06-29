@@ -2,7 +2,11 @@ using Microsoft.Extensions.Configuration;
 using MyBank.framework.facades;
 using MyBank.project.service.providers;
 using MyBank.project.views;
+using MyBankDbAccess.BusinessLogic;
 using MyBankDbAccess.Core;
+using MyBankDbAccess.Exceptions;
+using MyBankDbAccess.Models;
+using MyBankDbAccess.Utils;
 
 namespace MyBank;
 
@@ -14,14 +18,14 @@ namespace MyBank;
 //sets up all our classes that require booting.
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
 
         //|==============================================|
         //|             Initialize Config                |
         //|==============================================|
 
-        //Our config file is called appsettings and is 
+        //Our config file is called app settings and is 
         //initialized by our program, items such as the
         //database connection are stored in the config.
         
@@ -30,6 +34,14 @@ public class Program
         //As our database connection and ORM is handled
         //by a class library we need to pass it our url.
         DatabaseConfigurator.SetDatabaseURI(App.Config().GetConnectionString("DBConnect"));
+        
+        //|==============================================|
+        //|         Load Web Service Data                |
+        //|==============================================|
+        
+        // If not loaded already, here we load the data from
+        // the web service into the database.
+        await DataWebService.GetAndAddCustomers();
         
         //|==============================================|
         //|         Register Service Providers           |
@@ -57,12 +69,11 @@ public class Program
         //|                    START                     |
         //|==============================================|
         
-        //Our start method will call the Kernal and tell
+        //Our start method will call the Kernel and tell
         //it to boot the service providers, once completed
-        //the kernal will then load the first view and
+        //the kernel will then load the first view and
         //commence our application loop.
 
         App.Start("LoginView");
-
     }
 }

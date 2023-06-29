@@ -6,6 +6,8 @@ using MyBankDbAccess.Models;
 
 namespace MyBankDbAccess.Core;
 
+// The Database class serves as a generic interface for the model to the database. It forms par of our Object-Relational
+// Mapping and returns required data from the database to the view. 
 public class Database<T>
 {
     private readonly string _connectionString = DatabaseConfigurator.GetDatabaseURI();
@@ -29,18 +31,24 @@ public class Database<T>
         _externalCustomerId = 0;
     }
 
+    // The Where() method serves as a selector for specific attributes, like the WHERE clause in SQL. It returns a
+    // Database<T> object, so that it can get chained with other methods of this class. 
     public Database<T> Where(string key, string value)
     {
         _where.Add(key, value);
         return this;
     }
 
+    // The SetCustomerId() method is only required for the Web Service as we need to set the customer Id value for the
+    // Login type from the Customer type.
     public Database<T> SetCustomerId(int value)
     {
         _externalCustomerId = value;
         return this;
     }
 
+    // The CheckForDatabaseDataPresence() method serves only as a checkpoint in the beginning to see if data is present
+    // in the database, so tha the application can decide if he data must be loaded from the web service. 
     public bool CheckForDatabaseDataPresence()
     {
         using var connection = new SqlConnection(_connectionString);
@@ -52,6 +60,8 @@ public class Database<T>
         return count > 0;
     }
 
+    // From here on, we have a set of methods that all return a Database<T> object, so that they can get chained. The
+    // GetAll() method produces a query string that fetches all records of a given table.
     public Database<T> GetAll()
     {
         Query = "SELECT * FROM [" + _tableName + "] ";
@@ -78,6 +88,8 @@ public class Database<T>
         return this;
     }
 
+    // The Insert() method produces a query string that inserts a dataset into the corresponding table of the given
+    // model type. 
     public Database<T> Insert(T model)
     {
         var t = typeof(T);
@@ -119,6 +131,8 @@ public class Database<T>
         return this;
     }
 
+    // The Update() method produces a query string that updates a dataset in the corresponding table of the given
+    // model type. 
     public Database<T> Update(T model)
     {
         var t = typeof(T);
@@ -140,6 +154,8 @@ public class Database<T>
         return this;
     }
 
+    // As we deal with two types of database actions, getting and setting, we have the Execute() method which will
+    // perform any insert and update transactions, using the built Query and SqlParameters.
     public int Execute()
     {
         using var connection = new SqlConnection(_connectionString);
@@ -160,6 +176,8 @@ public class Database<T>
         return updates;
     }
 
+    // To fetch data from the database we use the GetAll() method which will use the Query value to create a command and
+    // the CreateDataTable class to build the result set.
     public List<T> GetResult()
     {
         using var connection = new SqlConnection(_connectionString);

@@ -1,22 +1,28 @@
 using Microsoft.IdentityModel.Tokens;
 using MyBankDbAccess.core;
 using MyBankDbAccess.Core;
+using MyBankDbAccess.Injector;
 using MyBankDbAccess.Models;
 
 namespace MyBankDbAccess.BusinessLogic;
 
-public static class PerformWithdrawal
+public class PerformWithdrawal
 {
-    public static bool Withdraw(Account sourceAccount, decimal amount, string comment)
+    private BalanceValidationLogic _balanceValidator;
+
+    public PerformWithdrawal()
+    {
+        _balanceValidator = new BalanceValidationLogic(new BalanceValidator());
+    }
+
+    public bool Withdraw(Account sourceAccount, decimal amount, string comment)
     {
         var accountExists = CheckForAccount.AccountCheck(sourceAccount);
 
         var result = false;
-        
+
         if (accountExists)
         {
-            
-
             var utcDate = DateTime.UtcNow;
 
             const decimal serviceCharge = 0.05m;
@@ -25,16 +31,19 @@ public static class PerformWithdrawal
             {
                 comment = null;
             }
-            
+
             var numberOfSourceAccountTransactions = CheckTransactions.GetNumberOfTransactions(sourceAccount);
 
-            var balanceCheck = new BalanceValidator
-                {
-                    SourceBalance = sourceAccount.Balance,
-                    Amount = amount,
-                    AccountType = sourceAccount.AccountType
-                }
-                .CheckMinBalance();
+            var balanceCheck =
+                _balanceValidator.PerformBalanceValidation(sourceAccount.Balance, sourceAccount.AccountType, amount);
+
+            // var balanceCheck = new BalanceValidator
+            //     {
+            //         SourceBalance = sourceAccount.Balance,
+            //         Amount = amount,
+            //         AccountType = sourceAccount.AccountType
+            //     }
+            //     .CheckMinBalance();
 
             if (balanceCheck)
             {
