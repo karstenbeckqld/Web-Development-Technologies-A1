@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using MyBank.framework.core;
+﻿using MyBank.framework.core;
 using MyBank.framework.facades;
 
 namespace MyBank.framework.components;
