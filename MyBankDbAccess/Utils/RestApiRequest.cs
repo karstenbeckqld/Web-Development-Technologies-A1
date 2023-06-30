@@ -21,7 +21,7 @@ public static class RestApiRequest
 
         // Now we obtain the JSON string by calling the GetStringAsync() method on the client and providing the url of
         // the web service.
-        var json =  client.GetStringAsync(Url).Result;
+        var json = client.GetStringAsync(Url).Result;
 
         // Now we can convert the JSON string to a list of WebServiceObjects using the DeserializeObject() method and
         // providing it the JSON string.
