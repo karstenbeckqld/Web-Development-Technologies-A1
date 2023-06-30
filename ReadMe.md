@@ -3,6 +3,24 @@
 ## GitHub Repository
 Project Github Repository: [https://github.com/rmit-wdt-sp2-2023/s3893749-s3912792-a1](https://github.com/rmit-wdt-sp2-2023/s3893749-s3912792-a1)
 
+## Class Library
+A class library is technically only another project inside a solution. However, they are more than that. Class libraries 
+are part of the shared library concept of .NET. By using class libraries, one can introduce components into modules that 
+can get used by multiple applications (Nobredev, Maddock & Warren 2022). Class libraries can be of three types.  
+A platform-specific class library is bound to a single .NET platform. A portable class library gets supported on multiple 
+.NET implementations, and a .NET standard library replaces the platform-specific and portable library concepts. These 
+libraries are platform-specific, exposing all functionality from the underlying platform and portable because they work 
+on all platforms (Nobredev, Maddock & Warren 2022).  
+The class library in our application s called **MyBankDbAccess**. It contains all relevant classes necessary for our 
+system’s database access, including the model classes. Class libraries have a grave limitation. Namely, they cannot 
+reference classes outside of it. Therefore, we moved the model classes in the class library for it to function.  
+Our class library contains every required class to access and query our given Microsoft SQL database. We have decided to 
+create the class library as the application's backend, containing all database functionality that the frontend accesses 
+to display information to the user.  
+The idea behind this concept is that we can utilise this class library fully for the next assignment, where the console 
+display gets replaced by a website, but the data access will remain with the same database.
+
+
 ## Used Design Patterns:
 
 ### Dependency Injection
@@ -94,7 +112,7 @@ It gets called a façade because, like the façade of a building, it provides ac
 
 With a moderately complex system like ours, it is appropriate to use a façade pattern as it hides the complexity (Kumar 2023).
 
-![facade-pattern.jpg](images/facade-pattern.jpg)
+![facade-pattern.jpg](Trello/facade-pattern.jpg)
 
 In our code this pattern can get observed in the App.cs file in the following way:
 ```csharp
@@ -259,6 +277,8 @@ Kumar, S 2023, Facade Design Pattern | Introduction, GeeksforGeeks, accessed 28 
 LaLonde, WR & Pugh, JR 2009, Inside Smalltalk, Volume 3, Prentice Hall.  
 
 Nesteruk, D 2022, Design Patterns in .NET 6, Apress, Berkeley, CA.  
+
+Nobredev, L, Maddock, C & Warren, G 2022, .NET class libraries, Microsoft Learn, accessed 1 July 2023, <https://learn.microsoft.com/en-us/dotnet/standard/class-libraries>.
 
 Reenskaug, T 1979, Trygve/MVC, MVC, accessed 29 June 2023, <https://folk.universitetetioslo.no/trygver/themes/mvc/mvc-index.html>.  
 
