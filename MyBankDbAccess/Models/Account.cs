@@ -32,4 +32,9 @@ public class Account
         return
             $"AccountNumber: {AccountNumber}, AccountType: {AccountType}, CustomerID: {CustomerID}, Balance: {Balance}";
     }
+
+    public string GetAccountNiceName()
+    {
+        return AccountType.Equals("C") ? "Credit" : "Savings";
+    }
 }
