@@ -2,6 +2,9 @@ using MyBankDbAccess.Models;
 
 namespace MyBankDbAccess.Core;
 
+// When working with accounts, we need to check if the account really exists. Therefore, the CheckForAccount class
+// provides a method to do this. The static method AccountCheck will return false if the entered account number is not
+// in the database. 
 public static class CheckForAccount
 {
     public static bool AccountCheck(Account account)

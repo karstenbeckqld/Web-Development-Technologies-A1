@@ -6,6 +6,10 @@ using MyBankDbAccess.Models;
 
 namespace MyBankDbAccess.DBControllers;
 
+
+// CAN THIS CLASS GO?
+
+
 public class DatabaseQuery<T>
 {
     public static DatabaseResponse<T> Query(string query, Dictionary<string, string> parameters)

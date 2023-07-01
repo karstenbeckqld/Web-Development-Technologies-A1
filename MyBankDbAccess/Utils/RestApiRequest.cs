@@ -14,7 +14,7 @@ public static class RestApiRequest
     // The RestCall() method performs the HTTP GET call to the web service to obtain the JSON object and deserialize it,
     // so that the content can get assigned to the respective classes. It returns a List of Customers.
     // Adapted from Week 2 lecture. 
-    public static async Task<List<Customer>> RestCallAsync()
+    public static Task<List<Customer>> RestCallAsync()
     {
         // We first establish a new HttpClient. Using the 'using' keyword omits the requirement to dispose of the client.
         using var client =  new HttpClient();
@@ -32,6 +32,6 @@ public static class RestApiRequest
         });
 
         // Finally, the method returns the list of WebServiceObjects.
-        return jsonData;
+        return Task.FromResult(jsonData);
     }
 }

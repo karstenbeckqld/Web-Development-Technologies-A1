@@ -1,5 +1,8 @@
 namespace MyBankDbAccess.BusinessLogic;
 
+// CAN THIS CLASS GO?
+
+
 public class CustomerIdValidation
 {
     public static bool ValidateCustomerId(int customerId)

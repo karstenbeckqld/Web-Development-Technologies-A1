@@ -20,7 +20,7 @@ public class TransactionController : IFormController
         
         if (performTransfer.Transfer(_sourceAccount, _destinationAccount, _amount, @event.Get("Comment")))
         {
-            App.SetViewVariable("MainMenuView","LoginSuccess","You have successfully transferred $"+_amount+" from your "+_sourceAccount.GetAccountNiceName()+" account to "+_destinationAccountNumber);
+            App.SetViewVariable("MainMenuView","LoginSuccess","You have successfully transferred $"+_amount+" from your "+_sourceAccount.GetAccountNiceName()+" account to account number: "+_destinationAccountNumber);
         }
         else
         {

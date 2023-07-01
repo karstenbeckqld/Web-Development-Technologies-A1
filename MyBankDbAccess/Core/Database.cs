@@ -6,10 +6,13 @@ using MyBankDbAccess.Models;
 
 namespace MyBankDbAccess.Core;
 
-// The Database class serves as a generic interface for the model to the database. It forms par of our Object-Relational
-// Mapping and returns required data from the database to the view. 
+// The Database class serves as a generic interface for the model to the database. It forms part of our Object-Relational
+// Mapping (ORM) and returns required data from the database to the view. 
 public class Database<T>
 {
+    
+    // We store the query generated, the generated parameters and the type passed into the class centrally to be able to
+    // access them from every method inside the class. 
     private readonly string _connectionString = DatabaseConfigurator.GetDatabaseURI();
     private string Query { get; set; }
     private Dictionary<string, object> SqlParameters { get; set; }
@@ -121,13 +124,6 @@ public class Database<T>
 
         Query = query + values;
 
-
-        Console.WriteLine(Query);
-        foreach (var parameter in SqlParameters)
-        {
-            Console.WriteLine(parameter.Key + ": " + parameter.Value);
-        }
-
         return this;
     }
 
@@ -186,9 +182,16 @@ public class Database<T>
 
         using var command = connection.CreateCommand();
 
+        // If a where value got provided, we add this to the query here.
         if (!_where.IsNullOrEmpty())
         {
             Query += " WHERE " + _where.FirstOrDefault().Key + " = @" + _where.FirstOrDefault().Key;
+        }
+
+        // If the object type is a Transaction, we sort the results by TransactionTimeUtc in descending order.
+        if (_objectType == typeof(Transaction))
+        {
+            Query += " ORDER BY TransactionTimeUtc DESC";
         }
 
         command.CommandText = Query;

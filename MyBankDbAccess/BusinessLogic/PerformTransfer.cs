@@ -60,10 +60,6 @@ public class PerformTransfer
                 throw new NegativeAmountException("Entered amount must be greater than zero.");
             }
 
-            // Because transactions incur a fee after the two free transactions have been used up, we check the number
-            // of transactions for the given source account here.
-            var numberOfSourceAccountTransactions = CheckTransactions.GetNumberOfTransactions(sourceAccount);
-
             // Now we check if the source account has enough balance to perform the transaction according to the
             // business rules.
             var balanceCheck =
@@ -72,6 +68,10 @@ public class PerformTransfer
             // When the balance is sufficient, we can continue.
             if (balanceCheck)
             {
+                
+                // Because transactions incur a fee after the two free transactions have been used up, we check the number
+                // of transactions for the given source account here.
+                var numberOfSourceAccountTransactions = CheckTransactions.GetNumberOfTransactions(sourceAccount);
                 
                 // Like in the PerformDeposit class, we instantiate a list of dictionaries data structure to send the
                 // data to the Execute Transaction class. 

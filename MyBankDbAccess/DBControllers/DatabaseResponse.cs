@@ -1,5 +1,8 @@
 namespace MyBankDbAccess.DBControllers;
 
+
+// CAN THIS CLASS GO?
+
 public class DatabaseResponse<T>
 {
     private bool _outcome;
