@@ -37,4 +37,9 @@ public class Account
     {
         return AccountType.Equals("C") ? "Credit" : "Savings";
     }
+
+    public decimal GetMinimumBalance()
+    {
+        return AccountType.Equals("C") ? Account.CreditMinBalance : Account.SavingMinBalance;
+    }
 }
