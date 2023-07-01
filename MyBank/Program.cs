@@ -66,6 +66,7 @@ public class Program
         App.RegisterView(new AccountSelectionView());
         App.RegisterView(new DepositView());
         App.RegisterView(new WithdrawView());
+        App.RegisterView(new TransactionView());
 
         //|==============================================|
         //|                    START                     |

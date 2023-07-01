@@ -13,7 +13,9 @@ public class WithdrawController: IFormController
 
     public void OnSuccess(Event @event)
     {
-        if (PerformWithdrawal.Withdraw(_account,_withdrawAmount,@event.Get("Comment")))
+        PerformWithdrawal performWithdrawal = new PerformWithdrawal();
+        
+        if (performWithdrawal.Withdraw(_account,_withdrawAmount,@event.Get("Comment")))
         {
             App.SetViewVariable("MainMenuView","LoginSuccess","You have successfully withdrawn $"+_withdrawAmount+" from your "+_account.GetAccountNiceName()+" account!");
             App.SwitchView("MainMenuView");

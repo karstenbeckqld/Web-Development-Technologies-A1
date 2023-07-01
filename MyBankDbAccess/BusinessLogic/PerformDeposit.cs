@@ -7,9 +7,9 @@ using MyBankDbAccess.Models;
 namespace MyBankDbAccess.BusinessLogic;
 
 // The PerformDeposit class handles the functionality required by the front end to perform a deposit into a given account.   
-public class PerformDeposit
+public static class PerformDeposit
 {
-    public bool Deposit(Account destinationAccount, decimal amount, string comment)
+    public static bool Deposit(Account destinationAccount, decimal amount, string comment)
     {
         // First we check if the given account exists in the database.
         var accountExists = CheckForAccount.AccountCheck(destinationAccount);

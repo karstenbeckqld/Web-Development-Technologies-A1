@@ -66,6 +66,11 @@ public class AccountSelectionController
                 App.SetViewVariable("WithdrawView", "AccountNumber", account.AccountNumber);
                 App.SetViewVariable("WithdrawView","Account",account);
                 break;
+            
+            //If we are redirecting to deposit process this code.
+            case "TransactionView":
+                App.SetViewVariable("TransactionView","Account",account);
+                break;
         }
             
             //Finally we clear the redirect variable and redirect to that view.
