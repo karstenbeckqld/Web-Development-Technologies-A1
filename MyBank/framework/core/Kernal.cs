@@ -86,6 +86,7 @@ public sealed class Kernal
                     catch (Exception e)
                     {
                         App.Console().Error(e.Message);
+                        App.Console().Error(e.StackTrace);
                     }
                 }
                 
