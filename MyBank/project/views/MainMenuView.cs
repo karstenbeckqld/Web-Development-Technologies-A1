@@ -17,6 +17,14 @@ public class MainMenuView : View
         
         AddComponent(loginSuccess);
         
+        var errorMessage = new Message();
+        
+        errorMessage.SetVariableKey("ErrorMessage");
+        errorMessage.SetColor(ConsoleColor.Red);
+        errorMessage.ClearAfterWrite(true);
+        
+        AddComponent(errorMessage);
+        
         var fullname = new Message();
         
         fullname.SetColor(ConsoleColor.Yellow);

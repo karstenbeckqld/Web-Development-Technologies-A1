@@ -53,6 +53,16 @@ public class App
         Kernal.Instance().SetViewVariable(view,key,value);
     }
 
+    public static object GetViewVariable(string view, string key)
+    {
+        return Kernal.Instance().GetView(view).GetVariableOrNull(key);
+    }
+
+    public static void ClearViewVariable(string view, string key)
+    {
+        Kernal.Instance().GetView(view).ClearVariable(key);
+    }
+
     public static void LoadConfiguration(string path)
     {
         Kernal.Instance().SetConfigurationFile(path);

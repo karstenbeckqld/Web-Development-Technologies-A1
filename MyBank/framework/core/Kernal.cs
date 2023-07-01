@@ -86,6 +86,7 @@ public sealed class Kernal
                     catch (Exception e)
                     {
                         App.Console().Error(e.Message);
+                        App.Console().Error(e.StackTrace);
                     }
                 }
                 
@@ -96,6 +97,11 @@ public sealed class Kernal
     public Customer getCustomer()
     {
         return _customer;
+    }
+
+    public View GetView(string view)
+    {
+        return _views[view];
     }
 
     public void SetViewVariable(string view, string key, object value)

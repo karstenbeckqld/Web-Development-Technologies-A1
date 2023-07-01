@@ -1,4 +1,6 @@
-﻿namespace MyBank.framework.components.form;
+﻿using System.Globalization;
+
+namespace MyBank.framework.components.form;
 
 public class InputField
 {
@@ -7,17 +9,26 @@ public class InputField
     private int _type;
     private Dictionary<string, string> _constraints;
     private bool _readLineHidden;
+    private bool _freeForm;
     
     public InputField(int type, string promptInput, string constraints, bool hideInput)
     {
         _prompt = promptInput;
         _readLineHidden = hideInput;
         _constraints = new Dictionary<string, string>();
-        
-        foreach (var entry in constraints.Split(","))
+
+        if (constraints != null)
         {
-            string[] values = entry.Split(":");
-            _constraints.Add(values[0],values[1]);
+            _freeForm = false;
+            foreach (var entry in constraints.Split(","))
+            {
+                string[] values = entry.Split(":");
+                _constraints.Add(values[0], values[1]);
+            }
+        }
+        else
+        {
+            _freeForm = true;
         }
     }
 
@@ -43,27 +54,55 @@ public class InputField
                 input = ReadLineHidden();
             }
 
-            foreach (var constraint in _constraints)
+            if (!_freeForm)
             {
-
-                switch (constraint.Key)
+                foreach (var constraint in _constraints)
                 {
-                    
-                    case "char_min":
-                        if (input.Length < Int32.Parse(constraint.Value))
-                        {
-                            errors.Add(constraint.Key,"Minimum length not met, please enter an input with at least "+constraint.Value+" characters");
-                        }
 
-                        break;
-                    case "char_max":
-                        if (input.Length > Int32.Parse(constraint.Value))
-                        {
-                            errors.Add(constraint.Key,"Minimum length not met, please enter an input with at least "+constraint.Value+" characters");
-                        }
-                        break;
+                    switch (constraint.Key)
+                    {
 
+                        case "char_min":
+                            if (input.Length < Int32.Parse(constraint.Value))
+                            {
+                                errors.Add(constraint.Key,
+                                    "Minimum length not met, please enter an input with at least " + constraint.Value +
+                                    " characters");
+                            }
+
+                            break;
+                        case "char_max":
+                            if (input.Length > Int32.Parse(constraint.Value))
+                            {
+                                errors.Add(constraint.Key,
+                                    "Minimum length not met, please enter an input with at least " + constraint.Value +
+                                    " characters");
+                            }
+
+                            break;
+                        case "min":
+
+                            if (!IsFloat(input))
+                            {
+                                errors.Add(constraint.Key, "Please enter a float only! Example: '1.23'");
+                                break;
+                            }
+
+                            var f = float.Parse(input, CultureInfo.InvariantCulture.NumberFormat);
+                            var min = float.Parse(constraint.Value, CultureInfo.InvariantCulture.NumberFormat);
+                            if (f < min)
+                            {
+                                errors.Add(constraint.Key,
+                                    "Your selection must be at least '" + constraint.Value + "'");
+                            }
+
+                            break;
+                    }
                 }
+            }
+            else
+            {
+                valid = true;
             }
 
             foreach (var error in errors)
@@ -101,6 +140,22 @@ public class InputField
         
         return input;
     }
+
+    private bool IsFloat(string input)
+    {
+        bool outcome = true;
+        
+        try
+        {
+            var f = float.Parse(input, CultureInfo.InvariantCulture.NumberFormat);
+        }
+        catch (Exception e)
+        {
+            outcome = false;
+        }
+
+        return outcome;
+    }
     
-    
+
 }

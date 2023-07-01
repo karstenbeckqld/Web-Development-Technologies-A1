@@ -6,12 +6,16 @@ public class MainMenuController
 {
     public void Deposit()
     {
-        App.SwitchView("TransactionView");
+        App.SetViewVariable("AccountSelectionView","RedirectMessage","Select Account to perform a deposit");
+        App.SetViewVariable("AccountSelectionView","Redirect","DepositView");
+        App.SwitchView("AccountSelectionView");
     }
 
     public void Withdraw()
     {
-        
+        App.SetViewVariable("AccountSelectionView","RedirectMessage","Select Account to withdraw from");
+        App.SetViewVariable("AccountSelectionView","Redirect","WithdrawView");
+        App.SwitchView("AccountSelectionView");
     }
 
     public void Transfer()
@@ -21,12 +25,9 @@ public class MainMenuController
 
     public void MyStatement()
     {
+        App.SetViewVariable("AccountSelectionView","RedirectMessage","Select Account to view statements");
+        App.SetViewVariable("AccountSelectionView","Redirect","MyStatementsView");
         App.SwitchView("AccountSelectionView");
-    }
-
-    public void ListAccounts()
-    {
-
     }
 
     public void Logout()
