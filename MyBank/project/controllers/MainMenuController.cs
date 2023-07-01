@@ -13,7 +13,9 @@ public class MainMenuController
 
     public void Withdraw()
     {
-        
+        App.SetViewVariable("AccountSelectionView","RedirectMessage","Select Account to withdraw from");
+        App.SetViewVariable("AccountSelectionView","Redirect","WithdrawView");
+        App.SwitchView("AccountSelectionView");
     }
 
     public void Transfer()
