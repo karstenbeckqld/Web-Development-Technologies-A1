@@ -58,7 +58,7 @@ public class AccountSelectionController
             //If we are redirecting to deposit process this code.
             case "DepositView":
                 App.SetViewVariable("DepositView", "AccountNumber", account.AccountNumber);
-                App.SetViewVariable("DepositView","account",account);
+                App.SetViewVariable("DepositView","Account",account);
                 break;
         }
             
