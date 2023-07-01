@@ -6,6 +6,8 @@ namespace MyBankDbAccess.Models;
 // The Account class represents a user defined type that holds data from the Account table in the database. 
 public class Account
 {
+    public static readonly decimal SavingMinBalance = 0;
+    public static readonly decimal CreditMinBalance = 300;
     public Account()
     {
     }
