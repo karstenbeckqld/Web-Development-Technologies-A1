@@ -20,7 +20,9 @@ public class MainMenuController
 
     public void Transfer()
     {
-        
+        App.SetViewVariable("AccountSelectionView","RedirectMessage","Select Account to transfer from");
+        App.SetViewVariable("AccountSelectionView","Redirect","TransactionView");
+        App.SwitchView("AccountSelectionView");
     }
 
     public void MyStatement()
