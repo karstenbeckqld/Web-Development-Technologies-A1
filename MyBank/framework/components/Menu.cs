@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using MyBank.framework.core;
+using MyBank.framework.facades;
 
 namespace MyBank.framework.components;
 
@@ -57,8 +58,14 @@ public class Menu<T> : Component
         string selection = Console.ReadLine();
         int number = 0;
         bool outcome = false;
-       
+        
+        
+        if (selection.Equals("/back"))
+        {
+            App.BackToPreviousView();
+        }
 
+        
         if (Int32.TryParse(selection, out number))
         {
             

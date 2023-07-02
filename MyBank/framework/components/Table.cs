@@ -68,6 +68,11 @@ public class Table<T> : Component
             }
             
             string input = Console.ReadLine();
+            
+            if (input.Equals("/back"))
+            {
+                App.BackToPreviousView();
+            }
         
             if (input.ToLower().Equals("0"))
             {
