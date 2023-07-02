@@ -75,7 +75,7 @@ public sealed class Kernel
         {
             foreach (var viewObject in _views.Values)
             {
-                if (viewObject.GetType().GetInterface("MyBank.framework.views.interfaces.IDefeeredConstructor") != null)
+                if (viewObject.GetType().GetInterface("MyBank.framework.views.interfaces.IConstructAfterLogin") != null)
                 {
                     try
                     {
