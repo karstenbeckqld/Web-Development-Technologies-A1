@@ -27,7 +27,7 @@ public class LoginView : View
         form.SetController("LoginController");
         
         form.AddInput(Form.Integer,"Login ID",null,"char_min:8,char_max:8");
-        form.AddInput(Form.Text,"Password",null,"char_min:2,char_max:20",true);
+        form.AddInput(Form.Text,"Password",null,"char_min:2,char_max:30",true);
         
         AddComponent(form);
     }
