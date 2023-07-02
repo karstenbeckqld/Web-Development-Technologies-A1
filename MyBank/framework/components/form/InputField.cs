@@ -137,6 +137,12 @@ public class InputField
                     }
                     else
                     {
+                        if (!ValidateDecimalPlaces(decimal.Parse(input, CultureInfo.InvariantCulture.NumberFormat), 2))
+                        {
+                            errors.Add("Decimal Places",
+                                "Please ensure your input is only in intervals of cents, example :'0.01' ");
+                        }
+                        
                         
                         foreach (var constraint in _constraints)
                         {
@@ -380,6 +386,28 @@ public class InputField
             outcome = false;
         }
 
+        return outcome;
+    }
+
+    private bool ValidateDecimalPlaces(decimal input, int maxDecimalPlaces)
+    {
+        bool outcome = true;
+
+        //START CODE REFERENCE 
+        
+        //batsheva (2019) Finding the number of places after the decimal point of a double,
+        //Stack Overflow. Available at: https://stackoverflow.com/questions/9386672/finding-the-number-of-places-after-the-decimal-point-of-a-double
+        //(Accessed: 02 July 2023). 
+        
+        int digits = input.ToString().Length - (((int)input).ToString().Length + 1);
+
+        //END CODE REFERENCE
+
+        if (digits > maxDecimalPlaces)
+        {
+            outcome = false;
+        }
+        
         return outcome;
     }
     
