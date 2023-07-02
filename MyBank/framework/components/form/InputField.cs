@@ -16,6 +16,7 @@ public class InputField
         _prompt = promptInput;
         _readLineHidden = hideInput;
         _constraints = new Dictionary<string, string>();
+        _type = type;
 
         if (constraints != null)
         {
@@ -53,9 +54,18 @@ public class InputField
             {
                 input = ReadLineHidden();
             }
-
+            
             if (!_freeForm)
             {
+                
+                if (_type == Form.Integer)
+                {
+                    if (!IsInteger(input))
+                    {
+                        errors.Add("Integer","Input must be a integer only");
+                    }
+                }
+                
                 foreach (var constraint in _constraints)
                 {
 
@@ -82,14 +92,14 @@ public class InputField
                             break;
                         case "min":
 
-                            if (!IsFloat(input))
+                            if (!IsDecimal(input))
                             {
                                 errors.Add(constraint.Key, "Please enter a float only! Example: '1.23'");
                                 break;
                             }
 
-                            var f = float.Parse(input, CultureInfo.InvariantCulture.NumberFormat);
-                            var min = float.Parse(constraint.Value, CultureInfo.InvariantCulture.NumberFormat);
+                            var f = decimal.Parse(input, CultureInfo.InvariantCulture.NumberFormat);
+                            var min = decimal.Parse(constraint.Value, CultureInfo.InvariantCulture.NumberFormat);
                             if (f < min)
                             {
                                 errors.Add(constraint.Key,
@@ -141,13 +151,29 @@ public class InputField
         return input;
     }
 
-    private bool IsFloat(string input)
+    private bool IsDecimal(string input)
     {
         bool outcome = true;
         
         try
         {
-            var f = float.Parse(input, CultureInfo.InvariantCulture.NumberFormat);
+            var f = decimal.Parse(input, CultureInfo.InvariantCulture.NumberFormat);
+        }
+        catch (Exception e)
+        {
+            outcome = false;
+        }
+
+        return outcome;
+    }
+
+    private bool IsInteger(string input)
+    {
+        bool outcome = true;
+        
+        try
+        {
+            var f = int.Parse(input);
         }
         catch (Exception e)
         {
