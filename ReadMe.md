@@ -231,6 +231,83 @@ public class Customer
     [SkipProperty] public Login Login { get; set; }
 ```
 
+### Component Design Pattern:
+
+Our frontend console application system utilizes the component design pattern with each element of the user interface being 
+presented by a reusable and re-configurable component. We can understand the flow of the design pattern as each view or “page” 
+has a number of components that are updated and rendered each application cycle.
+
+Our application update and rendering cycles are done together in this console application and are known as the “Process” method.
+
+````csharp
+Kernel.Instance().Process();
+````
+
+To create this front end UI framework I have taken lots of inspiration form JavaFX and its FXML system. One of the excellent 
+features of JavaFX controllers is that they allow for optional dependency injection into its constructor for allowing different 
+actions to receive an event object. This is a feature I have recreated in this project with the menu component allowing for the 
+injection of an event object from the menu.
+
+This allows us to access it from a controller if we need but does not limit the controllers to having to accept the event 
+object if it is not required. The blow example shows how we would retrieve the menu section variable from an event.
+
+
+````csharp
+public void S(Event @event)
+    {
+        int AccountNumber = int.Parse(@event.Get("MenuSelectionVariable"));
+        
+        Account account = new Database<Account>().Where("AccountNumber",accountnumber).getFirst();
+    }
+````
+
+As this event injection is optional and dynamic we are not forced to accept it as a constructor parameter. 
+
+````csharp
+public void S(Event @event)
+    {
+        App.SwitchView("CreditAccountView");
+    }
+````
+
+The core advantage of this component based user interface system is that it allows us to write a series of multi use and 
+configurable component objects and reuse them across the project, allowing for reduced development time, a more streamlined
+code base, and the removal of duplicated processing or input validation code.
+
+Example:
+````csharp
+
+public LoginView()
+{
+        var loginFailedMessage = new Message();
+        
+        loginFailedMessage.SetColor(ConsoleColor.Red);
+        loginFailedMessage.SetVariableKey("LoginFailed");
+        
+        loginFailedMessage.ClearAfterWrite(true);
+
+        AddComponent(loginFailedMessage);
+        
+        var logoutMessage = new Message();
+        
+        logoutMessage.SetColor(ConsoleColor.Green);
+        logoutMessage.SetVariableKey("LogoutSuccess");
+        
+        logoutMessage.ClearAfterWrite(true);
+
+        AddComponent(logoutMessage);
+        
+        var form = new Form();
+        
+        form.SetController("LoginController");
+        
+        form.AddInput(Form.Integer,"Login ID",null,"char_min:8,char_max:8");
+        form.AddInput(Form.Text,"Password",null,"char_min:2,char_max:30",true);
+        
+        AddComponent(form);
+    }
+
+````
 ### The use of async and await
 The code in a C# program usually gets executed sequentially, line by line. In most programs, this usually does not affect 
 performance. However, when involving components like web services, HTTP requests or file loading, we deal with processes 
@@ -261,6 +338,7 @@ way:
         foreach (var customer in customers)
         {...}
 ```
+
 
 ## References
 
