@@ -13,6 +13,7 @@ public sealed class Kernal
     private Customer _customer;
     private IConfigurationRoot _configuration;
     private Dictionary<string, ServiceProvider> _providers;
+    private string _lastAccessedView;
 
     public Kernal()
     {
@@ -65,6 +66,7 @@ public sealed class Kernal
 
     public void SetActiveView(string view)
     {
+        _lastAccessedView = _activeView;
         _activeView = view;
     }
 
@@ -92,6 +94,11 @@ public sealed class Kernal
                 
             }
         }
+    }
+
+    public string GetLastAccessedView()
+    {
+        return _lastAccessedView;
     }
 
     public Customer getCustomer()

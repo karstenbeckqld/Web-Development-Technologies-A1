@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using MyBank.framework.facades;
 
 namespace MyBank.framework.components.form;
 
@@ -53,6 +54,11 @@ public class InputField
             else
             {
                 input = ReadLineHidden();
+            }
+
+            if (input.Equals("/back"))
+            {
+                App.BackToPreviousView();
             }
 
             if (!_freeForm)
