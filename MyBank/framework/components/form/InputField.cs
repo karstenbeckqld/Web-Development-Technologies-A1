@@ -68,7 +68,7 @@ public class InputField
                 {
                     if (!IsInteger(input))
                     {
-                        errors.Add("Integer", "Input must be a integer only");
+                        errors.Add("Integer", "Please enter a number (integer) only.");
                     }
                     else
                     {
@@ -85,9 +85,8 @@ public class InputField
                                     if (!ValidateMinCharLength(input, Int32.Parse(constraint.Value)))
                                     {
                                         errors.Add(constraint.Key,
-                                            "Minimum length not met, please enter an input with at least " +
-                                            constraint.Value +
-                                            " characters");
+                                            "Please enter at least " +
+                                            constraint.Value +" characters");
                                     }
                                     break;
                                 
@@ -97,9 +96,8 @@ public class InputField
                                     if (!ValidateMaxCharLength(input, Int32.Parse(constraint.Value)))
                                     {
                                         errors.Add(constraint.Key,
-                                            "Minimum length not met, please enter an input with no more than " +
-                                            constraint.Value +
-                                            " characters");
+                                            "Please enter less than " +
+                                            constraint.Value +" characters");
                                     }
                                     break;
                                 
@@ -133,14 +131,14 @@ public class InputField
                 {
                     if (!IsDecimal(input))
                     {
-                        errors.Add("Decimal", "Input must be a decimal number");
+                        errors.Add("Decimal", "Please enter a decimal number only with no '$'");
                     }
                     else
                     {
                         if (!ValidateDecimalPlaces(decimal.Parse(input, CultureInfo.InvariantCulture.NumberFormat), 2))
                         {
                             errors.Add("Decimal Places",
-                                "Please ensure your input is only in intervals of cents, example :'0.01' ");
+                                "Please enter an amount only incrementing in cents, example : 0.01 ");
                         }
                         
                         
@@ -155,9 +153,8 @@ public class InputField
                                     if (!ValidateMinCharLength(input, Int32.Parse(constraint.Value)))
                                     {
                                         errors.Add(constraint.Key,
-                                            "Minimum length not met, please enter an input with at least " +
-                                            constraint.Value +
-                                            " characters");
+                                            "Please enter at least " +
+                                            constraint.Value +" characters");
                                     }
                                     break;
                                 
@@ -166,9 +163,8 @@ public class InputField
                                     if (!ValidateMaxCharLength(input, Int32.Parse(constraint.Value)))
                                     {
                                         errors.Add(constraint.Key,
-                                            "Minimum length not met, please enter an input with no more than " +
-                                            constraint.Value +
-                                            " characters");
+                                            "Please enter no more than " +
+                                            constraint.Value +" characters");
                                     }
                                     break;
                                 
@@ -224,9 +220,8 @@ public class InputField
                                     if (!ValidateMinCharLength(input, int.Parse(constraint.Value)))
                                     {
                                         errors.Add(constraint.Key,
-                                            "Minimum length not met, please enter an input with at least " +
-                                            constraint.Value +
-                                            " characters");
+                                            "Please enter at least " +
+                                            constraint.Value +" characters");
                                     }
 
                                     break;
@@ -236,9 +231,8 @@ public class InputField
                                     if (!ValidateMaxCharLength(input, int.Parse(constraint.Value)))
                                     {
                                         errors.Add(constraint.Key,
-                                            "Minimum length not met, please enter an input with no more than " +
-                                            constraint.Value +
-                                            " characters");
+                                            "Please enter no more than " +
+                                            constraint.Value +" characters");
                                     }
 
                                     break;
@@ -249,7 +243,9 @@ public class InputField
 
                 foreach (var error in errors)
                 {
-                    Console.WriteLine("[Input Constraint Error] " + error.Value);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(error.Value);
+                    Console.ResetColor();
                 }
                 
             }

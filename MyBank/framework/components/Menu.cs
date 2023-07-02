@@ -119,12 +119,16 @@ public class Menu<T> : Component
 
             if (!outcome)
             {
-                Console.WriteLine("Invalid Input, Please enter a valid number section");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid Input, Please enter a valid option from the list.");
+                Console.ResetColor();
             }
 
         }else
         {
-            Console.WriteLine("Invalid Input, Please enter a valid number section");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Invalid Input, Please enter a valid option from the list.");
+            Console.ResetColor();        
         }
         
         Kernal.Instance().Process();
