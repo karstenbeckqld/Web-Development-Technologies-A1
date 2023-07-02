@@ -5,7 +5,7 @@ using MyBankDbAccess.Models;
 
 namespace MyBank.project.views;
 
-public class MyStatementsView : View, IDefeeredConstructor
+public class MyStatementsView : View, IConstructAfterLogin
 {
 
     public void Construct()
