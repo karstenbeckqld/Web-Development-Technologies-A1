@@ -41,6 +41,8 @@ public class MainMenuView : View
         menu.AddOption("Logout");
         menu.AddOption("Exit");
         
+        menu.SetPrompt("Please select an option from the menu!");
+        
         menu.SetController("MainMenuController");
 
         AddComponent(menu);

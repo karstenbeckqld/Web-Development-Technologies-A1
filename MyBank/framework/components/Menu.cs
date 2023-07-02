@@ -10,6 +10,7 @@ public class Menu<T> : Component
     private List<T> _values;
     private string _key;
     private string _targetValue;
+    private string _prompt;
 
     public Menu()
     {
@@ -27,6 +28,11 @@ public class Menu<T> : Component
     public void AddOption(String name)
     {
         _options.Add(name,name);
+    }
+
+    public void SetPrompt(string prompt)
+    {
+        _prompt = prompt;
     }
 
     public void AddAll(List<T> items, string key, string value)
@@ -48,12 +54,20 @@ public class Menu<T> : Component
         
         Event @event = new Event();
         int count = 1;
+        
+        //Why would this need to be a raw string, it makes 0 sense! This approach with
+        //reusable menu components renders them in sequence and accepts items via the 
+        // AddAll(List) or Add(Option).
         foreach (var option in _options)
         {
             Console.WriteLine("["+count+"] "+option.Key);
             count++;
         }
-        
+
+        if (_prompt != null)
+        {
+            Console.WriteLine(_prompt);
+        }
         
         string selection = Console.ReadLine();
         int number = 0;
