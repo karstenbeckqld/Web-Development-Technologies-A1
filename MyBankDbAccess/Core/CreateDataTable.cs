@@ -42,7 +42,7 @@ public static class CreateDataTable
 
                          if (property.Name.Equals("TransactionTimeUtc"))
                          {
-                             //property.SetValue(obj, row.Field<DateTime>(property.Name).ToLocalTime());
+                             property.SetValue(obj, row.Field<DateTime>(property.Name));
                          }
                     }
                 }

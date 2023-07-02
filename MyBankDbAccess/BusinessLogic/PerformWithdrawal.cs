@@ -42,7 +42,7 @@ public class PerformWithdrawal
                 
                 // If the account exists and has enough money, we can set the current date and time and set empty
                 // comments to null for the database to display them as <null> values.
-                var utcDate = DateTime.UtcNow.ToLocalTime();
+                var utcDate = DateTime.UtcNow;
 
                 if (comment.IsNullOrEmpty())
                 {
