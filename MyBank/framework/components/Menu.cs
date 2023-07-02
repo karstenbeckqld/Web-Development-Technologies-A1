@@ -131,7 +131,7 @@ public class Menu<T> : Component
             Console.ResetColor();        
         }
         
-        Kernal.Instance().Process();
+        Kernel.Instance().Process();
         
         return null;
       
