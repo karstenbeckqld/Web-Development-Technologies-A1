@@ -77,6 +77,20 @@ public class App
     {
         Kernal.Instance().RegisterServiceProvider(provider);
     }
+
+    public static void BackToPreviousView()
+    {
+        if (Kernal.Instance().GetLastAccessedView() != null)
+        {
+            Kernal.Instance().SetActiveView(Kernal.Instance().GetLastAccessedView());
+            Kernal.Instance().Process();
+        }
+        else
+        {
+            System.Console.WriteLine("Cannot go back any further");
+        }
+      
+    }
     
     
 }
