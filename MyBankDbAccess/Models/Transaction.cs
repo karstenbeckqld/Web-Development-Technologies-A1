@@ -9,7 +9,7 @@ namespace MyBankDbAccess.Models;
 public class Transaction 
 {
     
-    private CultureInfo ci = CultureInfo.CreateSpecificCulture("en-AU");
+    private CultureInfo ci = CultureInfo.CurrentUICulture;
     public Transaction()
     {
     }
