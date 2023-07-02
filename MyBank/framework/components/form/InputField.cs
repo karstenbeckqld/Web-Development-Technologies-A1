@@ -56,7 +56,7 @@ public class InputField
                 input = ReadLineHidden();
             }
 
-            if (input.Equals("/back"))
+            if (!_readLineHidden && input.Equals("/back"))
             {
                 App.BackToPreviousView();
             }
