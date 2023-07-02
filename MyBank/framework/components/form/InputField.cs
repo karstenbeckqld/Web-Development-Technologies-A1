@@ -54,70 +54,192 @@ public class InputField
             {
                 input = ReadLineHidden();
             }
-            
+
             if (!_freeForm)
             {
-                
+
                 if (_type == Form.Integer)
                 {
                     if (!IsInteger(input))
                     {
-                        errors.Add("Integer","Input must be a integer only");
+                        errors.Add("Integer", "Input must be a integer only");
                     }
-                }
-                
-                foreach (var constraint in _constraints)
-                {
-
-                    switch (constraint.Key)
+                    else
                     {
 
-                        case "char_min":
-                            if (input.Length < Int32.Parse(constraint.Value))
+                        foreach (var constraint in _constraints)
+                        {
+
+                            switch (constraint.Key)
                             {
-                                errors.Add(constraint.Key,
-                                    "Minimum length not met, please enter an input with at least " + constraint.Value +
-                                    " characters");
+
+                                //-----------------------------------------------\\
+                                case "char_min":
+
+                                    if (!ValidateMinCharLength(input, Int32.Parse(constraint.Value)))
+                                    {
+                                        errors.Add(constraint.Key,
+                                            "Minimum length not met, please enter an input with at least " +
+                                            constraint.Value +
+                                            " characters");
+                                    }
+                                    break;
+                                
+                                //-----------------------------------------------\\
+                                case "char_max":
+
+                                    if (!ValidateMaxCharLength(input, Int32.Parse(constraint.Value)))
+                                    {
+                                        errors.Add(constraint.Key,
+                                            "Minimum length not met, please enter an input with no more than " +
+                                            constraint.Value +
+                                            " characters");
+                                    }
+                                    break;
+                                
+                                //-----------------------------------------------\\
+                                case "min":
+
+                                    if (!ValidateIntegerMinNumber(int.Parse(input), int.Parse(constraint.Value)))
+                                    {
+                                        errors.Add(constraint.Key,
+                                            "Please ensure your number is " + constraint.Value + " or larger");
+                                    }
+                                    
+                                    break;
+                                
+                                //-----------------------------------------------\\
+                                case "max":
+                                    
+                                    if (!ValidateIntegerMaxNumber(int.Parse(input), int.Parse(constraint.Value)))
+                                    {
+                                        errors.Add(constraint.Key,
+                                            "Please ensure your number is no larger than "+constraint.Value);
+                                    }
+                                    
+                                    break;
                             }
-
-                            break;
-                        case "char_max":
-                            if (input.Length > Int32.Parse(constraint.Value))
-                            {
-                                errors.Add(constraint.Key,
-                                    "Minimum length not met, please enter an input with at least " + constraint.Value +
-                                    " characters");
-                            }
-
-                            break;
-                        case "min":
-
-                            if (!IsDecimal(input))
-                            {
-                                errors.Add(constraint.Key, "Please enter a float only! Example: '1.23'");
-                                break;
-                            }
-
-                            var f = decimal.Parse(input, CultureInfo.InvariantCulture.NumberFormat);
-                            var min = decimal.Parse(constraint.Value, CultureInfo.InvariantCulture.NumberFormat);
-                            if (f < min)
-                            {
-                                errors.Add(constraint.Key,
-                                    "Your selection must be at least '" + constraint.Value + "'");
-                            }
-
-                            break;
+                        }
                     }
                 }
-            }
-            else
-            {
-                valid = true;
-            }
 
-            foreach (var error in errors)
-            {
-                Console.WriteLine("[Input Constraint Error] "+error.Value);
+                if (_type == Form.Float)
+                {
+                    if (!IsDecimal(input))
+                    {
+                        errors.Add("Decimal", "Input must be a decimal number");
+                    }
+                    else
+                    {
+                        
+                        foreach (var constraint in _constraints)
+                        {
+
+                            switch (constraint.Key)
+                            {
+
+                                case "char_min":
+
+                                    if (!ValidateMinCharLength(input, Int32.Parse(constraint.Value)))
+                                    {
+                                        errors.Add(constraint.Key,
+                                            "Minimum length not met, please enter an input with at least " +
+                                            constraint.Value +
+                                            " characters");
+                                    }
+                                    break;
+                                
+                                case "char_max":
+
+                                    if (!ValidateMaxCharLength(input, Int32.Parse(constraint.Value)))
+                                    {
+                                        errors.Add(constraint.Key,
+                                            "Minimum length not met, please enter an input with no more than " +
+                                            constraint.Value +
+                                            " characters");
+                                    }
+                                    break;
+                                
+                                case "min":
+                                    decimal userInput = Decimal.Parse(input, CultureInfo.InvariantCulture.NumberFormat);
+                                    decimal min = Decimal.Parse(constraint.Value,
+                                        CultureInfo.InvariantCulture.NumberFormat);
+
+                                    if (!ValidateDecimalMinNumber(userInput, min))
+                                    {
+                                        errors.Add(constraint.Key,
+                                            "Please ensure your number is " + constraint.Value + " or larger");
+                                    }
+                                    
+                                    break;
+                                
+                                case "max":
+                                    
+                                    userInput = Decimal.Parse(input, CultureInfo.InvariantCulture.NumberFormat);
+                                    decimal max = Decimal.Parse(constraint.Value,
+                                        CultureInfo.InvariantCulture.NumberFormat);
+                                    
+                                    if (!ValidateDecimalMaxNumber(userInput, max))
+                                    {
+                                        errors.Add(constraint.Key,
+                                            "Please ensure your number is " + constraint.Value + " or larger");
+                                    }
+                                    
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                if (_type == Form.Text)
+                {
+
+                    if (input == null)
+                    {
+                        errors.Add("Text","Input cannot be null");
+                    }
+                    else
+                    {
+
+                        foreach (var constraint in _constraints)
+                        {
+
+                            switch (constraint.Key)
+                            {
+
+                                case "char_min":
+
+                                    if (!ValidateMinCharLength(input, int.Parse(constraint.Value)))
+                                    {
+                                        errors.Add(constraint.Key,
+                                            "Minimum length not met, please enter an input with at least " +
+                                            constraint.Value +
+                                            " characters");
+                                    }
+
+                                    break;
+
+                                case "char_max":
+
+                                    if (!ValidateMaxCharLength(input, int.Parse(constraint.Value)))
+                                    {
+                                        errors.Add(constraint.Key,
+                                            "Minimum length not met, please enter an input with no more than " +
+                                            constraint.Value +
+                                            " characters");
+                                    }
+
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                foreach (var error in errors)
+                {
+                    Console.WriteLine("[Input Constraint Error] " + error.Value);
+                }
+                
             }
 
             if (errors.Count == 0)
@@ -176,6 +298,78 @@ public class InputField
             var f = int.Parse(input);
         }
         catch (Exception e)
+        {
+            outcome = false;
+        }
+
+        return outcome;
+    }
+
+    private bool ValidateMinCharLength(string input, int min)
+    {
+        bool outcome = true;
+        
+        if (input.Length < min)
+        {
+            outcome = false;
+        }
+
+        return outcome;
+    }
+    
+    private bool ValidateMaxCharLength(string input, int max)
+    {
+        bool outcome = true;
+
+        if (input.Length > max)
+        {
+            outcome = false;
+        }
+
+        return outcome;
+    }
+
+    private bool ValidateIntegerMaxNumber(int input, int max)
+    {
+        bool outcome = true;
+
+        if (input > max)
+        {
+            outcome = false;
+        }
+
+        return outcome;
+    }
+    
+    private bool ValidateIntegerMinNumber(int input, int min)
+    {
+        bool outcome = true;
+
+        if (input < min)
+        {
+            outcome = false;
+        }
+
+        return outcome;
+    }
+
+    private bool ValidateDecimalMinNumber(decimal input, decimal min)
+    {
+        bool outcome = true;
+
+        if (input < min)
+        {
+            outcome = false;
+        }
+
+        return outcome;
+    }
+
+    private bool ValidateDecimalMaxNumber(decimal input, decimal max)
+    {
+        bool outcome = true;
+
+        if (input > max)
         {
             outcome = false;
         }
