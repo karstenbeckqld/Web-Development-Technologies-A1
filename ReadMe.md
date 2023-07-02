@@ -267,7 +267,7 @@ public void S(Event @event)
 As this event injection is optional and dynamic we are not forced to accept it as a constructor parameter. 
 
 ````csharp
-public void S(Event @event)
+public void S()
     {
         App.SwitchView("CreditAccountView");
     }
