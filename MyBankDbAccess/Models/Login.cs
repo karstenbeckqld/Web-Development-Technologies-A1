@@ -20,7 +20,7 @@ public class Login
     }
 
     // The LoginId property stores the login id for a customer.
-    [PrimaryKey]public required string LoginID { get; init; }
+    public required string LoginID { get; init; }
 
     // The PasswordHash property stores the password for a customer.
     public string PasswordHash { get; set; }

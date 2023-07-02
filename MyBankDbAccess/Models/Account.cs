@@ -21,7 +21,7 @@ public class Account
         Balance = balance;
     }
 
-    [PrimaryKey]public int AccountNumber { get; set; }
+    public int AccountNumber { get; set; }
     public string AccountType { get; set; }
     public required int CustomerID { get; set; }
     public decimal Balance { get; set; }

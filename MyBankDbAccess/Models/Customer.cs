@@ -23,7 +23,7 @@ public class Customer
     }
 
     
-    [PrimaryKey] public required int CustomerID { get; set; }
+    public required int CustomerID { get; set; }
 
     public string Name { get; set; }
 
