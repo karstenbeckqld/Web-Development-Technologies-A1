@@ -1,5 +1,11 @@
 # ReadMe
 
+ReadMe File for Web Development Technologies, Assignment 1, Group 2:
+
+Karsten Beck: s3912792
+
+Jack George Harris: s3893749
+
 ## GitHub Repository
 Project Github Repository: [https://github.com/rmit-wdt-sp2-2023/s3893749-s3912792-a1](https://github.com/rmit-wdt-sp2-2023/s3893749-s3912792-a1)
 
