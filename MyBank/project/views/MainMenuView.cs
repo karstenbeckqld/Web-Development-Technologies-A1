@@ -1,14 +1,14 @@
 using MyBank.framework.components;
 using MyBank.framework.core;
+using MyBank.framework.views.interfaces;
 
 namespace MyBank.project.views;
 
-public class MainMenuView : View
+public class MainMenuView : View,  IConstructAfterLogin
 {
 
-    public MainMenuView()
+    public void Construct()
     {
-
         var loginSuccess = new Message();
         
         loginSuccess.SetVariableKey("LoginSuccess");
@@ -47,5 +47,4 @@ public class MainMenuView : View
 
         AddComponent(menu);
     }
-    
 }
