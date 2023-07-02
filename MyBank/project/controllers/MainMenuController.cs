@@ -1,3 +1,4 @@
+using MyBank.framework.core;
 using MyBank.framework.facades;
 
 namespace MyBank.project.controllers;
@@ -34,6 +35,7 @@ public class MainMenuController
 
     public void Logout()
     {
+        Kernel.Instance().RegenerateViews();
         Console.Clear();
         App.SetCurrentUser(null);
         App.SetViewVariable("LoginView","LogoutSuccess","You have been successfully logged out.");
