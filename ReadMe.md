@@ -43,11 +43,11 @@ The DI can help in solving the following problems:
 Dependency Injection is one of the so-called creational design patterns (Nesteruk 2022) and makes it easier to change an 
 application's behaviour by changing components that implement interfaces that define features. It also produces members 
 that are easier to isolate for unit testing (Freeman 2022). However, according to Fowler (2004), DI can also assist in 
-making a system 'portable', meaning, if we had a system that uses a method to read data from a file for one user, it 
-would be easier to change that method to read data from a database or an XML file for another user, without changing the 
-code for the class that uses the data. This flexibility is where the power of DI lies.
+making a system 'portable', meaning, if we had for example a system that uses a method to read data from a file for one 
+user, it would be easier to change that method to read data from a database or an XML file for another user, without 
+changing the code for the class that uses the data. This flexibility is where the power of DI lies.
 
- We use DI in the following way in the form of constructor injection:
+We use DI in the following way in the form of constructor injection:
 
 We define an Interface for the balance check that provides an abstract method.
 
@@ -58,7 +58,7 @@ public interface IBalanceCheck
 }
 ```
 
-Then we define the class BalanceValidatoinLogic as follows:
+Then we define the class BalanceValidationLogic (Injector) as follows:
 
 ```cs
 public class BalanceValidationLogic
@@ -82,8 +82,8 @@ public class BalanceValidationLogic
 }
 ```
 
-This class contains the constructor with one parameter of type IBalanceCheck. Now the calling class (PerformTransfer or 
-PerformWithdrawal) injects an object of type IBalanceCheck.
+This class contains the constructor with one parameter of type IBalanceCheck. Now the client class (PerformTransfer or 
+PerformWithdrawal) gets an object of type BalanceValidator injected through its constructor.
 
 ```cs
 public class PerformTransfer
@@ -101,8 +101,11 @@ public class PerformTransfer
 }
 ```
 
-The BalanceValidationLogic class creates and injects the BalanceValidator object into the PerformTransfer class. This 
-way, the PerformTransfer and the BalanceValidator classes become more loosely coupled.
+This way, the PerformTransfer and the BalanceValidator do not create the BalanceValidator object themselves and hence, 
+the service and client classes become more loosely coupled. It adds that the PerformTransfer and PerformWithdrawal 
+classes do not know about the implementation of the service class. All they see is if the check validates to true or 
+not. So, if the business rules change, all that needs to get done is update the service class (BalanceValidator) and 
+PerformTransfer and PerformWithdrawal would still work without even realising the change in the rule.  
 
 ### Façade Design Pattern:
 
