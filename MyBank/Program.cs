@@ -1,11 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using MyBank.framework.facades;
-using MyBank.project.service.providers;
 using MyBank.project.views;
-using MyBankDbAccess.BusinessLogic;
 using MyBankDbAccess.Core;
-using MyBankDbAccess.Exceptions;
-using MyBankDbAccess.Models;
 using MyBankDbAccess.Utils;
 
 namespace MyBank;
@@ -42,16 +38,7 @@ public class Program
         // If not loaded already, here we load the data from
         // the web service into the database.
         await DataWebService.GetAndAddCustomers();
-        
-        //|==============================================|
-        //|         Register Service Providers           |
-        //|==============================================|
-        
-        //Our service providers initialize on boot and 
-        //provide service functionality to the application.
-        
-        App.RegisterServiceProvider(new ModelManagerServiceProvider());
-        
+
         //|==============================================|
         //|                 Register Views               |
         //|==============================================|
