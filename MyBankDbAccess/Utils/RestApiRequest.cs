@@ -27,7 +27,7 @@ public static class RestApiRequest
         // providing it the JSON string.
         var jsonData =  JsonConvert.DeserializeObject<List<Customer>>(json, new JsonSerializerSettings
         {
-            // The date format string to achieve <day>/<month>/<year> <hour>:<minute>:<second> <AM or PM> output.
+            // The date format string <day>/<month>/<year> <hour>:<minute>:<second> <AM or PM> of the input date and time.
             DateFormatString = "dd/MM/yyyy hh:mm:ss tt"
         });
 

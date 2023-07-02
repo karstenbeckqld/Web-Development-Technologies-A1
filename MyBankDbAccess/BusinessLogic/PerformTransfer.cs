@@ -41,7 +41,7 @@ public class PerformTransfer
         {
             // If the accounts exist, we first set the current date and time, and set an empty comment to null, so that
             // the database will reflect this as a <null> value and not as an empty field. 
-            var utcDate = DateTime.UtcNow.ToLocalTime();
+            var utcDate = DateTime.UtcNow;
 
             if (comment.IsNullOrEmpty())
             {

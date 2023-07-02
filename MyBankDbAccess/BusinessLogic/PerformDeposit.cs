@@ -28,7 +28,7 @@ public static class PerformDeposit
             }
             
             // Set the current date and time.
-            var utcDate = DateTime.UtcNow.ToLocalTime();
+            var utcDate = DateTime.UtcNow;
 
             // Set empty comments to null, so that they're represented as <null> in the database and not as empty fields.
             if (comment.IsNullOrEmpty())

@@ -59,6 +59,7 @@ public static class DataWebService
                     // property to D for deposit. The same is true for the AccountNumber property. 
                     transaction.TransactionType = "D";
                     transaction.AccountNumber = account.AccountNumber;
+                    transaction.TransactionTimeUtc = TimeZoneInfo.ConvertTimeToUtc(transaction.TransactionTimeUtc);
 
                     // Now we call the Insert method of the Database class passing a Transaction object to write the
                     // data to the database.
