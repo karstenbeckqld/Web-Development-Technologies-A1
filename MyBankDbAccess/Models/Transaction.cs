@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using MyBankDbAccess.attributes;
 
 
@@ -7,6 +8,8 @@ namespace MyBankDbAccess.Models;
 // The Withdraw class represents a user defined type that holds data from the Withdraw table in the database. 
 public class Transaction 
 {
+    
+    private CultureInfo ci = CultureInfo.CreateSpecificCulture("en-AU");
     public Transaction()
     {
     }
@@ -66,7 +69,7 @@ public class Transaction
         
         output += "|";
 
-        output += FixedLength(TransactionTimeUtc.ToString(),23,' ')+"|";
+        output += FixedLength(TransactionTimeUtc.ToString("dd/MM/yyyy hh:mm:ss tt"),23,' ')+"|";
 
         return output;
     }
