@@ -1,6 +1,6 @@
 ﻿namespace MyBank.framework.views.interfaces;
 
-public interface IDefeeredConstructor
+public interface IConstructAfterLogin
 {
     public abstract void Construct();
 }
