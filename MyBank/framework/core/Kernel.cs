@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using MyBank.framework.facades;
+using MyBank.project.views;
 using MyBankDbAccess.Models;
 
 namespace MyBank.framework.core;
@@ -92,6 +93,22 @@ public sealed class Kernel
                 
             }
         }
+    }
+
+    //Quick and dirty fix for the login logout issue,
+    //this should get a better fix to auto regenerate
+    //the views but we have ran out of time.
+    public void RegenerateViews()
+    {
+        _views.Clear();
+        
+        App.RegisterView(new MainMenuView());
+        App.RegisterView(new LoginView());
+        App.RegisterView(new MyStatementsView());
+        App.RegisterView(new AccountSelectionView());
+        App.RegisterView(new DepositView());
+        App.RegisterView(new WithdrawView());
+        App.RegisterView(new TransactionView());
     }
 
     public string GetLastAccessedView()
