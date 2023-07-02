@@ -33,14 +33,14 @@ public class Form : Component
         
         MethodInfo methodInfo = _type.GetMethod("OnSuccess");
         methodInfo.Invoke(_controller, new object[]{@event});
-        Kernal.Instance().Process();
+        Kernel.Instance().Process();
     }
 
     public void OnFailure(Event @event)
     {
         MethodInfo methodInfo = _type.GetMethod("OnError");
         methodInfo.Invoke(_controller, new object[]{@event});
-        Kernal.Instance().Process();
+        Kernel.Instance().Process();
     }
 
     protected void OnSubmit(Event @event)
