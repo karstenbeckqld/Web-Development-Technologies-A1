@@ -5,20 +5,18 @@ using MyBankDbAccess.Models;
 
 namespace MyBank.framework.core;
 
-public sealed class Kernal
+public sealed class Kernel
 {
-    private static Kernal _instance = null;
+    private static Kernel _instance = null;
     private Dictionary<string, View> _views;
     private string _activeView;
     private Customer _customer;
     private IConfigurationRoot _configuration;
-    private Dictionary<string, ServiceProvider> _providers;
     private string _lastAccessedView;
 
-    public Kernal()
+    public Kernel()
     {
         _views = new Dictionary<string, View>();
-        _providers = new Dictionary<string, ServiceProvider>();
     }
 
     public void SetConfigurationFile(string path)
@@ -36,11 +34,11 @@ public sealed class Kernal
         _views.Add(view.GetType().Name,view);
     }
 
-    public static Kernal Instance()
+    public static Kernel Instance()
     {
         if (_instance == null)
         {
-            _instance = new Kernal();
+            _instance = new Kernel();
         }
 
         return _instance;
@@ -70,7 +68,7 @@ public sealed class Kernal
         _activeView = view;
     }
 
-    public void setCustomer(Customer customer)
+    public void SetCustomer(Customer customer)
     {
         _customer = customer;
         if (customer != null)
@@ -101,7 +99,7 @@ public sealed class Kernal
         return _lastAccessedView;
     }
 
-    public Customer getCustomer()
+    public Customer GetCustomer()
     {
         return _customer;
     }
@@ -121,21 +119,5 @@ public sealed class Kernal
 
         _views[view].SetLocalScopeVariable(key, value);
     }
-
-    public void RegisterServiceProvider(ServiceProvider provider)
-    {
-        _providers.Add(provider.GetType().Name.Substring(0,provider.GetType().Name.Length-15),provider);
-    }
-
-    public void Boot()
-    {
-        foreach (var provider in _providers)
-        {
-            provider.Value.Boot();
-        }
-        
-    }
     
-    
-
 }
