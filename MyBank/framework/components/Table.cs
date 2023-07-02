@@ -80,7 +80,7 @@ public class Table<T> : Component
                 _error = String.Empty;
                 _view.ClearVariable(_displayKey);
                 App.SwitchView("AccountSelectionView");
-                Kernal.Instance().Process();
+                Kernel.Instance().Process();
             }
 
             int selection;
@@ -101,7 +101,7 @@ public class Table<T> : Component
                 _error = "Invalid selection provided, please enter a valid page";
             }
 
-            Kernal.Instance().Process();
+            Kernel.Instance().Process();
         }
         
         return null;
