@@ -1,3 +1,6 @@
+#Visiblity
+Updated to Public as of 5:45pm AEST on 10/7/2023 as final results have been released for this assignment.
+
 # ReadMe
 
 ReadMe File for Web Development Technologies, Assignment 1, Group 2:
